@@ -1,5 +1,5 @@
-| Date     | Time | Description         |
-| -------- | ---- | ------------------- |
-| January  | $250 | Starting procedures |
-| February | $80  |                     |
-| March    | $420 |                     |
+| Date       | Time | Description         |
+| ---------- | ---- | ------------------- |
+| 17.12.2024 |      | Starting procedures |
+|            |      |                     |
+|            |      |                     |
