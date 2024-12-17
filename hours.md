@@ -1,5 +1,5 @@
-| Date       | Time | Description         |
-| ---------- | ---- | ------------------- |
-| 17.12.2024 |      | Starting procedures |
-|            |      |                     |
-|            |      |                     |
+| Date       | Time | Description            |
+| ---------- | ---- | ---------------------- |
+| 17.12.2024 |      | Setting up the project |
+|            |      |                        |
+|            |      |                        |
