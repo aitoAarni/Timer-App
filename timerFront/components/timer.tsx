@@ -9,13 +9,12 @@ interface Props {
 export default function Timer({ time, breakTime }: Props) {
     const [timer, setTimer] = useState(0)
     const [startTime] = useState(getEpochInSeconds())
-    console.log('start time: ', startTime)
 
     useEffect(() => {
         const interval = setInterval(() => {
             const elapsed = timeElapsed(startTime)
             setTimer(elapsed)
-        }, 1000)
+        }, 250)
 
         return () => clearInterval(interval)
     }, [])
