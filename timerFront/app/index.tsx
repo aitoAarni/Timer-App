@@ -1,10 +1,10 @@
 import { Link } from 'expo-router'
-import { Text, View } from 'react-native'
-
+import { View } from 'react-native'
+import Timer from '@/components/timer'
 export default function HomeView() {
     return (
         <View>
-            <Text>HOME SCREEN IS HERE</Text>
+            <Timer />
             <Link href={'/settings'}>settings</Link>
         </View>
     )
