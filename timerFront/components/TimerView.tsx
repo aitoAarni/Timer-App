@@ -7,17 +7,21 @@ interface Props {
     breakTime?: number
 }
 
-export default function TimerView({ time, breakTime }: Props) {
-    const [timerTime, setTimerTime] = useState(0)
+export default function TimerView({ time = 5, breakTime = 3 }: Props) {
+    const [timerTime, setTimerTime] = useState(time)
 
-    const timerRef = useRef(new Timer(5, 3))
+    const timerRef = useRef(new Timer(time, breakTime))
     useEffect(() => {
         const interval = setInterval(() => {
             const t = timerRef.current.timerLogic()
-            console.log(`t: ${t}`)
+            console.log(`t1: ${t}`)
+            console.log(`timerTime ${timerTime} != ${t} t : ${timerTime != t}`)
             if (timerTime != t) {
+                console.log(`t2: ${t}`)
                 setTimerTime(t)
             }
+            console.log(`timerTime after: ${timerTime}`)
+            console.log()
         }, 250)
 
         return () => clearInterval(interval)
