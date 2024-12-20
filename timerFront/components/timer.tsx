@@ -69,8 +69,6 @@ class CountdownTimer {
         } else {
             this.timerStart = this.getEpoch()
         }
-        console.log(this.paused)
-        console.log(this.paused)
     }
     getTime() {
         let displayTime
