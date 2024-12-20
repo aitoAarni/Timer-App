@@ -45,13 +45,6 @@ class CountdownTimer {
         }
         const t = displayTime
 
-        console.log(`t: ${t}`)
-        console.log(
-            `${this.timeLength} - ${Math.floor(t / 1000)}: ${
-                this.timeLength - Math.floor(t / 1000)
-            }`
-        )
-        console.log('')
         return this.timeLength - Math.floor(t / 1000)
     }
 }

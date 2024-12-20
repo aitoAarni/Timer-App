@@ -14,6 +14,7 @@ export default function TimerView({ time, breakTime }: Props) {
     useEffect(() => {
         const interval = setInterval(() => {
             const t = timerRef.current.timerLogic()
+            console.log(`t: ${t}`)
             if (timerTime != t) {
                 setTimerTime(t)
             }
