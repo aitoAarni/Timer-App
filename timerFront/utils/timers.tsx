@@ -39,6 +39,6 @@ export default class CountdownTimer {
         } else {
             displayTime = this.#timeElapsed() + this.previousTime
         }
-        return Math.floor(displayTime / 10)
+        return this.timeLength - Math.floor(displayTime / 10)
     }
 }
