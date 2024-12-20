@@ -14,14 +14,9 @@ export default function TimerView({ time = 5, breakTime = 3 }: Props) {
     useEffect(() => {
         const interval = setInterval(() => {
             const t = timerRef.current.timerLogic()
-            console.log(`t1: ${t}`)
-            console.log(`timerTime ${timerTime} != ${t} t : ${timerTime != t}`)
             if (timerTime != t) {
-                console.log(`t2: ${t}`)
                 setTimerTime(t)
             }
-            console.log(`timerTime after: ${timerTime}`)
-            console.log()
         }, 250)
 
         return () => clearInterval(interval)
