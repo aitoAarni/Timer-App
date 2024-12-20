@@ -13,7 +13,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     const timerRef = useRef(new Timer(time, breakTime))
     useEffect(() => {
         const interval = setInterval(() => {
-            const t = timerRef.current.timerLogic()
+            const t = timerRef.current.getSecondsRemaining()
             setTimerTime(t)
         }, 100)
 
@@ -21,7 +21,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     }, [])
 
     const handleButtonClick = function () {
-        console.log(timerRef.current.timerLogic())
+        console.log(timerRef.current.getSecondsRemaining())
     }
     const handleTogglePause = function () {
         timerRef.current.pauseToggle()
@@ -30,8 +30,14 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     return (
         <View>
             <Button title="Time" onPress={handleButtonClick}></Button>
-            <Text>Timer: {timerTime}</Text>
+            <Text>Timer: {formatTime(timerTime)}</Text>
             <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
         </View>
     )
+}
+
+const formatTime = function (seconds: number) {
+    const formattedMinutes = String(Math.floor(seconds / 60)).padStart(2, '0')
+    const formattedSeconds = String(Math.floor(seconds % 60)).padStart(2, '0')
+    return formattedMinutes + ':' + formattedSeconds
 }

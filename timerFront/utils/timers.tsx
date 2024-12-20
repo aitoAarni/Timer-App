@@ -71,7 +71,7 @@ export default class Timer {
         }
     }
 
-    timerLogic() {
+    getSecondsRemaining() {
         if (this.timerActive) {
             let timeRemaining = this.activeTimer.getTime()
             if (timeRemaining < 0) {
@@ -93,7 +93,4 @@ export default class Timer {
         }
     }
 
-    getFormattedTime() {
-        const time = this.timerLogic()
-    }
 }
