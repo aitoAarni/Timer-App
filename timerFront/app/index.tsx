@@ -1,10 +1,10 @@
 import { Link } from 'expo-router'
 import { View } from 'react-native'
-import Timer from '@/components/timer'
+import TimerView from '@/components/TimerView'
 export default function HomeView() {
     return (
         <View>
-            <Timer />
+            <TimerView />
             <Link href={'/settings'}>settings</Link>
         </View>
     )
