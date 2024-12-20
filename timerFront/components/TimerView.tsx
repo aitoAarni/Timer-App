@@ -1,4 +1,4 @@
-import CountdownTimer from '@/utils/timers'
+import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
 import { Button, Text, View } from 'react-native'
 
@@ -10,11 +10,12 @@ interface Props {
 export default function TimerView({ time, breakTime }: Props) {
     const [timerTime, setTimerTime] = useState(0)
 
-    const timerRef = useRef(new CountdownTimer(600, 10))
+    const timerRef = useRef(new Timer(20, 5))
     useEffect(() => {
         const interval = setInterval(() => {
-            if (timerTime != timerRef.current.getTime()) {
-                setTimerTime(timerRef.current.getTime())
+            const t = timerRef.current.timerLogic()
+            if (timerTime != t) {
+                setTimerTime(t)
             }
         }, 250)
 
@@ -22,10 +23,11 @@ export default function TimerView({ time, breakTime }: Props) {
     }, [])
 
     const handleButtonClick = function () {
-        console.log(timerRef.current.getTime())
+        console.log(timerRef.current.timerLogic())
     }
     const handleTogglePause = function () {
-        timerRef.current.togglePause()
+        console.log('1')
+        timerRef.current.pauseToggle()
     }
 
     return (
