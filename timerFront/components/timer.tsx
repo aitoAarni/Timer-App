@@ -43,11 +43,10 @@ class CountdownTimer {
     timerStart: number
     previousTime: number
     constructor(length: number, pause: number) {
-        console.log('new constructor: ' + length)
         this.timeLength = length
         this.breakLength = pause
         this.paused = true
-        this.timerStart = this.getEpoch()
+        this.timerStart = 0
         this.previousTime = 0
     }
 
@@ -63,6 +62,7 @@ class CountdownTimer {
     }
 
     togglePause() {
+        this.paused = !this.paused
         if (this.paused) {
             const elapsedTime = this.#timeElapsed()
             this.previousTime += elapsedTime
@@ -70,7 +70,6 @@ class CountdownTimer {
             this.timerStart = this.getEpoch()
         }
         console.log(this.paused)
-        this.paused = !this.paused
         console.log(this.paused)
     }
     getTime() {
