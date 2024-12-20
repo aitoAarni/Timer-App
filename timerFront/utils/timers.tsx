@@ -4,7 +4,7 @@ class CountdownTimer {
     timerStart: number
     previousTime: number
     constructor(length: number) {
-        this.timeLength = length
+        this.timeLength = length - 1
         this.paused = true
         this.timerStart = 0
         this.previousTime = 0
@@ -12,7 +12,7 @@ class CountdownTimer {
 
     #getEpoch() {
         const date = new Date()
-        const epoch = Math.floor(date.getTime() / 100)
+        const epoch = date.getTime()
         return epoch
     }
 
@@ -43,7 +43,16 @@ class CountdownTimer {
         } else {
             displayTime = this.#timeElapsed() + this.previousTime
         }
-        return this.timeLength - Math.floor(displayTime / 10)
+        const t = displayTime
+
+        console.log(`t: ${t}`)
+        console.log(
+            `${this.timeLength} - ${Math.floor(t / 1000)}: ${
+                this.timeLength - Math.floor(t / 1000)
+            }`
+        )
+        console.log('')
+        return this.timeLength - Math.floor(t / 1000)
     }
 }
 
@@ -71,19 +80,21 @@ export default class Timer {
 
     timerLogic() {
         if (this.timerActive) {
-            const timeRemaining = this.activeTimer.getTime()
-            if (timeRemaining === 0) {
+            let timeRemaining = this.activeTimer.getTime()
+            if (timeRemaining < 0) {
                 this.timerActive = !this.timerActive
                 this.activeTimer.resetTimer()
                 this.breakTimer.pauseToggle()
+                timeRemaining = this.breakTimer.getTime()
             }
             return timeRemaining
         } else {
-            const timeRemaining = this.breakTimer.getTime()
-            if (timeRemaining === 0) {
+            let timeRemaining = this.breakTimer.getTime()
+            if (timeRemaining < 0) {
                 this.timerActive = !this.timerActive
                 this.breakTimer.resetTimer()
                 this.activeTimer.pauseToggle()
+                timeRemaining = this.activeTimer.getTime()
             }
             return timeRemaining
         }

@@ -10,7 +10,7 @@ interface Props {
 export default function TimerView({ time, breakTime }: Props) {
     const [timerTime, setTimerTime] = useState(0)
 
-    const timerRef = useRef(new Timer(20, 5))
+    const timerRef = useRef(new Timer(5, 3))
     useEffect(() => {
         const interval = setInterval(() => {
             const t = timerRef.current.timerLogic()
@@ -26,7 +26,6 @@ export default function TimerView({ time, breakTime }: Props) {
         console.log(timerRef.current.timerLogic())
     }
     const handleTogglePause = function () {
-        console.log('1')
         timerRef.current.pauseToggle()
     }
 
