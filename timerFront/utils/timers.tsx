@@ -62,10 +62,8 @@ export default class Timer {
     }
 
     pauseToggle() {
-        console.log('2')
         if (this.timerActive) {
             this.activeTimer.pauseToggle()
-            console.log('3 ', this.activeTimer.paused)
         } else {
             this.breakTimer.pauseToggle()
         }
@@ -77,6 +75,7 @@ export default class Timer {
             if (timeRemaining === 0) {
                 this.timerActive = !this.timerActive
                 this.activeTimer.resetTimer()
+                this.breakTimer.pauseToggle()
             }
             return timeRemaining
         } else {
@@ -84,6 +83,7 @@ export default class Timer {
             if (timeRemaining === 0) {
                 this.timerActive = !this.timerActive
                 this.breakTimer.resetTimer()
+                this.activeTimer.pauseToggle()
             }
             return timeRemaining
         }
