@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button, Text, View } from 'react-native'
 
 interface Props {
@@ -7,19 +7,13 @@ interface Props {
 }
 
 export default function Timer({ time, breakTime }: Props) {
-    const [timer, setTimer] = useState(0)
-    const [paused, setPaused] = useState(true)
-    const [startTime] = useState(getEpoch())
+    const [timerTime, setTimerTime] = useState(0)
 
-    let pausedTime = 0
-
+    const timerRef = useRef(new CountdownTimer(600, 10))
     useEffect(() => {
         const interval = setInterval(() => {
-            if (!paused) {
-                const elapsed = timeElapsed(startTime)
-                setTimer(elapsed)
-            } else {
-                const pausedStartTime = getEpoch()
+            if (timerTime != timerRef.current.getTime()) {
+                setTimerTime(timerRef.current.getTime())
             }
         }, 250)
 
@@ -27,29 +21,19 @@ export default function Timer({ time, breakTime }: Props) {
     }, [])
 
     const handleButtonClick = function () {
-        console.log(timeElapsed(startTime))
+        console.log(timerRef.current.getTime())
     }
-    const handlePausePress = function () {
-        setPaused(!paused)
+    const handleTogglePause = function () {
+        timerRef.current.togglePause()
     }
 
     return (
         <View>
             <Button title="Time" onPress={handleButtonClick}></Button>
-            <Text>Timer: {timer}</Text>
+            <Text>Timer: {timerTime}</Text>
+            <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
         </View>
     )
-}
-
-function getEpoch() {
-    const date = new Date()
-    const epoch = Math.floor(date.getTime() / 100)
-    return epoch
-}
-
-function timeElapsed(startTime: number) {
-    const currentTime = getEpoch()
-    return currentTime - startTime
 }
 
 class CountdownTimer {
@@ -59,6 +43,7 @@ class CountdownTimer {
     timerStart: number
     previousTime: number
     constructor(length: number, pause: number) {
+        console.log('new constructor: ' + length)
         this.timeLength = length
         this.breakLength = pause
         this.paused = true
@@ -84,7 +69,9 @@ class CountdownTimer {
         } else {
             this.timerStart = this.getEpoch()
         }
-        this.paused != this.paused
+        console.log(this.paused)
+        this.paused = !this.paused
+        console.log(this.paused)
     }
     getTime() {
         let displayTime
