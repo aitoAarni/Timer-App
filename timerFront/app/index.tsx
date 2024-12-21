@@ -1,11 +1,19 @@
 import { Link } from 'expo-router'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import TimerView from '@/components/TimerView'
+import theme from '@/theme'
 export default function HomeView() {
     return (
-        <View>
+        <View style={styles.container}>
             <TimerView />
             <Link href={'/settings'}>settings</Link>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: theme.colors.background,
+        flexGrow: 1,
+    },
+})

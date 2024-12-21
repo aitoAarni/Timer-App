@@ -1,6 +1,7 @@
+import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 
 interface Props {
     time?: number
@@ -20,17 +21,13 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
         return () => clearInterval(interval)
     }, [])
 
-    const handleButtonClick = function () {
-        console.log(timerRef.current.getSecondsRemaining())
-    }
     const handleTogglePause = function () {
         timerRef.current.pauseToggle()
     }
 
     return (
-        <View>
-            <Button title="Time" onPress={handleButtonClick}></Button>
-            <Text>Timer: {formatTime(timerTime)}</Text>
+        <View style={styles.timerContainer}>
+            <Text style={styles.text}>{formatTime(timerTime)}</Text>
             <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
         </View>
     )
@@ -41,3 +38,15 @@ const formatTime = function (seconds: number) {
     const formattedSeconds = String(Math.floor(seconds % 60)).padStart(2, '0')
     return formattedMinutes + ':' + formattedSeconds
 }
+
+const styles = StyleSheet.create({
+    timerContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+    },
+    text: {
+        color: '#f0f0f0',
+        fontSize: theme.fontSizes.timer,
+        textAlign: 'center',
+    },
+})
