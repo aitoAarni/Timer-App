@@ -4,6 +4,7 @@ const theme = {
     colors: {
         primary: '#036666',
         background: '#101010',
+        text: '#f0f0f0',
     },
 
     fontSizes: {

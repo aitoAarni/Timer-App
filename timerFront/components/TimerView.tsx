@@ -28,8 +28,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
 
     return (
         <View style={styles.timerContainer}>
-            <Text>Caardi Beee</Text>
-            <Text>{formatTime(timerTime)}</Text>
+            <Text style={styles.text}>{formatTime(timerTime)}</Text>
             <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
         </View>
     )
@@ -47,8 +46,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        color: '#f0f0f0',
-        fontSize: theme.fontSizes.timer,
         textAlign: 'center',
     },
 })
