@@ -1,7 +1,8 @@
 import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
+import Text from '../components/Text'
 
 interface Props {
     time?: number
@@ -27,7 +28,8 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
 
     return (
         <View style={styles.timerContainer}>
-            <Text style={styles.text}>{formatTime(timerTime)}</Text>
+            <Text>Caardi Beee</Text>
+            <Text>{formatTime(timerTime)}</Text>
             <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
         </View>
     )
