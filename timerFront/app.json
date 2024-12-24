@@ -24,6 +24,16 @@
             "favicon": "./assets/images/favicon.png"
         },
         "plugins": [
+            [
+                "expo-font",
+                {
+                    "fonts": [
+                        "./assets/fonts/PlaywriteFont.ttf",
+                        "./assets/fonts/PermanentMarker-Regular.tff",
+                        "./assets/fonts/SpaceMono-Regular.ttf"
+                    ]
+                }
+            ],
             "expo-router",
             [
                 "expo-splash-screen",
@@ -33,8 +43,7 @@
                     "resizeMode": "contain",
                     "backgroundColor": "#ffffff"
                 }
-            ],
-            ["expo-font", { "font": ["./assets/fonts/PlaywriteFont.ttf"] }]
+            ]
         ],
 
         "experiments": {
