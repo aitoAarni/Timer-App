@@ -30,7 +30,9 @@
                     "fonts": [
                         "./assets/fonts/PlaywriteFont.ttf",
                         "./assets/fonts/PermanentMarker-Regular.tff",
-                        "./assets/fonts/SpaceMono-Regular.ttf"
+                        "./assets/fonts/SpaceMono-Regular.ttf",
+                        "./assets/fonts/IBMPlexMono-Regular.ttf",
+                        ".assets/fonts/DancingScript-VariableFont-wght.ttf"
                     ]
                 }
             ],

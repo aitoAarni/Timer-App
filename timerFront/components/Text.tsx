@@ -27,7 +27,7 @@ const Text = function ({ style, color, fontSize, ...props }: Props) {
 
 const styles = StyleSheet.create({
     text: {
-        fontFamily: 'PermanentMarker-Regular',
+        fontFamily: 'SpaceMono-Regular',
         color: theme.colors.text,
         fontSize: theme.fontSizes.timer,
     },
