@@ -15,7 +15,6 @@ interface Props extends TextProps {
 }
 
 const Text = function ({ style, color, fontSize, ...props }: Props) {
-    console.log('loaded fonts: ', getLoadedFonts())
     const textStyle: StyleProp<TextStyle>[] = [
         styles.text,
         style,

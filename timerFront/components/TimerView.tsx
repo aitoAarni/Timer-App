@@ -1,7 +1,7 @@
 import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
-import { Button, StyleSheet, View } from 'react-native'
+import { Button, Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 
 interface Props {
@@ -27,9 +27,17 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     }
 
     return (
-        <View style={styles.timerContainer}>
-            <Text style={styles.text}>{formatTime(timerTime)}</Text>
-            <Button title="Toggle Pause" onPress={handleTogglePause}></Button>
+        <View style={styles.container}>
+            <View style={styles.fillerContainers}></View>
+            <View style={styles.timerContainer}>
+                <Pressable
+                    style={styles.timerPressable}
+                    onPress={handleTogglePause}
+                >
+                    <Text style={styles.text}>{formatTime(timerTime)}</Text>
+                </Pressable>
+            </View>
+            <View style={styles.fillerContainers}></View>
         </View>
     )
 }
@@ -41,11 +49,17 @@ const formatTime = function (seconds: number) {
 }
 
 const styles = StyleSheet.create({
+    container: { flexGrow: 1, justifyContent: 'center' },
     timerContainer: {
         flexGrow: 1,
-        justifyContent: 'center',
     },
     text: {
         textAlign: 'center',
+    },
+    fillerContainers: { flexGrow: 1 },
+    timerPressable: {
+        flexGrow: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
