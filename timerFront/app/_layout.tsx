@@ -11,7 +11,7 @@ export default function RootLayout() {
         'IBM-Plex-Mono': require('@/assets/fonts/IBMPlexMono-Bold.ttf'),
         PlaywriterFont: require('@/assets/fonts/PlaywriteFont.ttf'),
         'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
-        'DancingScript-Regular': require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
+        'DancingScript': require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
     useEffect(() => {
         if (loaded || error) {
