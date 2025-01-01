@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Button, Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import Animated, { useSharedValue, withSpring } from 'react-native-reanimated'
+import DirectionPad from './DirectionPad'
 
 interface Props {
     time?: number
@@ -12,7 +13,6 @@ interface Props {
 
 export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     const [timerTime, setTimerTime] = useState(time)
-    const width = useSharedValue(100)
     const timerRef = useRef(new Timer(time, breakTime))
     useEffect(() => {
         const interval = setInterval(() => {
@@ -29,12 +29,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.fillerContainers}>
-                <Button
-                    onPress={() => (width.value = (width.value + 10))}
-                    title="lil xp"
-                />
-            </View>
+            <View style={styles.fillerContainers}></View>
             <View style={styles.timerContainer}>
                 <Pressable
                     style={styles.timerPressable}
@@ -44,7 +39,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                 </Pressable>
             </View>
             <View style={styles.fillerContainers}>
-                <Animated.View style={[styles.animatedView, { width }]} />
+                <DirectionPad />
             </View>
         </View>
     )
@@ -64,11 +59,10 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    fillerContainers: { flexGrow: 1 },
+    fillerContainers: { flexGrow: 1, backgroundColor: 'gray' },
     timerPressable: {
         flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    animatedView: { width: 50, height: 50, backgroundColor: 'violet' },
 })
