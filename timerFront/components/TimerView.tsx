@@ -1,9 +1,8 @@
 import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
-import { Button, Pressable, StyleSheet, View } from 'react-native'
+import {  Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated'
 import DirectionPad from './DirectionPad'
 
 interface Props {

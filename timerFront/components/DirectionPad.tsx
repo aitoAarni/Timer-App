@@ -8,25 +8,22 @@ import Animated, {
 } from 'react-native-reanimated'
 
 function DirectionPad({}) {
-    const offset = useSharedValue<{ x: number; y: number }>({ x: 0, y: 0 })
+    const offset = useSharedValue<number>(0)
 
     const pan = Gesture.Pan()
         .onChange(event => {
-            offset.value.x = event.translationX
-            offset.value.y = event.translationY
-            
+            offset.value = event.changeX
+            console.log(event)
         })
         .onFinalize(event => {
-            offset.value.y = withSpring(0)
-            offset.value.x = withSpring(0)
+            offset.value = withSpring(0)
         })
 
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [
             {
-                translateX: offset.value.x,
+                translateX: offset.value,
             },
-            { translateY: offset.value.y },
         ],
     }))
     return (
