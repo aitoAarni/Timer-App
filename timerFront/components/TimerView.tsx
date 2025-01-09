@@ -29,8 +29,10 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
         timerRef.current.resetTimer()
     }
     const handleAddTime = function () {
-        console.log('1')
         timerRef.current.addTime(60)
+    }
+    const handleSwitchTimer = function () {
+        timerRef.current.switchTimer()
     }
     return (
         <View style={styles.container}>
@@ -43,6 +45,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                     <DirectionPad
                         onUp={handleResetTimer}
                         onLeft={handleAddTime}
+                        onRight={handleSwitchTimer}
                     >
                         <Text style={styles.text}>{formatTime(timerTime)}</Text>
                     </DirectionPad>

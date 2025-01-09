@@ -89,22 +89,30 @@ export default class Timer {
         }
     }
 
+    switchTimer() {
+        if (this.timerActive) {
+            this.timerActive = !this.timerActive
+            this.activeTimer.resetTimer()
+            this.breakTimer.pauseToggle()
+        } else {
+            this.timerActive = !this.timerActive
+            this.breakTimer.resetTimer()
+            this.activeTimer.pauseToggle()
+        }
+    }
+
     getSecondsRemaining() {
         if (this.timerActive) {
             let timeRemaining = this.activeTimer.getTime()
             if (timeRemaining < 0) {
-                this.timerActive = !this.timerActive
-                this.activeTimer.resetTimer()
-                this.breakTimer.pauseToggle()
+                this.switchTimer()
                 timeRemaining = this.breakTimer.getTime()
             }
             return timeRemaining
         } else {
             let timeRemaining = this.breakTimer.getTime()
             if (timeRemaining < 0) {
-                this.timerActive = !this.timerActive
-                this.breakTimer.resetTimer()
-                this.activeTimer.pauseToggle()
+                this.switchTimer()
                 timeRemaining = this.activeTimer.getTime()
             }
             return timeRemaining
