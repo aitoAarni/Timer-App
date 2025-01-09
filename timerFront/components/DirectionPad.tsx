@@ -6,13 +6,24 @@ import Animated, {
     useSharedValue,
     withSpring,
     clamp,
+    runOnJS,
 } from 'react-native-reanimated'
 
 interface DirectionPadProps {
     children?: ReactNode
+    onUp?: () => void
+    onRight?: () => void
+    onDown?: () => void
+    onLeft?: () => void
 }
 
-function DirectionPad({ children }: DirectionPadProps) {
+function DirectionPad({
+    children,
+    onUp,
+    onRight,
+    onDown,
+    onLeft,
+}: DirectionPadProps) {
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
@@ -31,15 +42,15 @@ function DirectionPad({ children }: DirectionPadProps) {
             )
         })
         .onFinalize(event => {
-            if (offsetX.value == movementClamp) {
-                console.log('oikee')
-            } else if (offsetX.value == -movementClamp) {
-                console.log('vasen')
+            if (offsetX.value == movementClamp && onRight) {
+                runOnJS(onRight)
+            } else if (offsetX.value == -movementClamp && onLeft) {
+                runOnJS(onLeft)
             }
-            if (offsetY.value == movementClamp) {
-                console.log('ala')
-            } else if (offsetY.value == -movementClamp) {
-                console.log('ykä')
+            if (offsetY.value == movementClamp && onDown) {
+                runOnJS(onDown)()
+            } else if (offsetY.value == -movementClamp && onUp) {
+                runOnJS(onUp)()
             }
             offsetX.value = withSpring(0)
             offsetY.value = withSpring(0)

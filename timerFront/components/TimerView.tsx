@@ -34,7 +34,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                     style={styles.timerPressable}
                     onPress={handleTogglePause}
                 >
-                    <DirectionPad>
+                    <DirectionPad onUp={handleTogglePause}>
                         <Text style={styles.text}>{formatTime(timerTime)}</Text>
                     </DirectionPad>
                 </Pressable>
