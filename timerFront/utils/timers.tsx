@@ -31,6 +31,10 @@ class CountdownTimer {
         }
     }
 
+    addTime(time: number) {
+        this.previousTime -= time * 1000
+    }
+
     resetTimer() {
         this.previousTime = 0
         this.paused = true
@@ -77,8 +81,12 @@ export default class Timer {
         this.breakTimer.resetTimer()
     }
 
-    ching() {
-        console.log('cashiiing')
+    addTime(time: number) {
+        if (this.timerActive) {
+            this.activeTimer.addTime(time)
+        } else {
+            this.breakTimer.addTime(time)
+        }
     }
 
     getSecondsRemaining() {

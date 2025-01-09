@@ -28,6 +28,10 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     const handleResetTimer = function () {
         timerRef.current.resetTimer()
     }
+    const handleAddTime = function () {
+        console.log('1')
+        timerRef.current.addTime(60)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.fillerContainers}></View>
@@ -36,7 +40,10 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                     style={styles.timerPressable}
                     onPress={handleTogglePause}
                 >
-                    <DirectionPad onUp={handleResetTimer}>
+                    <DirectionPad
+                        onUp={handleResetTimer}
+                        onLeft={handleAddTime}
+                    >
                         <Text style={styles.text}>{formatTime(timerTime)}</Text>
                     </DirectionPad>
                 </Pressable>

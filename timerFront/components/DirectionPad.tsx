@@ -47,9 +47,9 @@ function DirectionPad({
         })
         .onFinalize(event => {
             if (offsetX.value == movementClamp && onRight) {
-                runOnJS(onRight)
+                runOnJS(onRight)()
             } else if (offsetX.value == -movementClamp && onLeft) {
-                runOnJS(onLeft)
+                runOnJS(onLeft)()
             }
             if (offsetY.value == movementClamp && onDown) {
                 runOnJS(onDown)()
