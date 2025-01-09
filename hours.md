@@ -8,3 +8,4 @@
 | 29.12.2024 | 2h   | Learned about gesture handling and siwtched a button to a pressable element  |
 | 30.12.2024 | 1h   | Learning about gestures and animations in react native                       |
 | 31.12.2024 | 1h   | Reading reanimated documentation                                             |
+| 8.1.2025   | 1h   | Getting pan animation to work and reading relevant documentation for it      |
