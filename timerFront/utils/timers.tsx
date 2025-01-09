@@ -71,6 +71,16 @@ export default class Timer {
         }
     }
 
+    resetTimer() {
+        this.timerActive = true
+        this.activeTimer.resetTimer()
+        this.breakTimer.resetTimer()
+    }
+
+    ching() {
+        console.log('cashiiing')
+    }
+
     getSecondsRemaining() {
         if (this.timerActive) {
             let timeRemaining = this.activeTimer.getTime()
@@ -92,5 +102,4 @@ export default class Timer {
             return timeRemaining
         }
     }
-
 }
