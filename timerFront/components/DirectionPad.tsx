@@ -7,6 +7,8 @@ import Animated, {
     withSpring,
     clamp,
     runOnJS,
+    withDelay,
+    withTiming,
 } from 'react-native-reanimated'
 
 interface DirectionPadProps {
@@ -27,8 +29,10 @@ function DirectionPad({
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
+    const pressed = useSharedValue<boolean>(false)
 
     const pan = Gesture.Pan()
+        .onBegin(event => {})
         .onUpdate(event => {
             offsetX.value = clamp(
                 event.translationX,
@@ -52,8 +56,8 @@ function DirectionPad({
             } else if (offsetY.value == -movementClamp && onUp) {
                 runOnJS(onUp)()
             }
-            offsetX.value = withSpring(0)
-            offsetY.value = withSpring(0)
+            offsetX.value = withDelay(150, withTiming(0))
+            offsetY.value = withDelay(150, withTiming(0))
         })
 
     const animatedStyle = useAnimatedStyle(() => ({
@@ -73,7 +77,6 @@ function DirectionPad({
 
 const styles = StyleSheet.create({
     animatedStick: {
-        backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'center',
     },
