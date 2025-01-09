@@ -1,4 +1,4 @@
-import { transform } from '@babel/core'
+import { ReactNode } from 'react'
 import { StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -7,12 +7,16 @@ import Animated, {
     withSpring,
 } from 'react-native-reanimated'
 
-function DirectionPad({}) {
+interface DirectionPadProps {
+    children?: ReactNode
+}
+
+function DirectionPad({ children }: DirectionPadProps) {
     const offset = useSharedValue<number>(0)
 
     const pan = Gesture.Pan()
-        .onChange(event => {
-            offset.value = event.changeX
+        .onUpdate(event => {
+            offset.value = event.translationX
             console.log(event)
         })
         .onFinalize(event => {
@@ -28,15 +32,15 @@ function DirectionPad({}) {
     }))
     return (
         <GestureDetector gesture={pan}>
-            <Animated.View
-                style={[styles.animatedStick, animatedStyle]}
-            ></Animated.View>
+            <Animated.View style={[styles.animatedStick, animatedStyle]}>
+                {children}
+            </Animated.View>
         </GestureDetector>
     )
 }
 
 const styles = StyleSheet.create({
-    animatedStick: { backgroundColor: 'green', width: 50, height: 50 },
+    animatedStick: { justifyContent: 'center', alignItems: 'center' },
 })
 
 export default DirectionPad

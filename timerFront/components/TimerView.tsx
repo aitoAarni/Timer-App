@@ -1,7 +1,7 @@
 import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
-import {  Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 
@@ -34,12 +34,12 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                     style={styles.timerPressable}
                     onPress={handleTogglePause}
                 >
-                    <Text style={styles.text}>{formatTime(timerTime)}</Text>
+                    <DirectionPad>
+                        <Text style={styles.text}>{formatTime(timerTime)}</Text>
+                    </DirectionPad>
                 </Pressable>
             </View>
-            <View style={styles.fillerContainers}>
-                <DirectionPad />
-            </View>
+            <View style={styles.fillerContainers}></View>
         </View>
     )
 }
