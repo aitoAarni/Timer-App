@@ -10,3 +10,4 @@
 | 31.12.2024 | 1h   | Reading reanimated documentation                                             |
 | 8.1.2025   | 1h   | Getting pan animation to work and reading relevant documentation for it      |
 | 9.1.2025   | 2.5h | Reseting timer etc. added when swiping the timer                             |
+| 10.1.2025  | 4h   | setting up testing and doing unit tests                                      |
