@@ -34,6 +34,9 @@ export class CountdownTimer {
     }
 
     addTime(time: number) {
+        if (!isPositiveNumber(time)) {
+            throw new Error('time must be a positive number')
+        }
         this.previousTime -= time * 1000
     }
 

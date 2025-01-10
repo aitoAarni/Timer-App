@@ -28,6 +28,25 @@ describe('timers.tsx file', () => {
             addMockTime(2_000)
             expect(countdownTimer.getTime()).toBe(2)
         })
+        it('shows correct time after pausing', () => {
+            countdownTimer.pauseToggle()
+            addMockTime(1_000)
+            countdownTimer.pauseToggle()
+            addMockTime(5_000)
+            expect(countdownTimer.getTime()).toBe(3)
+        })
+        it('adds time when addTime() is called', () => {
+            countdownTimer.addTime(10)
+            expect(countdownTimer.getTime()).toBe(14)
+        })
+        it('resets timer when resetTimer() is called', () => {
+            countdownTimer.pauseToggle()
+            addMockTime(4)
+            countdownTimer.addTime(15)
+            countdownTimer.resetTimer()
+            expect(countdownTimer.getTime()).toBe(4)
+            expect(countdownTimer.paused).toBeTruthy()
+        })
     })
     describe('Timer', () => {
         let timer: Timer
