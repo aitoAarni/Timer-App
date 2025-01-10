@@ -47,9 +47,8 @@ class CountdownTimer {
         } else {
             displayTime = this.#timeElapsed() + this.previousTime
         }
-        const t = displayTime
 
-        return this.timeLength - Math.floor(t / 1000)
+        return this.timeLength - Math.floor(displayTime / 1000)
     }
 }
 

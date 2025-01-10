@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, fireEvent, act, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
-import Timer from '@/utils/timers'
 
 jest.mock('@/utils/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
@@ -21,8 +20,7 @@ describe('TimerView', () => {
         render(<TimerView time={5} breakTime={3} />)
     })
 
-    it.only('should render correctly', () => {
+    it('should render correctly', () => {
         screen.getByText('00:05')
     })
 })
-
