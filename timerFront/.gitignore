@@ -3,6 +3,8 @@
 /android
 /ios
 
+coverage/**/*
+
 
 # dependencies
 node_modules/

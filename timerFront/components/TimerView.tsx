@@ -1,4 +1,3 @@
-import theme from '@/theme'
 import Timer from '@/utils/timers'
 import { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
