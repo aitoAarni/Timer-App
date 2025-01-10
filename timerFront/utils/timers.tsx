@@ -1,4 +1,6 @@
-class CountdownTimer {
+import { isPositiveNumber, PositiveNumber } from '@/types/positiveNumber'
+
+export class CountdownTimer {
     timeLength: number
     paused: boolean
     timerStart: number
@@ -81,6 +83,9 @@ export default class Timer {
     }
 
     addTime(time: number) {
+        if (!isPositiveNumber(time)) {
+            throw new Error('Time must be a positive number')
+        }
         if (this.timerActive) {
             this.activeTimer.addTime(time)
         } else {
