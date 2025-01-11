@@ -4,7 +4,6 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
-    withSpring,
     clamp,
     runOnJS,
     withDelay,
@@ -29,7 +28,6 @@ function DirectionPad({
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
-    const pressed = useSharedValue<boolean>(false)
 
     const pan = Gesture.Pan()
         .onBegin(event => {})
@@ -68,7 +66,10 @@ function DirectionPad({
     }))
     return (
         <GestureDetector gesture={pan}>
-            <Animated.View style={[styles.animatedStick, animatedStyle]}>
+            <Animated.View
+                testID="direction-pad"
+                style={[styles.animatedStick, animatedStyle]}
+            >
                 {children}
             </Animated.View>
         </GestureDetector>
