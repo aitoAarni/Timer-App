@@ -58,6 +58,7 @@ function DirectionPad({
             offsetY.value = withDelay(150, withTiming(0))
         })
 
+    pan.withTestId('pan')
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [
             { translateX: offsetX.value },
@@ -66,10 +67,7 @@ function DirectionPad({
     }))
     return (
         <GestureDetector gesture={pan}>
-            <Animated.View
-                testID="direction-pad"
-                style={[styles.animatedStick, animatedStyle]}
-            >
+            <Animated.View style={[styles.animatedStick, animatedStyle]}>
                 {children}
             </Animated.View>
         </GestureDetector>
