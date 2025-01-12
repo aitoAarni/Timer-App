@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
+import { formatTime } from '@/utils/format'
 
 interface Props {
     time?: number
@@ -53,12 +54,6 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
             <View style={styles.fillerContainers}></View>
         </View>
     )
-}
-
-const formatTime = function (seconds: number) {
-    const formattedMinutes = String(Math.floor(seconds / 60)).padStart(2, '0')
-    const formattedSeconds = String(Math.floor(seconds % 60)).padStart(2, '0')
-    return formattedMinutes + ':' + formattedSeconds
 }
 
 const styles = StyleSheet.create({
