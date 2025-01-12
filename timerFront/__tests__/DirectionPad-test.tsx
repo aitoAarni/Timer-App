@@ -12,16 +12,15 @@ import DirectionPad from '@/components/DirectionPad'
 import Text from '@/components/Text'
 
 describe('DirectionPad', () => {
-    it.only('triggers the onRight callback when swiped to the right', () => {
+    it('triggers the onRight callback when swiped to the right', () => {
         const mockOnRight = jest.fn()
-        const { debug } = render(
+        render(
             <GestureHandlerRootView>
                 <DirectionPad onRight={mockOnRight}>
                     <Text>00:04</Text>
                 </DirectionPad>
             </GestureHandlerRootView>
         )
-        debug()
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
             { state: State.BEGAN },
             { state: State.ACTIVE },
