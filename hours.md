@@ -11,4 +11,6 @@
 | 8.1.2025   | 1h   | Getting pan animation to work and reading relevant documentation for it      |
 | 9.1.2025   | 2.5h | Reseting timer etc. added when swiping the timer                             |
 | 10.1.2025  | 4h   | setting up testing and doing unit tests                                      |
-| 11.1.2025  | 4.5  | Trying to test a component using react native gesture handler w/o success    |
+| 11.1.2025  | 4.5h | Trying to test a component using react native gesture handler w/o success    |
+| 12.1.2025  | 3h   | Solved how to test gesture handler and added other tests also                |
+| in total   | 34 h |                                                                              |
