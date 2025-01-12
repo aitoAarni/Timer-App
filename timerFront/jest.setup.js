@@ -5,13 +5,13 @@ jest.mock('react-native-reanimated', () => {
     const Reanimated = jest.requireActual('react-native-reanimated/mock')
 
     Reanimated.runOnJS = fn => fn
-
-    Reanimated.withTiming = value => value
+    ;(Reanimated.clamp = (value, leftClamp, rightClamp) => {
+        if (value > rightClamp) return rightClamp
+        if (value < leftClamp) return leftClamp
+        return value
+    }),
+        (Reanimated.withTiming = value => value)
     Reanimated.withDelay = (delay, value) => value
 
     return Reanimated
 })
-
-// jest.mock('rect-native-gesture-handler', () => {
-//     const GestureHandler = jest.requireActual('react-native-gesture-handler')
-// })
