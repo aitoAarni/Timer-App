@@ -17,7 +17,10 @@
         "setupFiles": [
             "./node_modules/react-native-gesture-handler/jestSetup.js",
             "./jest.setup.js"
-        ]
+        ],
+        "moduleNameMapper": {
+            "^@/(.*)$": "<rootDir>/$1"
+        }
     },
     "dependencies": {
         "@expo/vector-icons": "^14.0.2",
