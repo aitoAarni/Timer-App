@@ -72,7 +72,7 @@ describe('DirectionPad', () => {
         ])
         expect(mockOnDown).toHaveBeenCalledTimes(1)
     })
-    it('Does not triggers the onRight callback when half swiped right', () => {
+    it('does not triggers the onRight callback when half swiped right', () => {
         const mockOnRight = jest.fn()
         render(
             <GestureHandlerRootView>
@@ -87,7 +87,7 @@ describe('DirectionPad', () => {
         ])
         expect(mockOnRight).toHaveBeenCalledTimes(0)
     })
-    it('Does not triggers the onUp callback when half swiped up', () => {
+    it('does not triggers the onUp callback when half swiped up', () => {
         const mockOnUp = jest.fn()
         render(
             <GestureHandlerRootView>
@@ -102,7 +102,7 @@ describe('DirectionPad', () => {
         ])
         expect(mockOnUp).toHaveBeenCalledTimes(0)
     })
-    it('Does not triggers the onLeft callback when half swiped left', () => {
+    it('does not triggers the onLeft callback when half swiped left', () => {
         const mockOnLeft = jest.fn()
         render(
             <GestureHandlerRootView>
@@ -117,7 +117,7 @@ describe('DirectionPad', () => {
         ])
         expect(mockOnLeft).toHaveBeenCalledTimes(0)
     })
-    it('Does not triggers the onDown callback when half swiped down', () => {
+    it('does not triggers the onDown callback when half swiped down', () => {
         const mockOnDown = jest.fn()
         render(
             <GestureHandlerRootView>

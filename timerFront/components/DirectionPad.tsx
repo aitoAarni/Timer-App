@@ -31,7 +31,6 @@ function DirectionPad({
     const pan = Gesture.Pan()
         .onBegin(event => {})
         .onUpdate(event => {
-
             offsetX.value = clamp(
                 event.translationX,
                 -movementClamp,
@@ -68,7 +67,10 @@ function DirectionPad({
     }))
     return (
         <GestureDetector gesture={pan}>
-            <Animated.View style={[styles.animatedStick, animatedStyle]}>
+            <Animated.View
+                testID="animated-view"
+                style={[styles.animatedStick, animatedStyle]}
+            >
                 {children}
             </Animated.View>
         </GestureDetector>

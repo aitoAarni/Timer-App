@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    fillerContainers: { flexGrow: 1, backgroundColor: 'gray' },
+    fillerContainers: { flexGrow: 1 },
     timerPressable: {
         flexGrow: 1,
         alignItems: 'center',
