@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react-native'
 import {
+    Gesture,
     GestureHandlerRootView,
     PanGesture,
     State,
@@ -9,16 +10,13 @@ import {
     getByGestureTestId,
 } from 'react-native-gesture-handler/jest-utils'
 import DirectionPad from '@/components/DirectionPad'
-import Text from '@/components/Text'
 
 describe('DirectionPad', () => {
-    it('triggers the onRight callback when swiped to the right', () => {
+    it('triggers the onRight callback when swiped right', () => {
         const mockOnRight = jest.fn()
         render(
             <GestureHandlerRootView>
-                <DirectionPad onRight={mockOnRight}>
-                    <Text>00:04</Text>
-                </DirectionPad>
+                <DirectionPad onRight={mockOnRight}></DirectionPad>
             </GestureHandlerRootView>
         )
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
@@ -27,7 +25,51 @@ describe('DirectionPad', () => {
             { translationX: 100 },
             { state: State.END },
         ])
-
         expect(mockOnRight).toHaveBeenCalledTimes(1)
+    })
+    it('triggers the onUp callback when swiped up', () => {
+        const mockOnUp = jest.fn()
+        render(
+            <GestureHandlerRootView>
+                <DirectionPad onUp={mockOnUp}></DirectionPad>
+            </GestureHandlerRootView>
+        )
+        fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
+            { state: State.BEGAN },
+            { state: State.ACTIVE },
+            { translationY: -103 },
+            { state: State.END },
+        ])
+        expect(mockOnUp).toHaveBeenCalledTimes(1)
+    })
+    it('triggers the onLeft callback when swiped up', () => {
+        const mockOnLeft = jest.fn()
+        render(
+            <GestureHandlerRootView>
+                <DirectionPad onLeft={mockOnLeft}></DirectionPad>
+            </GestureHandlerRootView>
+        )
+        fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
+            { state: State.BEGAN },
+            { state: State.ACTIVE },
+            { translationX: -111 },
+            { state: State.END },
+        ])
+        expect(mockOnLeft).toHaveBeenCalledTimes(1)
+    })
+    it('triggers the onDown callback when swiped up', () => {
+        const mockOnDown = jest.fn()
+        render(
+            <GestureHandlerRootView>
+                <DirectionPad onDown={mockOnDown}></DirectionPad>
+            </GestureHandlerRootView>
+        )
+        fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
+            { state: State.BEGAN },
+            { state: State.ACTIVE },
+            { translationY: 200 },
+            { state: State.END },
+        ])
+        expect(mockOnDown).toHaveBeenCalledTimes(1)
     })
 })
