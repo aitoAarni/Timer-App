@@ -28,23 +28,27 @@ function DirectionPad({
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
-
     const pan = Gesture.Pan()
         .onBegin(event => {})
         .onUpdate(event => {
-            runOnJS(console.log)('eventtiiii', event)
+            console.log('ofsettiX ennen clamppia: ', offsetX)
+
             offsetX.value = clamp(
                 event.translationX,
                 -movementClamp,
                 movementClamp
             )
+            console.log('ofsettiX jälkeen clamppin: ', offsetX)
+
             offsetY.value = clamp(
                 event.translationY,
                 -movementClamp,
                 movementClamp
             )
+            runOnJS(console.log)('offsetX', offsetX)
         })
         .onFinalize(event => {
+            runOnJS(console.log)('onFinalize: ', offsetX)
             if (offsetX.value == movementClamp && onRight) {
                 runOnJS(onRight)()
             } else if (offsetX.value == -movementClamp && onLeft) {

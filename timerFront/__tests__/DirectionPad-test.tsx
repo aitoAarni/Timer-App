@@ -25,7 +25,7 @@ describe('DirectionPad', () => {
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
             { state: State.BEGAN },
             { state: State.ACTIVE },
-            { translationX: 120 },
+            { translationX: 100 },
             { state: State.END },
         ])
 
