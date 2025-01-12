@@ -32,6 +32,7 @@ function DirectionPad({
     const pan = Gesture.Pan()
         .onBegin(event => {})
         .onUpdate(event => {
+            runOnJS(console.log)('eventtiiii', event)
             offsetX.value = clamp(
                 event.translationX,
                 -movementClamp,

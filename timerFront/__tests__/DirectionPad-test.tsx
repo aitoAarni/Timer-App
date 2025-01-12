@@ -2,6 +2,7 @@ import { render } from '@testing-library/react-native'
 import {
     GestureHandlerRootView,
     PanGesture,
+    State,
 } from 'react-native-gesture-handler'
 import {
     fireGestureHandler,
@@ -13,17 +14,19 @@ import Text from '@/components/Text'
 describe('DirectionPad', () => {
     it.only('triggers the onRight callback when swiped to the right', () => {
         const mockOnRight = jest.fn()
-        const { toJSON } = render(
+        const { debug } = render(
             <GestureHandlerRootView>
                 <DirectionPad onRight={mockOnRight}>
                     <Text>00:04</Text>
                 </DirectionPad>
             </GestureHandlerRootView>
         )
-        console.log(toJSON())
-
+        debug()
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
-            { translationX: 100 },
+            { state: State.BEGAN },
+            { state: State.ACTIVE },
+            { translationX: 120 },
+            { state: State.END },
         ])
 
         expect(mockOnRight).toHaveBeenCalledTimes(1)
