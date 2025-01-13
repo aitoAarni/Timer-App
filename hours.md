@@ -14,3 +14,4 @@
 | 11.1.2025  | 4.5h | Trying to test a component using react native gesture handler w/o success    |
 | 12.1.2025  | 3h   | Solved how to test gesture handler and added other tests also                |
 | in total   | 34 h |                                                                              |
+| 13.1.2025  | 1h   | researched storage options and decided for local storage expo.sqlite         |
