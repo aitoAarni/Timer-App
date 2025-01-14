@@ -1,27 +1,46 @@
 import * as sqlite from 'expo-sqlite'
 
-let db: sqlite.SQLiteDatabase
-
 const initializeDatabase = async () => {
-    db = await sqlite.openDatabaseAsync('testDatabase')
+    const db = await sqlite.openDatabaseAsync('localDatabase')
+    return db
 }
-const createTable = async () => {
-    await db.execAsync(`
-        PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY NOT NULL, value TEXT NOT NULL, intValue INTEGER);
-        INSERT INTO test (value, intValue) VALUES ('test1', 123);
-        INSERT INTO test (value, intValue) VALUES ('test2', 456);
-        INSERT INTO test (value, intValue) VALUES ('test3', 789);
-        `)
+const createTables = async (db: sqlite.SQLiteDatabase) => {
+    try {
+        await db.execAsync(`
+            PRAGMA foreign_keys = ON;
+    
+            CREATE TABLE IF NOT EXISTS users 
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+            CREATE TABLE IF NOT EXISTS timer 
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            category_id INTEGER NOT NULL,
+            duration INTEGER,
+            created_at DATETIME DEFAULT,
+            FOREIGN KEY (user_id) REFERENCE users (id) ON DELETE CASCADE);
+            `)
+    } catch (error) {
+        throw new Error(
+            `Databse table creation failed: ${
+                error instanceof Error ? error.message : String(error)
+            }`
+        )
+    }
 }
 
-const cleanDatabase = async () => {
-    await db.execAsync(`DELETE FROM test`)
+const dropUsersDatabase = async (db: sqlite.SQLiteDatabase) => {
+    await db.execAsync(`DELETE FROM users`)
 }
 
-const queryDatabase = async (): Promise<object[]> => {
-    const query = await db.getAllAsync('SELECT * FROM test')
-    return query as object[]
+const dropTimerDatabase = async (db: sqlite.SQLiteDatabase) => {
+    await db.execAsync(`DELETE FROM users`)
 }
 
-export { queryDatabase, initializeDatabase, createTable, cleanDatabase }
+export {
+    initializeDatabase,
+    createTables,
+    dropUsersDatabase,
+    dropTimerDatabase,
+}
