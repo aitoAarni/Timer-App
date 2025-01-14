@@ -8,12 +8,11 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
     try {
         await db.execAsync(`
             PRAGMA foreign_keys = ON;
-    
             CREATE TABLE IF NOT EXISTS users 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
+            );
             CREATE TABLE IF NOT EXISTS timer 
             (id INTEGER PRIMARY KEY AUTOINCREMENT, 
             category_id INTEGER NOT NULL,

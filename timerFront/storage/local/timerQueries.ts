@@ -7,8 +7,10 @@ const insertTime = async (
 ) => {
     try {
         await db.runAsync(
-            `INSERT INTO timer (category_id, duration, user_id) VALUES (?, ?, ?) ${category_id}, ${duration}, 1
-            }`
+            `INSERT INTO timer (category_id, duration, user_id) VALUES (?, ?, ?)`,
+            category_id,
+            duration,
+            1
         )
     } catch (error) {
         throw new Error(

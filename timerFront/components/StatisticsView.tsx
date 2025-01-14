@@ -1,17 +1,21 @@
 import { StyleSheet, View } from 'react-native'
 import Text from './Text'
-import { initializeDatabase } from '@/storage/local/db'
+import { createTables, initializeDatabase } from '@/storage/local/db'
 import { useEffect, useState } from 'react'
+import { getUsers, insertUser } from '@/storage/local/userQueries'
 
 export default function StatisticsView() {
     const [data, setData] = useState<object[]>([])
     useEffect(() => {
         const getData = async () => {
             try {
-                await initializeDatabase()
-                const d = []
-                setData(d)
+                const db = await initializeDatabase()
+                await createTables(db)
+                await insertUser(db, 'pekkispoika')
+                const users = await getUsers(db)
+                setData(users)
             } catch (error) {
+                console.log('helooo')
                 console.error('Error fetching data:', error)
             }
         }
