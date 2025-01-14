@@ -33,11 +33,14 @@ export default function RootLayout() {
                     backgroundColor={theme.colors.background}
                     style="light"
                 />
-                <Stack>
-                    <Stack.Screen
-                        options={{ headerShown: false }}
-                        name="index"
-                    />
+                <Stack
+                    screenOptions={{
+                        headerShown: false,
+                    }}
+                >
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="settings" />
+                    <Stack.Screen name="statistics" />
                 </Stack>
             </SafeAreaView>
         </GestureHandlerRootView>
