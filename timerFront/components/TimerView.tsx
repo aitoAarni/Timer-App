@@ -4,7 +4,6 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
-import { initializeDb, querlyDb } from '@/storage/local/db'
 
 interface Props {
     time?: number
