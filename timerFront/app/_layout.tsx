@@ -3,6 +3,10 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { StyleSheet } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import theme from '@/theme'
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -11,7 +15,7 @@ export default function RootLayout() {
         'IBM-Plex-Mono': require('@/assets/fonts/IBMPlexMono-Bold.ttf'),
         PlaywriterFont: require('@/assets/fonts/PlaywriteFont.ttf'),
         'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
-        'DancingScript': require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
+        DancingScript: require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
     useEffect(() => {
         if (loaded || error) {
@@ -24,10 +28,28 @@ export default function RootLayout() {
     }
     return (
         <GestureHandlerRootView>
-            <Stack>
-                <Stack.Screen options={{ headerShown: false }} name="index" />
-                <Stack.Screen name="settings" />
-            </Stack>
+            <SafeAreaView style={styles.container}>
+                <StatusBar
+                    backgroundColor={theme.colors.background}
+                    style="light"
+                />
+                <Stack>
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="index"
+                    />
+                </Stack>
+            </SafeAreaView>
         </GestureHandlerRootView>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})
