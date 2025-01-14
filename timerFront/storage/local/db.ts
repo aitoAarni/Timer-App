@@ -15,7 +15,7 @@ const initializeDb = async () => {
 
 const querlyDb = async () => {
     const query = await db.getAllAsync('SELECT * FROM test')
-    console.log(query)
+    return query
 }
 
 export { querlyDb, initializeDb }

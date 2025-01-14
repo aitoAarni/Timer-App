@@ -14,14 +14,8 @@ interface Props {
 export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     const [timerTime, setTimerTime] = useState(time)
     const timerRef = useRef(new Timer(time, breakTime))
-    const doDbOperations = async () => {
-        console.log('setting up db')
-        await initializeDb()
-        console.log('db set up')
-        await querlyDb()
-    }
+
     useEffect(() => {
-        doDbOperations()
         const interval = setInterval(() => {
             const t = timerRef.current.getSecondsRemaining()
             setTimerTime(t)
