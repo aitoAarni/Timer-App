@@ -5,22 +5,26 @@ import {
     dropTimerDatabase,
     dropUsersDatabase,
     initializeDatabase,
+    logTableSchema,
 } from '@/storage/local/db'
 import { useEffect, useState } from 'react'
 import { getUsers, insertUser } from '@/storage/local/userQueries'
+import { getAllTimes, insertTime } from '@/storage/local/timerQueries'
+import { TimeLogged } from '@/types'
 
 export default function StatisticsView() {
-    const [data, setData] = useState<object[]>([])
+    const [data, setData] = useState<TimeLogged[]>([])
     useEffect(() => {
         const getData = async () => {
             try {
                 const db = await initializeDatabase()
-                await dropTimerDatabase(db)
-                await dropUsersDatabase(db)
-                await createTables(db)
-                await insertUser(db, 'pekkispoika')
                 const users = await getUsers(db)
-                setData(users)
+                console.log('users: ', users)
+                const user_id = users[0]?.id
+                console.log('user_id: ', user_id)
+                await insertTime(db, 10000, 1, user_id)
+                const times = await getAllTimes(db)
+                setData(times)
             } catch (error) {
                 console.log('helooo')
                 console.error('Error fetching data:', error)

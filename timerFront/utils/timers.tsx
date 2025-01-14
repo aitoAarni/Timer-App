@@ -1,5 +1,4 @@
-import { isPositiveNumber, PositiveNumber } from '@/types/positiveNumber'
-
+import { isPositiveNumber } from '@/types'
 export class CountdownTimer {
     timeLength: number
     paused: boolean

@@ -2,17 +2,25 @@ import * as sqlite from 'expo-sqlite'
 
 const initializeDatabase = async () => {
     const db = await sqlite.openDatabaseAsync('localDatabase')
+    await db.execAsync('PRAGMA foreign_keys = ON')
     return db
+}
+
+const logTableSchema = async (db: sqlite.SQLiteDatabase) => {
+    const schema = await db.getAllAsync('PRAGMA table_info(timer)')
+    console.log(schema)
 }
 const createTables = async (db: sqlite.SQLiteDatabase) => {
     try {
-        await db.execAsync(`
-            PRAGMA foreign_keys = ON;
+        console.log(1)
+        await db.runAsync(`
             CREATE TABLE IF NOT EXISTS users 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
+            );`)
+        console.log(3)
+        await db.runAsync(`
             CREATE TABLE IF NOT EXISTS timer 
             (id INTEGER PRIMARY KEY AUTOINCREMENT, 
             category_id INTEGER NOT NULL,
@@ -31,11 +39,11 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
 }
 
 const dropUsersDatabase = async (db: sqlite.SQLiteDatabase) => {
-    await db.execAsync(`DELETE FROM users`)
+    await db.execAsync(`DROP TABLE IF EXISTS users`)
 }
 
 const dropTimerDatabase = async (db: sqlite.SQLiteDatabase) => {
-    await db.execAsync(`DELETE FROM users`)
+    await db.execAsync(`DROP TABLE IF EXISTS timer`)
 }
 
 export {
@@ -43,4 +51,5 @@ export {
     createTables,
     dropUsersDatabase,
     dropTimerDatabase,
+    logTableSchema,
 }

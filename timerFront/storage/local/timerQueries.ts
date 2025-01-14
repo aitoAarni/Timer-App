@@ -1,16 +1,17 @@
+import { TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
 const insertTime = async (
     db: sqlite.SQLiteDatabase,
     duration: number,
-    category_id: number
+    category_id: number,
+    user_id: number
 ) => {
+    console.log('category_id: ', category_id)
     try {
         await db.runAsync(
-            `INSERT INTO timer (category_id, duration, user_id) VALUES (?, ?, ?)`,
-            category_id,
-            duration,
-            1
+            `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`,
+            [duration, category_id, user_id]
         )
     } catch (error) {
         throw new Error(
@@ -22,7 +23,18 @@ const insertTime = async (
 }
 
 const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
-    await db.getAllAsync(`SELECT * FROM timer`)
+    try {
+        const times = (await db.getAllAsync(
+            `SELECT * FROM timer`
+        )) as TimeLogged[]
+        return times
+    } catch (error) {
+        throw new Error(
+            `Error fetching times: ${
+                error instanceof Error ? error.message : String(error)
+            }`
+        )
+    }
 }
 
 export { insertTime, getAllTimes }

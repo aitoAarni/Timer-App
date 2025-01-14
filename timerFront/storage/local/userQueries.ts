@@ -1,12 +1,9 @@
+import { User } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
 const insertUser = async (db: sqlite.SQLiteDatabase, username: string) => {
     try {
-        const result = await db.runAsync(
-            `INSERT INTO users (username) VALUES (?)`,
-            username
-        )
-        return result
+        await db.runAsync(`INSERT INTO users (username) VALUES (?)`, username)
     } catch (error) {
         throw new Error(
             `Database insert failed: ${
@@ -16,10 +13,10 @@ const insertUser = async (db: sqlite.SQLiteDatabase, username: string) => {
     }
 }
 
-const getUsers = async (db: sqlite.SQLiteDatabase): Promise<object[]> => {
+const getUsers = async (db: sqlite.SQLiteDatabase) => {
     try {
-        const query = await db.getAllAsync('SELECT * FROM users')
-        return query as object[]
+        const query = (await db.getAllAsync('SELECT * FROM users')) as User[]
+        return query
     } catch (error) {
         throw new Error(
             `Database fetch failed: ${
