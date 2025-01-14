@@ -17,8 +17,9 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
             (id INTEGER PRIMARY KEY AUTOINCREMENT, 
             category_id INTEGER NOT NULL,
             duration INTEGER,
-            created_at DATETIME DEFAULT,
-            FOREIGN KEY (user_id) REFERENCE users (id) ON DELETE CASCADE);
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            user_id INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE);
             `)
     } catch (error) {
         throw new Error(

@@ -1,6 +1,11 @@
 import { StyleSheet, View } from 'react-native'
 import Text from './Text'
-import { createTables, initializeDatabase } from '@/storage/local/db'
+import {
+    createTables,
+    dropTimerDatabase,
+    dropUsersDatabase,
+    initializeDatabase,
+} from '@/storage/local/db'
 import { useEffect, useState } from 'react'
 import { getUsers, insertUser } from '@/storage/local/userQueries'
 
@@ -10,6 +15,8 @@ export default function StatisticsView() {
         const getData = async () => {
             try {
                 const db = await initializeDatabase()
+                await dropTimerDatabase(db)
+                await dropUsersDatabase(db)
                 await createTables(db)
                 await insertUser(db, 'pekkispoika')
                 const users = await getUsers(db)
