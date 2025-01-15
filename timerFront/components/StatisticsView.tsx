@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
 import Text from './Text'
 
 import { useEffect, useState } from 'react'
@@ -11,11 +11,24 @@ import {
 import { TimeDuratio, TimeLogged } from '@/types'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { formatTotalTime } from '@/utils/format'
-import HeatMapGraph from './HeatMapGraph'
 import AreaChartView from './AreaChartView'
+const data1 = [
+    { value: 15, label: '15' },
+    { value: 30, label: '30' },
+    { value: 26 },
+    { value: 40 },
+]
+const data2 = [
+    { value: 20, label: '20' },
+    { value: 10, label: '10' },
+    { value: 6 },
+    { value: 15 },
+]
 
 export default function StatisticsView() {
     const [data, setData] = useState<string>('00:00')
+    const [values, setValues] = useState(data1)
+    const [original, setOriginal] = useState(true)
     const db = useDatabase()
     useEffect(() => {
         const getData = async () => {
@@ -31,11 +44,17 @@ export default function StatisticsView() {
         getData()
     }, [])
     console.log(data)
+    const onPress = () => {
+        const helper = original ? data1 : data2
+        setOriginal(!original)
+        setValues(helper)
+    }
     return (
         <View>
             <Text>statimtiks</Text>
             <Text>{data}</Text>
-            <AreaChartView />
+            <AreaChartView data={values} />
+            <Button title="switch data" onPress={onPress}></Button>
         </View>
     )
 }
