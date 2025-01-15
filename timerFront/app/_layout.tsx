@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
+import { DatabaseProvider } from '@/contexts/DatabaseContext'
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -33,15 +34,17 @@ export default function RootLayout() {
                     backgroundColor={theme.colors.background}
                     style="light"
                 />
-                <Stack
-                    screenOptions={{
-                        headerShown: false,
-                    }}
-                >
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="settings" />
-                    <Stack.Screen name="statistics" />
-                </Stack>
+                <DatabaseProvider>
+                    <Stack
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
+                        <Stack.Screen name="index" />
+                        <Stack.Screen name="settings" />
+                        <Stack.Screen name="statistics" />
+                    </Stack>
+                </DatabaseProvider>
             </SafeAreaView>
         </GestureHandlerRootView>
     )

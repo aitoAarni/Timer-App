@@ -1,23 +1,18 @@
 import { StyleSheet, View } from 'react-native'
 import Text from './Text'
-import {
-    createTables,
-    dropTimerDatabase,
-    dropUsersDatabase,
-    initializeDatabase,
-    logTableSchema,
-} from '@/storage/local/db'
+
 import { useEffect, useState } from 'react'
-import { getUsers, insertUser } from '@/storage/local/userQueries'
+import { getUsers } from '@/storage/local/userQueries'
 import { getAllTimes, insertTime } from '@/storage/local/timerQueries'
 import { TimeLogged } from '@/types'
+import { useDatabase } from '@/contexts/DatabaseContext'
 
 export default function StatisticsView() {
     const [data, setData] = useState<TimeLogged[]>([])
+    const db = useDatabase()
     useEffect(() => {
         const getData = async () => {
             try {
-                const db = await initializeDatabase()
                 const users = await getUsers(db)
                 console.log('users: ', users)
                 const user_id = users[0]?.id
