@@ -4,6 +4,9 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
+import TimeLogger from '@/utils/logger'
+import { useDatabase } from '@/contexts/DatabaseContext'
+import { getUserId } from '@/services/user'
 
 interface Props {
     time?: number
@@ -12,8 +15,8 @@ interface Props {
 
 export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     const [timerTime, setTimerTime] = useState(time)
-    const timerRef = useRef(new Timer(time, breakTime))
-
+    const database = useDatabase()
+    const userId = getUserId()
     useEffect(() => {
         const interval = setInterval(() => {
             const t = timerRef.current.getSecondsRemaining()
@@ -22,6 +25,8 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
 
         return () => clearInterval(interval)
     }, [])
+    const loggerRef = useRef(new TimeLogger(database, userId, 1))
+    const timerRef = useRef(new Timer(time, breakTime, loggerRef.current))
 
     const handleTogglePause = function () {
         timerRef.current.pauseToggle()

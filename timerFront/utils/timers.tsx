@@ -1,14 +1,17 @@
 import { isPositiveNumber } from '@/types'
+import TimeLogger from './logger'
 export class CountdownTimer {
     timeLength: number
     paused: boolean
     timerStart: number
     previousTime: number
-    constructor(length: number) {
+    timeLogger: TimeLogger | null
+    constructor(length: number, timeLogger: TimeLogger | null = null) {
         this.timeLength = length - 1
         this.paused = true
         this.timerStart = 0
         this.previousTime = 0
+        this.timeLogger = timeLogger
     }
 
     #getEpoch() {
@@ -22,10 +25,19 @@ export class CountdownTimer {
         return currentTime - this.timerStart
     }
 
+    async #logTime(timeMs: number) {
+        'hjeloo'
+        if (this.timeLogger) {
+            await this.timeLogger.addTimeLog(timeMs)
+            console.log('time logged: ', timeMs / 1000, ' seconds')
+        }
+    }
+
     pauseToggle() {
         this.paused = !this.paused
         if (this.paused) {
             const elapsedTime = this.#timeElapsed()
+            this.#logTime(elapsedTime)
             this.previousTime += elapsedTime
         } else {
             this.timerStart = this.#getEpoch()
@@ -40,6 +52,10 @@ export class CountdownTimer {
     }
 
     resetTimer() {
+        const timeElapsed = this.#timeElapsed()
+        if (!this.paused) {
+            this.#logTime(timeElapsed)
+        }
         this.previousTime = 0
         this.paused = true
     }
@@ -62,11 +78,15 @@ export default class Timer {
     timerActive: boolean
     activeTimer: CountdownTimer
     breakTimer: CountdownTimer
-    constructor(timerLength: number, breakLength: number) {
+    constructor(
+        timerLength: number,
+        breakLength: number,
+        timeLogger: TimeLogger | null
+    ) {
         this.timerLength = timerLength
         this.breakLength = breakLength
         this.timerActive = true
-        this.activeTimer = new CountdownTimer(timerLength)
+        this.activeTimer = new CountdownTimer(timerLength, timeLogger)
         this.breakTimer = new CountdownTimer(breakLength)
     }
 

@@ -7,12 +7,12 @@ const insertTime = async (
     category_id: number,
     user_id: number
 ) => {
-    console.log('category_id: ', category_id)
     try {
         await db.runAsync(
             `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`,
             [duration, category_id, user_id]
         )
+        return true
     } catch (error) {
         throw new Error(
             `Error inserting data: ${
