@@ -39,7 +39,7 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
             xAxisLabelsHeight={0}
             hideYAxisText
             textColor1="white"
-            textFontSize1={16}
+            textFontSize={20}
             textShiftX={10}
             textShiftY={-5}
             yAxisTextStyle={{ color: 'lightgray' }}
