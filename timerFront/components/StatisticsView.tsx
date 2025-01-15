@@ -11,6 +11,7 @@ import {
 import { TimeDuratio, TimeLogged } from '@/types'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { formatTotalTime } from '@/utils/format'
+import HeatMapGraph from './HeatMapGraph'
 
 export default function StatisticsView() {
     const [data, setData] = useState<string>('00:00')
@@ -33,6 +34,7 @@ export default function StatisticsView() {
         <View>
             <Text>statimtiks</Text>
             <Text>{data}</Text>
+            <HeatMapGraph />
         </View>
     )
 }
