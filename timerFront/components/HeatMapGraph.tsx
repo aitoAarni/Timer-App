@@ -6,41 +6,46 @@ const screenWidth = Dimensions.get('window').width
 
 export default function HeatMapGraph() {
     const chartConfig = {
-        backgroundGradientFrom: '#1E2923',
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: '#08130D',
+        backgroundGradientFrom: 'white',
+        backgroundGradientFromOpacity: 0.5,
+        backgroundGradientTo: 'red',
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        strokeWidth: 3,
         barPercentage: 0.5,
         useShadowColorFromDataset: false, // optional
     }
     const commitsData = [
-        { date: '2017-01-02', count: 1 },
-        { date: '2017-01-03', count: 2 },
-        { date: '2017-01-04', count: 3 },
-        { date: '2017-01-05', count: 4 },
-        { date: '2017-01-06', count: 5 },
-        { date: '2017-01-30', count: 2 },
-        { date: '2017-01-31', count: 3 },
-        { date: '2017-03-01', count: 2 },
-        { date: '2017-04-02', count: 4 },
-        { date: '2017-03-05', count: 2 },
-        { date: '2017-02-30', count: 4 },
+        { date: '2025-01-01', count: 0 },
+        { date: '2025-01-02', count: 2 },
+        { date: '2025-01-03', count: 3 },
+        { date: '2025-01-04', count: 4 },
+        { date: '2025-01-05', count: 5 },
+        { date: '2025-01-06', count: 2 },
+        { date: '2025-01-09', count: 0 },
+        { date: '2025-01-10', count: 2 },
+        { date: '2025-01-12', count: 4 },
+        { date: '2025-01-13', count: 2 },
+        { date: '2025-01-15', count: 4 },
     ]
     return (
         <View>
             <ContributionGraph
                 values={commitsData}
-                endDate={new Date('2017-04-01')}
-                numDays={105}
+                endDate={new Date('2025-01-18')}
+                numDays={30}
+                gutterSize={10}
                 width={screenWidth}
-                height={220}
+                height={600}
+                horizontal={true}
+                squareSize={50}
+                showMonthLabels={false}
+                showOutOfRangeDays={true}
                 chartConfig={chartConfig}
                 tooltipDataAttrs={value => ({
-                    fill: 'blue', // Customizes the tooltip rectangle color
-                    stroke: 'black', // Customizes the border color
-                    strokeWidth: 1, // Customizes the border width
+                    fill: value.count > 3 ? 'red' : 'green',
+                    stroke: 'black',
+                    strokeWidth: 1,
                 })}
             />
         </View>
