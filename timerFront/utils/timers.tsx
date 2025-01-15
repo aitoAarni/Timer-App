@@ -59,7 +59,7 @@ export class CountdownTimer {
 export default class Timer {
     timerLength: number
     breakLength: number
-    timerActive: boolean // not a break
+    timerActive: boolean
     activeTimer: CountdownTimer
     breakTimer: CountdownTimer
     constructor(timerLength: number, breakLength: number) {

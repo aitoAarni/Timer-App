@@ -15,13 +15,11 @@ export default function StatisticsView() {
             try {
                 const users = await getUsers(db)
                 console.log('users: ', users)
-                const user_id = users[0]?.id
-                console.log('user_id: ', user_id)
+                const user_id = users[0].id
                 await insertTime(db, 10000, 1, user_id)
                 const times = await getAllTimes(db)
                 setData(times)
             } catch (error) {
-                console.log('helooo')
                 console.error('Error fetching data:', error)
             }
         }
