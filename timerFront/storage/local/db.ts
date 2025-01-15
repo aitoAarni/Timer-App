@@ -12,14 +12,12 @@ const logTableSchema = async (db: sqlite.SQLiteDatabase) => {
 }
 const createTables = async (db: sqlite.SQLiteDatabase) => {
     try {
-        console.log(1)
         await db.runAsync(`
             CREATE TABLE IF NOT EXISTS users 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );`)
-        console.log(3)
         await db.runAsync(`
             CREATE TABLE IF NOT EXISTS timer 
             (id INTEGER PRIMARY KEY AUTOINCREMENT, 

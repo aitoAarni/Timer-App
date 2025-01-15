@@ -3,22 +3,25 @@ import Text from './Text'
 
 import { useEffect, useState } from 'react'
 import { getUsers } from '@/storage/local/userQueries'
-import { getAllTimes, insertTime } from '@/storage/local/timerQueries'
-import { TimeLogged } from '@/types'
+import {
+    getAllTimeData,
+    getAllTimes,
+    insertTime,
+} from '@/storage/local/timerQueries'
+import { TimeDuratio, TimeLogged } from '@/types'
 import { useDatabase } from '@/contexts/DatabaseContext'
+import { formatTotalTime } from '@/utils/format'
 
 export default function StatisticsView() {
-    const [data, setData] = useState<TimeLogged[]>([])
+    const [data, setData] = useState<string>('00:00')
     const db = useDatabase()
     useEffect(() => {
         const getData = async () => {
             try {
-                const users = await getUsers(db)
-                console.log('users: ', users)
-                const user_id = users[0].id
-                await insertTime(db, 10000, 1, user_id)
-                const times = await getAllTimes(db)
-                setData(times)
+                const times_array = await getAllTimes(db)
+                const times = times_array.reduce((a, b) => a + b.duration, 0)
+                console.log('times: ', times)
+                setData(formatTotalTime(times))
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
@@ -28,8 +31,8 @@ export default function StatisticsView() {
     console.log(data)
     return (
         <View>
-            <Text>{}</Text>
             <Text>statimtiks</Text>
+            <Text>{data}</Text>
         </View>
     )
 }

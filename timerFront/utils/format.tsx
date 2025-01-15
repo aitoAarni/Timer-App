@@ -4,4 +4,14 @@ const formatTime = function (seconds: number) {
     return formattedMinutes + ':' + formattedSeconds
 }
 
-export { formatTime }
+const formatTotalTime = function (millisedonds: number) {
+    let totalSeconds = Math.floor(millisedonds / 1000)
+    const hours = Math.floor(totalSeconds / 3600)
+    totalSeconds -= hours * 3600
+    const minutes = Math.floor(totalSeconds / 60)
+    let formattedTime = String(hours).padStart(2, '0') + ':'
+    formattedTime += String(minutes).padStart(2, '0')
+    return formattedTime
+}
+
+export { formatTime, formatTotalTime }

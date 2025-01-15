@@ -1,4 +1,4 @@
-import { TimeLogged } from '@/types'
+import { TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
 const insertTime = async (
@@ -22,11 +22,25 @@ const insertTime = async (
     }
 }
 
-const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
+const getAllTimeData = async (db: sqlite.SQLiteDatabase) => {
     try {
-        const times = (await db.getAllAsync(
+        const timeData = (await db.getAllAsync(
             `SELECT * FROM timer`
         )) as TimeLogged[]
+        return timeData
+    } catch (error) {
+        throw new Error(
+            `Error fetching time data: ${
+                error instanceof Error ? error.message : String(error)
+            }`
+        )
+    }
+}
+
+const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
+    const query = `SELECT duration FROM timer`
+    try {
+        const times = (await db.getAllAsync(query)) as TimeDuratio[]
         return times
     } catch (error) {
         throw new Error(
@@ -37,4 +51,4 @@ const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
     }
 }
 
-export { insertTime, getAllTimes }
+export { insertTime, getAllTimeData, getAllTimes }

@@ -18,4 +18,8 @@ interface TimeLogged {
     user_id: number
 }
 
-export { User, TimeLogged }
+interface TimeDuratio {
+    duration: number
+}
+
+export { User, TimeLogged, TimeDuratio }

@@ -21,7 +21,6 @@ class TimeLogger {
             this.categoryId,
             this.userId
         )
-        console.log('insertTime val: ', success)
         return success
     }
 }
