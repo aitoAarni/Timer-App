@@ -7,7 +7,7 @@ export const msToHours = (ms: number) => {
 }
 
 export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
-    const month = [
+    const months = [
         'Jan',
         'Feb',
         'Mar',
@@ -34,9 +34,10 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
         ).padStart(2, '0')}-${String(dateOfData.getDate()).padStart(2, '0')}`
         const DataPoint = {
             value: 0,
-            label: `${month[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
+            label: `${months[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
+
             dataPointLabelComponent: () =>
-                DataPointLabel(String(DataPoint.value)),
+                DataPointLabel(String(DataPoint.value) + ' h'),
             labelTextStyle: { color: '#999999' },
         }
         if (

@@ -14,11 +14,11 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
     return (
         <View style={{}}>
             <LineChart
+                dataPointLabelWidth={50}
                 areaChart
                 width={width - 25}
                 height={300}
                 scrollToIndex={30}
-                // stepValue={1}
                 maxValue={maxValue > 4 ? maxValue * 1.1 : 6}
                 animateOnDataChange
                 onDataChangeAnimationDuration={600}
@@ -38,7 +38,6 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 yAxisTextStyle={{ color: '#999999' }}
                 yAxisColor="#555555"
                 xAxisColor="#555555"
-                // hideRules
                 noOfSections={3}
                 rulesColor="gray"
                 rulesType="solid"
