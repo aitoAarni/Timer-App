@@ -17,3 +17,4 @@
 | 13.1.2025  | 1h   | researched storage options and decided for local storage expo.sqlite                        |
 | 14.1.2025  | 6h   | sqlite database set up and queries added fo it, also research on design related to it       |
 | 15.1.2025  | 7h   | timer logs times to db now, test different chat libraries and chose one and created a chart |
+| 16.1.2025  | 4.5h | Integrated database data to show in the chart, and modifies how the chart looks             |
