@@ -1,5 +1,6 @@
 import { AreaChartData, DatesWithDuration } from '@/types'
 import { DataPointLabel } from './Stylers'
+import theme from '@/theme'
 
 export const msToHours = (ms: number) => {
     const hours = Math.round(ms / 360_000) / 10
@@ -38,7 +39,7 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
 
             dataPointLabelComponent: () =>
                 DataPointLabel(String(DataPoint.value) + ' h'),
-            labelTextStyle: { color: '#999999' },
+            labelTextStyle: { color: theme.colors.grayLight },
         }
         if (
             dataIndex < data.length &&

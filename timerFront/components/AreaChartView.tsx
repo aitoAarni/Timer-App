@@ -35,15 +35,15 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 xAxisThickness={2}
                 yAxisThickness={2}
                 yAxisLabelWidth={25}
-                yAxisTextStyle={{ color: '#999999' }}
+                yAxisTextStyle={{ color: theme.colors.grayLight }}
                 yAxisColor="#555555"
                 xAxisColor="#555555"
                 noOfSections={3}
                 rulesColor="gray"
                 rulesType="solid"
                 backgroundColor={theme.colors.background}
-                startFillColor="rgb(202, 202, 202)"
-                endFillColor="rgb(0, 0, 0)"
+                startFillColor={theme.colors.grayLight}
+                endFillColor="black"
                 startOpacity={0.7}
                 endOpacity={0.1}
                 gradientDirection="vertical"
@@ -51,7 +51,7 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 dataPointsRadius={5}
                 dataPointLabelShiftX={10}
                 dataPointLabelShiftY={-30}
-                dataPointsColor="#999999"
+                dataPointsColor={theme.colors.grayLight}
             />
         </View>
     )
