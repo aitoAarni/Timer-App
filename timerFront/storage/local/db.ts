@@ -19,8 +19,8 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );`)
         await db.runAsync(`
-            CREATE TABLE IF NOT EXISTS timer 
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            CREATE TABLE IF NOT EXISTS timer
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
             category_id INTEGER NOT NULL,
             duration INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

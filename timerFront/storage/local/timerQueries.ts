@@ -51,4 +51,30 @@ const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
     }
 }
 
-export { insertTime, getAllTimeData, getAllTimes }
+const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
+    const query = ` SELECT 
+        DATE(created_at) AS date, 
+        SUM(duration) AS total_duration
+    FROM 
+        timer
+    GROUP BY 
+        DATE(created_at)
+    ORDER BY 
+        DATE(created_at) ASC;`
+    try {
+        const data = (await db.getAllAsync(query)) as {
+            created_at: string
+            total_dutaion: number
+        }[]
+        console.log('dataa: ', data)
+        return data
+    } catch (error) {
+        throw new Error(
+            `Error fetching times: ${
+                error instanceof Error ? error.message : String(error)
+            }`
+        )
+    }
+}
+
+export { insertTime, getAllTimeData, getAllTimes, getTimesGroupedByDate }

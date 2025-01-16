@@ -1,7 +1,10 @@
 import { Button, StyleSheet, View, Text } from 'react-native'
 
 import { useEffect, useState } from 'react'
-import { getAllTimes } from '@/storage/local/timerQueries'
+import {
+    getAllTimes,
+    getTimesGroupedByDate,
+} from '@/storage/local/timerQueries'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { formatTotalTime } from '@/utils/format'
 import AreaChartView from './AreaChartView'
@@ -105,6 +108,7 @@ export default function StatisticsView() {
     const [data, setData] = useState<string>('00:00')
     const [values, setValues] = useState(data1)
     const [original, setOriginal] = useState(false)
+    
     const db = useDatabase()
     useEffect(() => {
         const getData = async () => {
@@ -113,6 +117,7 @@ export default function StatisticsView() {
                 const times = times_array.reduce((a, b) => a + b.duration, 0)
                 console.log('times: ', times)
                 setData(formatTotalTime(times))
+                const datesData = await getTimesGroupedByDate(db)
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
