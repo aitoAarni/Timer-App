@@ -2,7 +2,6 @@ import { Button, StyleSheet, View, Text } from 'react-native'
 
 import { useEffect, useState } from 'react'
 import { getAllTimes } from '@/storage/local/timerQueries'
-import { TimeDuratio, TimeLogged } from '@/types'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { formatTotalTime } from '@/utils/format'
 import AreaChartView from './AreaChartView'
@@ -12,7 +11,6 @@ const CustomLabel = (val: string) => {
         <View
             style={{
                 flexGrow: 1,
-                backgroundColor: 'red',
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
@@ -26,7 +24,7 @@ const data1 = [
         value: 15,
         dataPointText: '15',
         secondaryLabel: 'jouuuu',
-        label: 'Nov 15',
+        label: 'Nov 25',
         labelTextStyle: { color: 'white' },
     },
     {

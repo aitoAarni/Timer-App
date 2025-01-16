@@ -19,7 +19,7 @@ const { width } = Dimensions.get('window')
 
 const AreaChartView = ({ data }: AreaChartViewProps) => {
     return (
-        <View>
+        <View style={{ marginBottom: 30 }}>
             <LineChart
                 areaChart
                 width={width}
@@ -39,7 +39,7 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 startIndex1={0}
                 xAxisThickness={0}
                 yAxisThickness={0}
-                yAxisLabelWidth={0}  
+                yAxisLabelWidth={0}
                 hideRules
                 hideYAxisText
                 textColor1="white"
@@ -47,7 +47,7 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 textShiftX={10}
                 textShiftY={-5}
                 yAxisTextStyle={{ color: 'lightgray' }}
-                backgroundColor="gray" //{theme.colors.background}
+                backgroundColor={theme.colors.background}
                 startFillColor="green"
                 endFillColor1="blue"
                 startOpacity={0.5}
@@ -64,11 +64,6 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 lineGradientDirection="horizontal"
                 lineGradientStartColor="green"
                 lineGradientEndColor="blue"
-            />
-            <LineChart
-                data={data}
-                overflowBottom={10}
-                backgroundColor="white"
             />
         </View>
     )
