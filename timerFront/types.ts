@@ -22,4 +22,11 @@ interface TimeDuratio {
     duration: number
 }
 
-export { User, TimeLogged, TimeDuratio }
+interface DatesWithDuration {
+    date: string
+    total_duration: number
+
+}
+
+
+export { User, TimeLogged, TimeDuratio, DatesWithDuration }
