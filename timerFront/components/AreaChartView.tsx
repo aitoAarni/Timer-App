@@ -1,24 +1,25 @@
 import theme from '@/theme'
-import { useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { LineChart } from 'react-native-gifted-charts'
-import Text from './Text'
 import { AreaChartData } from '@/types'
 
 interface AreaChartViewProps {
     data: AreaChartData[]
+    maxValue: number
 }
 
 const { width } = Dimensions.get('window')
 
-const AreaChartView = ({ data }: AreaChartViewProps) => {
+const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
     return (
-        <View style={{ marginBottom: 30 }}>
+        <View style={{}}>
             <LineChart
                 areaChart
                 width={width}
-                stepValue={10}
-                color="#33FFFF"
+                height={300}
+                scrollToIndex={30}
+                // stepValue={1}
+                maxValue={maxValue > 4 ? maxValue * 1.1 : 6}
                 animateOnDataChange
                 onDataChangeAnimationDuration={600}
                 isAnimated
@@ -28,47 +29,25 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 }}
                 curved
                 curvature={0.1}
-                thickness1={8}
+                thickness1={1}
+                color="black"
                 spacing={60}
-                startIndex1={0}
                 xAxisThickness={0}
                 yAxisThickness={0}
                 yAxisLabelWidth={0}
                 hideRules
-                hideYAxisText
-                textColor1="white"
-                textFontSize={20}
-                textShiftX={10}
-                textShiftY={-5}
-                yAxisTextStyle={{ color: 'lightgray' }}
                 backgroundColor={theme.colors.background}
-                startFillColor="green"
-                endFillColor1="blue"
-                startOpacity={0.5}
+                startFillColor="#7CFC00"
+                endFillColor1="#800000"
+                startOpacity={0.8}
                 endOpacity={0.5}
+                gradientDirection="vertical"
                 data={data}
-                yAxisColor="lightgray"
-                xAxisColor="lightgray"
-                dataPointsHeight={20}
-                dataPointsWidth={20}
-                dataPointsRadius={7}
+                dataPointsRadius={5}
                 dataPointLabelShiftX={10}
                 dataPointLabelShiftY={-30}
-                dataPointsColor1="white"
-                gradientDirection="horizontal"
-                lineGradient
-                lineGradientDirection="horizontal"
-                lineGradientStartColor="green"
-                lineGradientEndColor="blue"
+                dataPointsColor="#999999"
             />
-        </View>
-    )
-}
-
-const CustomLabel = (val: string) => {
-    return (
-        <View style={{ width: 70, marginLeft: 7 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>{val}</Text>
         </View>
     )
 }

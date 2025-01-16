@@ -24,9 +24,8 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
     const transformedData: AreaChartData[] = []
     let dateOfData = new Date()
     let dataIndex = 0
-
-    console.log(2)
-    for (let i = 0; i < 20; i++) {
+    let maxValue = 0
+    for (let i = 0; i < 30; i++) {
         if (i) {
             dateOfData.setDate(dateOfData.getDate() - 1)
         }
@@ -38,7 +37,7 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
             label: `${month[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
             dataPointLabelComponent: () =>
                 DataPointLabel(String(DataPoint.value)),
-            labelTextStyle: { color: 'white' },
+            labelTextStyle: { color: '#999999' },
         }
         if (
             dataIndex < data.length &&
@@ -46,10 +45,10 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
         ) {
             DataPoint.value = msToHours(data[dataIndex].total_duration)
             dataIndex++
+            maxValue = maxValue > DataPoint.value ? maxValue : DataPoint.value
         }
         transformedData.push(DataPoint)
     }
-    console.log(3)
     transformedData.reverse()
-    return transformedData
+    return { transformedData, maxValue }
 }
