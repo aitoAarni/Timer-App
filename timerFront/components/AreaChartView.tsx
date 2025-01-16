@@ -58,6 +58,8 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 dataPointsHeight={20}
                 dataPointsWidth={20}
                 dataPointsRadius={7}
+                dataPointLabelShiftX={10}
+                dataPointLabelShiftY={-30}
                 dataPointsColor1="white"
                 gradientDirection="horizontal"
                 lineGradient

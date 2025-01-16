@@ -15,21 +15,39 @@ const CustomLabel = (val: string) => {
                 justifyContent: 'center',
             }}
         >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>{val}</Text>
+            <Text style={{ color: 'gray', fontWeight: 'bold' }}>{val}</Text>
         </View>
     )
 }
+
+const DataPointLabel = (val: string) => {
+    return (
+        <Text
+            style={{
+                color: 'gray',
+                fontSize: 20,
+                fontWeight: 'bold',
+            }}
+        >
+            {val}
+        </Text>
+    )
+}
+
 const data1 = [
     {
         value: 15,
-        dataPointText: '15',
+        // dataPointText: '15',
         secondaryLabel: 'jouuuu',
         label: 'Nov 25',
         labelTextStyle: { color: 'white' },
+        dataPointLabelComponent: () => DataPointLabel('15'),
     },
     {
         value: 30,
-        dataPointText: '30',
+
+        dataPointLabelComponent: () => DataPointLabel('5'),
+
         // labelComponent: () => CustomLabel('22 Nov'),
 
         label: 'Nov 15',
