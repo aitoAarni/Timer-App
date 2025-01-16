@@ -1,4 +1,4 @@
-import { TimeDuratio, TimeLogged } from '@/types'
+import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
 const insertTime = async (
@@ -60,12 +60,9 @@ const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
     GROUP BY 
         DATE(created_at)
     ORDER BY 
-        DATE(created_at) ASC;`
+        DATE(created_at) DESC;`
     try {
-        const data = (await db.getAllAsync(query)) as {
-            created_at: string
-            total_dutaion: number
-        }[]
+        const data = (await db.getAllAsync(query)) as DatesWithDuration[]
         console.log('dataa: ', data)
         return data
     } catch (error) {

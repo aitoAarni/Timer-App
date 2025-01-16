@@ -3,16 +3,10 @@ import { useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { LineChart } from 'react-native-gifted-charts'
 import Text from './Text'
+import { AreaChartData } from '@/types'
 
 interface AreaChartViewProps {
-    data: {
-        value: number
-        label?: string
-        endFillColor?: string
-        labelComponent?: (val: string) => React.JSX.Element
-        secondaryLabel?: string
-        labelTextStyle?: { color: string }
-    }[]
+    data: AreaChartData[]
 }
 
 const { width } = Dimensions.get('window')

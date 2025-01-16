@@ -25,8 +25,15 @@ interface TimeDuratio {
 interface DatesWithDuration {
     date: string
     total_duration: number
-
 }
 
+interface AreaChartData {
+    value: number
+    label?: string
+    endFillColor?: string
+    labelComponent?: (val: string) => React.JSX.Element
+    secondaryLabel?: string
+    labelTextStyle?: { color: string }
+}
 
-export { User, TimeLogged, TimeDuratio, DatesWithDuration }
+export { User, TimeLogged, TimeDuratio, DatesWithDuration, AreaChartData }
