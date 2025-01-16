@@ -15,7 +15,7 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
         <View style={{}}>
             <LineChart
                 areaChart
-                width={width}
+                width={width - 25}
                 height={300}
                 scrollToIndex={30}
                 // stepValue={1}
@@ -23,24 +23,30 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 animateOnDataChange
                 onDataChangeAnimationDuration={600}
                 isAnimated
-                animationDuration={1.5}
+                animationDuration={600}
                 onPress={(item: { value: number }, index: number) => {
                     console.log(item, index)
                 }}
                 curved
                 curvature={0.1}
-                thickness1={1}
+                thickness={1}
                 color="black"
-                spacing={60}
-                xAxisThickness={0}
-                yAxisThickness={0}
-                yAxisLabelWidth={0}
-                hideRules
+                spacing={100}
+                xAxisThickness={2}
+                yAxisThickness={2}
+                yAxisLabelWidth={25}
+                yAxisTextStyle={{ color: '#999999' }}
+                yAxisColor="#555555"
+                xAxisColor="#555555"
+                // hideRules
+                noOfSections={3}
+                rulesColor="gray"
+                rulesType="solid"
                 backgroundColor={theme.colors.background}
-                startFillColor="#7CFC00"
-                endFillColor1="#800000"
-                startOpacity={0.8}
-                endOpacity={0.5}
+                startFillColor="rgb(202, 202, 202)"
+                endFillColor="rgb(0, 0, 0)"
+                startOpacity={0.7}
+                endOpacity={0.1}
                 gradientDirection="vertical"
                 data={data}
                 dataPointsRadius={5}
