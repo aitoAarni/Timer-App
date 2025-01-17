@@ -6,6 +6,7 @@ import { SQLiteDatabase } from 'expo-sqlite'
 
 describe('timers.tsx file', () => {
     let timeSinceEpochMock: number = 100_000
+    let addTimeLogMock
     let addMockTime = (ms: number) => {
         timeSinceEpochMock += ms
     }
@@ -15,12 +16,14 @@ describe('timers.tsx file', () => {
             return timeSinceEpochMock
         })
     })
+    afterAll(() => {
+        jest.restoreAllMocks()
+    })
 
     afterEach(() => {
         jest.restoreAllMocks()
     })
     describe('CountdownTimer', () => {
-        let addTimeLogMock
         let countdownTimer: CountdownTimer
         beforeEach(() => {
             addTimeLogMock = jest.fn()
@@ -76,7 +79,11 @@ describe('timers.tsx file', () => {
     describe('Timer', () => {
         let timer: Timer
         beforeEach(() => {
-            timer = new Timer(20, 5)
+            addTimeLogMock = jest.fn()
+            const timeLoggerMock = {
+                addTimeLog: addTimeLogMock,
+            }
+            timer = new Timer(20, 5, timeLoggerMock)
         })
 
         it('shows correct time when initialized', () => {
@@ -141,6 +148,28 @@ describe('timers.tsx file', () => {
             timer.switchTimer()
             expect(timer.getSecondsRemaining()).toBe(19)
             expect(timer.timerActive).toBeTruthy()
+        })
+        it('logs correct time when timer reset and then paused', () => {
+            timer.pauseToggle()
+            addMockTime(1_000)
+            timer.resetTimer()
+            addMockTime(2_000)
+            timer.pauseToggle()
+            addMockTime(3_000)
+            expect(addTimeLogMock).toHaveBeenCalledTimes(1)
+            expect(addTimeLogMock).toHaveBeenCalledWith(1_000)
+        })
+        it('logs correct time, if break inbetween', () => {
+            timer.pauseToggle()
+            addMockTime(20_001)
+            timer.getSecondsRemaining()
+            expect(addTimeLogMock).toHaveBeenCalledWith(20_001)
+            addMockTime(5_001)
+            timer.getSecondsRemaining()
+            addMockTime(10_000)
+            timer.pauseToggle()
+            expect(addTimeLogMock).toHaveBeenCalledTimes(2)
+            expect(addTimeLogMock).toHaveBeenLastCalledWith(10_000)
         })
     })
 })
