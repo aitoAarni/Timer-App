@@ -1,6 +1,7 @@
 // @ts-nocheck
 import TimeLogger from '@/utils/logger'
 import Timer, { CountdownTimer } from '@/utils/timers'
+import { toHaveStyle } from '@testing-library/react-native/build/matchers/to-have-style'
 import { SQLiteDatabase } from 'expo-sqlite'
 
 describe('timers.tsx file', () => {
@@ -19,27 +20,15 @@ describe('timers.tsx file', () => {
         jest.restoreAllMocks()
     })
     describe('CountdownTimer', () => {
-        let timeLoggerMock: jest.Mocked<TimeLogger>
+        let addTimeLogMock
         let countdownTimer: CountdownTimer
         beforeEach(() => {
-            const dbMock: jest.Mocked<SQLiteDatabase> = {
-                databasePath: 'mockPath',
-                options: {},
-                nativeDatabase: {},
-                isInTransactionAsync: jest.fn(),
-                closeAsync: jest.fn(),
-                execAsync: jest.fn(),
-                serializeAsync: jest.fn(),
-                prepareAsync: jest.fn(),
-                withTransactionAsync: jest.fn(),
-                withExclusiveTransactionAsync: jest.fn(),
-                getAllSync: jest.fn(),
-            }
+            addTimeLogMock = jest.fn()
             timeLoggerMock = {
-                db: dbMock,
+                db: jest.fn(),
                 userId: 1,
                 categoryId: 1,
-                addTimeLog: jest.fn(),
+                addTimeLog: addTimeLogMock,
             }
             countdownTimer = new CountdownTimer(5, timeLoggerMock)
         })
@@ -64,7 +53,7 @@ describe('timers.tsx file', () => {
         })
         it('resets timer when resetTimer() is called', () => {
             countdownTimer.pauseToggle()
-            addMockTime(4)
+            addMockTime(4_000)
             countdownTimer.addTime(15)
             countdownTimer.resetTimer()
             expect(countdownTimer.getTime()).toBe(4)
@@ -72,12 +61,16 @@ describe('timers.tsx file', () => {
         })
         it('logs time when resetTimer() is called', () => {
             countdownTimer.pauseToggle()
-            addMockTime(4)
+            addMockTime(4_000)
             countdownTimer.resetTimer()
-            console.log(
-                'timeLoggerMock.mock.calls: ',
-                timeLoggerMock.addTimeLog.mock.calls
-            )
+            expect(addTimeLogMock).toHaveBeenCalledWith(4000)
+        })
+        it('logs time when pauseToggle() is called to pause the timer', () => {
+            countdownTimer.pauseToggle()
+            addMockTime(3_000)
+            countdownTimer.pauseToggle()
+            expect(addTimeLogMock).toHaveBeenCalledTimes(1)
+            expect(addTimeLogMock).toHaveBeenCalledWith(3_000)
         })
     })
     describe('Timer', () => {

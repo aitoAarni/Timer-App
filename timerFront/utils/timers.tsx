@@ -28,7 +28,6 @@ export class CountdownTimer {
     async #logTime(timeMs: number) {
         if (this.timeLogger) {
             await this.timeLogger.addTimeLog(timeMs)
-            console.log('time logged: ', timeMs / 1000, ' seconds')
         }
     }
 
