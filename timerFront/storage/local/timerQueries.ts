@@ -1,7 +1,7 @@
 import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
-const insertTime = async (
+const insertTimeToDb = async (
     db: sqlite.SQLiteDatabase,
     duration: number,
     category_id: number,
@@ -74,4 +74,4 @@ const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
     }
 }
 
-export { insertTime, getAllTimeData, getAllTimes, getTimesGroupedByDate }
+export { insertTimeToDb, getAllTimeData, getAllTimes, getTimesGroupedByDate }

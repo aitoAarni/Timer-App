@@ -2,10 +2,8 @@ import { AreaChartData, DatesWithDuration } from '@/types'
 import { DataPointLabel } from './Stylers'
 import theme from '@/theme'
 
-export const msToHours = (ms: number) => {
-    console.log('ms in: ', ms)
+const msToHours = (ms: number) => {
     const hours = Math.round(ms / 360_000) / 10
-    console.log('hours: ', hours, '\n')
     return hours
 }
 

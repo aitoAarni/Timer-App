@@ -1,4 +1,4 @@
-import { insertTime } from '@/storage/local/timerQueries'
+import { insertTimeToDb } from '@/storage/local/timerQueries'
 import * as sqlite from 'expo-sqlite'
 
 class TimeLogger {
@@ -15,12 +15,13 @@ class TimeLogger {
         this.categoryId = categoryId
     }
     async addTimeLog(timeMs: number) {
-        const success = await insertTime(
+        const success = await insertTimeToDb(
             this.db,
             timeMs,
             this.categoryId,
             this.userId
         )
+
         return success
     }
 }

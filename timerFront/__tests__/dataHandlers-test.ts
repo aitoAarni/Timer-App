@@ -61,7 +61,6 @@ describe('dataHandlers', () => {
     it('transforms chart data to correct form', () => {
         const mockDate = new Date('2025-02-03T06:00:00Z')
         jest.spyOn(global, 'Date').mockImplementation(() => mockDate)
-
         const { transformedData, maxValue } =
             transformDatesAndDurationDataForChart([...testData], 7)
         transformedData.forEach((element, index) => {
@@ -71,6 +70,7 @@ describe('dataHandlers', () => {
                 labelTextStyle: element.labelTextStyle,
             }).toMatchObject(correctlyTransformedData[index])
         })
+        expect(maxValue).toBe(20)
         jest.resetAllMocks()
     })
 })
