@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, act, screen } from '@testing-library/react-native'
+import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
 
 jest.mock('@/utils/timers', () => {
@@ -13,6 +13,12 @@ jest.mock('@/utils/timers', () => {
         }
     })
     return mockTimer
+})
+
+jest.mock('@/contexts/DatabaseContext', () => {
+    return {
+        useDatabase: jest.fn(),
+    }
 })
 
 describe('TimerView', () => {
