@@ -159,7 +159,7 @@ describe('timers.tsx file', () => {
             expect(addTimeLogMock).toHaveBeenCalledTimes(1)
             expect(addTimeLogMock).toHaveBeenCalledWith(1_000)
         })
-        it('logs correct time, if break inbetween', () => {
+        it('logs correct time if there is a break inbetween', () => {
             timer.pauseToggle()
             addMockTime(20_001)
             timer.getSecondsRemaining()
@@ -170,6 +170,18 @@ describe('timers.tsx file', () => {
             timer.pauseToggle()
             expect(addTimeLogMock).toHaveBeenCalledTimes(2)
             expect(addTimeLogMock).toHaveBeenLastCalledWith(10_000)
+        })
+        it('logs correct time if timer skipped and then paused', () => {
+            timer.pauseToggle()
+            addMockTime(5_000)
+            timer.switchTimer()
+            expect(addTimeLogMock).toHaveBeenCalledWith(5_000)
+            addMockTime(3_000)
+            timer.switchTimer()
+            addMockTime(6_000)
+            timer.pauseToggle()
+            expect(addTimeLogMock).toHaveBeenCalledTimes(2)
+            expect(addTimeLogMock).toHaveBeenLastCalledWith(6_000)
         })
     })
 })
