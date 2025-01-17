@@ -3,11 +3,16 @@ import { DataPointLabel } from './Stylers'
 import theme from '@/theme'
 
 export const msToHours = (ms: number) => {
+    console.log('ms in: ', ms)
     const hours = Math.round(ms / 360_000) / 10
+    console.log('hours: ', hours, '\n')
     return hours
 }
 
-export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
+export const transformDatesAndDurationDataForChart = (
+    data: DatesWithDuration[],
+    daysOfData: number = 30
+) => {
     const months = [
         'Jan',
         'Feb',
@@ -26,7 +31,7 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
     let dateOfData = new Date()
     let dataIndex = 0
     let maxValue = 0
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < daysOfData; i++) {
         if (i) {
             dateOfData.setDate(dateOfData.getDate() - 1)
         }
@@ -43,7 +48,7 @@ export const transformDatesAndDurationData = (data: DatesWithDuration[]) => {
         }
         if (
             dataIndex < data.length &&
-            data[dataIndex]?.date == dateOfDataString
+            data[dataIndex].date == dateOfDataString
         ) {
             DataPoint.value = msToHours(data[dataIndex].total_duration)
             dataIndex++

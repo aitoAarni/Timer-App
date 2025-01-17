@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import AreaChartView from './AreaChartView'
-import { transformDatesAndDurationData } from '@/utils/dataHandlers'
+import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
 
 export default function StatisticsView() {
@@ -17,7 +17,7 @@ export default function StatisticsView() {
             try {
                 const datesData = await getTimesGroupedByDate(db)
                 const { transformedData, maxValue } =
-                    transformDatesAndDurationData(datesData)
+                    transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)
                 setMaxValue(maxValue)
             } catch (error) {
