@@ -1,4 +1,7 @@
+// @ts-nocheck
+import TimeLogger from '@/utils/logger'
 import Timer, { CountdownTimer } from '@/utils/timers'
+import { SQLiteDatabase } from 'expo-sqlite'
 
 describe('timers.tsx file', () => {
     let timeSinceEpochMock: number = 100_000
@@ -16,9 +19,29 @@ describe('timers.tsx file', () => {
         jest.restoreAllMocks()
     })
     describe('CountdownTimer', () => {
+        let timeLoggerMock: jest.Mocked<TimeLogger>
         let countdownTimer: CountdownTimer
         beforeEach(() => {
-            countdownTimer = new CountdownTimer(5)
+            const dbMock: jest.Mocked<SQLiteDatabase> = {
+                databasePath: 'mockPath',
+                options: {},
+                nativeDatabase: {},
+                isInTransactionAsync: jest.fn(),
+                closeAsync: jest.fn(),
+                execAsync: jest.fn(),
+                serializeAsync: jest.fn(),
+                prepareAsync: jest.fn(),
+                withTransactionAsync: jest.fn(),
+                withExclusiveTransactionAsync: jest.fn(),
+                getAllSync: jest.fn(),
+            }
+            timeLoggerMock = {
+                db: dbMock,
+                userId: 1,
+                categoryId: 1,
+                addTimeLog: jest.fn(),
+            }
+            countdownTimer = new CountdownTimer(5, timeLoggerMock)
         })
         it('gives starting time right when getTime() called', () => {
             expect(countdownTimer.getTime()).toBe(4)
@@ -46,6 +69,15 @@ describe('timers.tsx file', () => {
             countdownTimer.resetTimer()
             expect(countdownTimer.getTime()).toBe(4)
             expect(countdownTimer.paused).toBeTruthy()
+        })
+        it('logs time when resetTimer() is called', () => {
+            countdownTimer.pauseToggle()
+            addMockTime(4)
+            countdownTimer.resetTimer()
+            console.log(
+                'timeLoggerMock.mock.calls: ',
+                timeLoggerMock.addTimeLog.mock.calls
+            )
         })
     })
     describe('Timer', () => {

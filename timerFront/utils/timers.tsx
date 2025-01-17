@@ -80,7 +80,7 @@ export default class Timer {
     constructor(
         timerLength: number,
         breakLength: number,
-        timeLogger: TimeLogger | null
+        timeLogger: TimeLogger | null = null
     ) {
         this.timerLength = timerLength
         this.breakLength = breakLength
