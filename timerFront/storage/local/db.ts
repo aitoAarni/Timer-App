@@ -1,8 +1,16 @@
 import * as sqlite from 'expo-sqlite'
 
 const initializeDatabase = async () => {
-    const db = await sqlite.openDatabaseAsync('localDatabase')
+    let databaseName = process.env.EXPO_PUBLIC_TESTING
+        ? 'testDatabase'
+        : 'localDatabase'
+
+    const db = await sqlite.openDatabaseAsync(databaseName)
     await db.execAsync('PRAGMA foreign_keys = ON')
+    if (process.env.EXPO_PUBLIC_TESTING) {
+        dropTimerDatabase(db)
+        dropUsersDatabase(db)
+    }
     return db
 }
 

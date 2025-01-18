@@ -7,6 +7,7 @@ import { formatTime } from '@/utils/format'
 import TimeLogger from '@/utils/logger'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { getUserId } from '@/services/user'
+import { configuration } from '@/config'
 
 interface Props {
     time?: number
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function TimerView({ time = 20, breakTime = 5 }: Props) {
+    console.log('confiiig: ', configuration())
     const [timerTime, setTimerTime] = useState(time)
     const database = useDatabase()
     const userId = getUserId()
