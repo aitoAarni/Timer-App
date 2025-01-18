@@ -13,9 +13,10 @@
 | 10.1.2025  | 4h    | setting up testing and doing unit tests                                                     |
 | 11.1.2025  | 4.5h  | Trying to test a component using react native gesture handler w/o success                   |
 | 12.1.2025  | 3h    | Solved how to test gesture handler and added other tests also                               |
-| in total   | 34 h  |                                                                                             |
+| in total   | 34h  |                                                                                             |
 | 13.1.2025  | 1h    | researched storage options and decided for local storage expo.sqlite                        |
 | 14.1.2025  | 6h    | sqlite database set up and queries added fo it, also research on design related to it       |
 | 15.1.2025  | 7h    | timer logs times to db now, test different chat libraries and chose one and created a chart |
 | 16.1.2025  | 4.5h  | Integrated database data to show in the chart, and modifies how the chart looks             |
-| 16.1.2025  | 3.5 h | Added unit testing for multiple omponents and fixed broken tests                            |
+| 16.1.2025  | 3.5h | Added unit testing for multiple omponents and fixed broken tests                            |
+| 17.1.2025 | 3.5h  | Added e2e testing and started doing CI workflow                                         |
