@@ -53,7 +53,9 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                         onLeft={handleAddTime}
                         onRight={handleSwitchTimer}
                     >
-                        <Text style={styles.text}>{formatTime(timerTime)}</Text>
+                        <Text testID="timer-text" style={styles.text}>
+                            {formatTime(timerTime)}
+                        </Text>
                     </DirectionPad>
                 </Pressable>
             </View>
