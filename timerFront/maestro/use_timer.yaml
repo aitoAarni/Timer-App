@@ -8,5 +8,22 @@ appId: com.isovertti.timerFront
 - extendedWaitUntil:
       visible: '00:16'
       timeout: 3200
-- tapOn:
-    id: "timer-text"
+- swipe:
+      start: 50%, 50%
+      end: 50%, 30%
+- extendedWaitUntil:
+      visible: '00:19'
+      timeout: 1100
+- swipe:
+      start: 50%, 50%
+      end: 10%, 50%
+- assertVisible: '01:19'
+- swipe:
+      start: 50%, 50%
+      end: 90%, 50%
+- extendedWaitUntil:
+      visible: '00:02'
+      timeout: 2200
+- swipe:
+      start: 50%, 50%
+      end: 50%, 30%
