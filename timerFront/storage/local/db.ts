@@ -44,6 +44,7 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
     }
 }
 
+
 const dropUsersDatabase = async (db: sqlite.SQLiteDatabase) => {
     await db.execAsync(`DROP TABLE IF EXISTS users`)
 }
