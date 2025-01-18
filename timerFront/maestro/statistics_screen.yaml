@@ -1,5 +1,0 @@
-appId: fe45723a-f80f-4f23-8897-6294150ed20f
----
-- launchApp
-- tapOn: 'statistics'
-- assertVisible: 

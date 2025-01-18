@@ -90,6 +90,7 @@ export default class Timer {
 
     pauseToggle() {
         if (this.timerActive) {
+            console.log('timer press: pause pressed ')
             this.activeTimer.pauseToggle()
         } else {
             this.breakTimer.pauseToggle()

@@ -1,0 +1,11 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- tapOn:
+      text: '00:19'
+      retryTapIfNoChange: false
+
+- extendedWaitUntil:
+      visible: '00:16'
+      timeout: 3200
+- tapOn: '00:16'
