@@ -6,7 +6,7 @@ export default function HomeView() {
     return (
         <View style={styles.container}>
             <TimerView />
-            <Link style={{ fontSize: 40 }} href={'/statistics'}>
+            <Link style={{ fontSize: 40, color: 'white' }} href={'/statistics'}>
                 statistics
             </Link>
         </View>

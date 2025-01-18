@@ -1,5 +1,5 @@
-import { StyleSheet, View, Text } from 'react-native'
-
+import { StyleSheet, View } from 'react-native'
+import Text from './Text'
 import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
 import { useDatabase } from '@/contexts/DatabaseContext'
@@ -28,7 +28,7 @@ export default function StatisticsView() {
     }, [])
     return (
         <View>
-            <Text>statimtiks</Text>
+            <Text style={{marginBottom: 70}}>statimtiks</Text>
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (

@@ -1,0 +1,4 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- assertVisible: '00:19'
