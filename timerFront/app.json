@@ -1,5 +1,7 @@
 {
     "expo": {
+        "owner": "isovertti",
+        
         "name": "timerFront",
         "slug": "timerFront",
         "version": "1.0.0",
