@@ -25,7 +25,9 @@ jobs:
 
             - name: Install dependencies
               run: yarn install
+              working-directory: ./timerFront
 
             - name: Send build request
               run: eas build --platform all --non-interactive --no-wait --profile development-sim
               shell: bash
+              working-directory: ./timerFront
