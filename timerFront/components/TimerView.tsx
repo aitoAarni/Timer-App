@@ -60,7 +60,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                 </Pressable>
             </View>
             <View
-                style={[styles.fillerContainers, { paddingBottom: 50 }]}
+                style={[styles.fillerContainers, { marginBottom: 50 }]}
             ></View>
         </View>
     )

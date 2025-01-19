@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import AreaChartView from './AreaChartView'
-import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
+import {
+    getPlaceholderDataForChart,
+    transformDatesAndDurationDataForChart,
+} from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
 
 export default function StatisticsView() {
@@ -15,11 +18,17 @@ export default function StatisticsView() {
     useEffect(() => {
         const getData = async () => {
             try {
+                const {
+                    transformedData: placeholderData,
+                    maxValue: placeholderMaxValue,
+                } = getPlaceholderDataForChart()
+                setData(placeholderData)
+                setMaxValue(placeholderMaxValue)
                 const datesData = await getTimesGroupedByDate(db)
-                const { transformedData, maxValue } =
+                const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)
-                setMaxValue(maxValue)
+                setMaxValue(maxVal)
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
@@ -28,7 +37,6 @@ export default function StatisticsView() {
     }, [])
     return (
         <View>
-            <Text style={{marginBottom: 70}}>statimtiks</Text>
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (
