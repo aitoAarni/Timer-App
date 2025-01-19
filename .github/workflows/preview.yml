@@ -11,21 +11,21 @@ jobs:
         steps:
             - name: Setup repository
               uses: actions/checkout@v3
+
             - name: Print Current Working Directory
               run: pwd
-              working-directory: ./timerFront
 
-            - name: List Files in Directory
-              run: ls
-              working-directory: ./timerFront
+            - name: print tail of package-lock.json
+              run: tail ./timerFront/package-lock.json
 
-            - name: List Files with dc
+            - name: List Files with cd
               run: |
                   ls
                   echo "cd timerFront"
                   cd timerFront
                   pwd
                   ls
+
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
