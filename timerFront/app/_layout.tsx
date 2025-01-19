@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
 import { DatabaseProvider } from '@/contexts/DatabaseContext'
+import AppBar from '@/components/AppBar'
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -37,7 +38,10 @@ export default function RootLayout() {
                 <DatabaseProvider>
                     <Stack
                         screenOptions={{
-                            headerShown: false,
+                            headerShown: true,
+                            
+                            headerRight: () => <AppBar />,
+                            headerLeft: () => <AppBar />,
                         }}
                     >
                         <Stack.Screen name="index" />

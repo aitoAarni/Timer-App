@@ -18,5 +18,6 @@
 | 14.1.2025  | 6h   | sqlite database set up and queries added fo it, also research on design related to it       |
 | 15.1.2025  | 7h   | timer logs times to db now, test different chat libraries and chose one and created a chart |
 | 16.1.2025  | 4.5h | Integrated database data to show in the chart, and modifies how the chart looks             |
-| 16.1.2025  | 3.5h | Added unit testing for multiple omponents and fixed broken tests                            |
-| 17.1.2025  | 3.5h | Added e2e testing and started doing CI workflow                                             |
+| 17.1.2025  | 3.5h | Added unit testing for multiple omponents and fixed broken tests                            |
+| 18.1.2025  | 3.5h | Added e2e testing and started doing CI workflow                                             |
+| 19.1.2025  | 3h   | configuring e2e testing for CI before giving up and just putting unit-testing there         |

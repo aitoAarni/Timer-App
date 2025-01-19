@@ -15,7 +15,7 @@
     "lint": "expo lint"
   },
   "jest": {
-    "preset": "jest-expo",
+    "preset": "jest-expo", 
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js",
       "./jest.setup.js"
