@@ -29,9 +29,9 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
+                  cache-dependency-path: ./timerFront/package-lock.json
                   node-version: 18.x
                   cache: npm
-                  cache-dependency-path: timerFront/package-lock.json
 
             - name: Setup EAS
               uses: expo/expo-github-action@v8
