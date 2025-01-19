@@ -59,7 +59,9 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                     </DirectionPad>
                 </Pressable>
             </View>
-            <View style={styles.fillerContainers}></View>
+            <View
+                style={[styles.fillerContainers, { paddingBottom: 50 }]}
+            ></View>
         </View>
     )
 }

@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
 import { DatabaseProvider } from '@/contexts/DatabaseContext'
 import AppBar from '@/components/AppBar'
+import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -38,10 +39,9 @@ export default function RootLayout() {
                 <DatabaseProvider>
                     <Stack
                         screenOptions={{
-                            headerShown: true,
-                            
-                            headerRight: () => <AppBar />,
-                            headerLeft: () => <AppBar />,
+                            header: (props: NativeStackHeaderProps) => (
+                                <AppBar {...props} />
+                            ),
                         }}
                     >
                         <Stack.Screen name="index" />
@@ -61,5 +61,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    header: {
+        borderWidth: 1,
     },
 })
