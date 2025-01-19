@@ -31,11 +31,14 @@ jobs:
               with:
                   node-version: 18.x
                   cache: npm
+                  cache-dependency-path: timerFront/package-lock.json
+
             - name: Setup EAS
               uses: expo/expo-github-action@v8
               with:
                   eas-version: latest
                   token: ${{ secrets.EXPO_TOKEN }}
+                  working-directory: ./timerFront
 
             - name: Install dependencies
               run: npm install
