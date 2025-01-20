@@ -21,4 +21,4 @@
 | 17.1.2025  | 3.5h | Added unit testing for multiple omponents and fixed broken tests                            |
 | 18.1.2025  | 3.5h | Added e2e testing and started doing CI workflow                                             |
 | 19.1.2025  | 3h   | configuring e2e testing for CI before giving up and just putting unit-testing there         |
-| 20.1.2025  | 1h   | adding AppBar to the app                                                                    |
+| 20.1.2025  | 6.5h | adding AppBar to the app, adding settings menu & some settings & reading about compnents    |
