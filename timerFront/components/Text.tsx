@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         fontFamily: 'SpaceMono-Regular',
         color: theme.colors.text,
         fontSize: theme.fontSizes.timer,
+        textAlign: 'center',
     },
 })
 
