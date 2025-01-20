@@ -18,7 +18,7 @@ export default function SettingsView() {
         throw new Error('SettingsView must be used within a SettingsProvider')
     }
     const { setWorkTime, setBreakTime } = context
-    
+
     return (
         <ScrollView style={styles.container}>
             <TimerSlider
@@ -37,10 +37,13 @@ interface TimerSliderProps {
     callback?: (value: number) => void
 }
 
-const TimerSlider = function ({ style, text }: TimerSliderProps) {
+const TimerSlider = function ({ style, text, callback }: TimerSliderProps) {
     const [timer, setTime] = useState(10)
     const onValueChange = (value: number) => {
         setTime(value)
+        if (callback) {
+            callback(value)
+        }
     }
     return (
         <View style={[styles.timerSliderContainer, style]}>
