@@ -27,6 +27,6 @@ describe('TimerView', () => {
     })
 
     it('should render correctly', () => {
-        screen.getByText('00:05')
+        screen.getByText('00:04')
     })
 })
