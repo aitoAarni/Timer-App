@@ -14,6 +14,7 @@ describe('Text Component', () => {
             fontFamily: 'SpaceMono-Regular',
             color: theme.colors.text,
             fontSize: theme.fontSizes.timer,
+            textAlign: 'center',
         })
     })
 
@@ -38,7 +39,7 @@ describe('Text Component', () => {
             fontSize: customFontSize,
         })
     })
- 
+
     it('combines custom styles with default styles', () => {
         const customStyle: TextStyle = {
             fontWeight: 'bold',
@@ -55,6 +56,7 @@ describe('Text Component', () => {
             fontFamily: 'SpaceMono-Regular',
             color: theme.colors.text,
             fontSize: theme.fontSizes.timer,
+            textAlign: 'center',
         })
     })
 
