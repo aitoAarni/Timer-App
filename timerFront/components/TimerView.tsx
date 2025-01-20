@@ -44,26 +44,26 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     }
     return (
         <View style={styles.container}>
-                <View style={styles.fillerContainers}></View>
-                <View style={styles.timerContainer}>
-                    <Pressable
-                        style={styles.timerPressable}
-                        onPress={handleTogglePause}
+            <View style={styles.fillerContainers}></View>
+            <View style={styles.timerContainer}>
+                <Pressable
+                    style={styles.timerPressable}
+                    onPress={handleTogglePause}
+                >
+                    <DirectionPad
+                        onUp={handleResetTimer}
+                        onLeft={handleAddTime}
+                        onRight={handleSwitchTimer}
                     >
-                        <DirectionPad
-                            onUp={handleResetTimer}
-                            onLeft={handleAddTime}
-                            onRight={handleSwitchTimer}
-                        >
-                            <Text testID="timer-text" style={styles.text}>
-                                {formatTime(timerTime)}
-                            </Text>
-                        </DirectionPad>
-                    </Pressable>
-                </View>
-                <View
-                    style={[styles.fillerContainers, { marginBottom: 50 }]}
-                ></View>
+                        <Text testID="timer-text" style={styles.text}>
+                            {formatTime(timerTime)}
+                        </Text>
+                    </DirectionPad>
+                </Pressable>
+            </View>
+            <View
+                style={[styles.fillerContainers, { marginBottom: 50 }]}
+            ></View>
         </View>
     )
 }

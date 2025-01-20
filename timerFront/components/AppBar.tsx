@@ -15,7 +15,7 @@ export default function AppBar({
     return (
         <LinearGradient
             style={styles.container}
-            colors={['rgba(114, 143, 150, 0.3)', theme.colors.background]}
+            colors={[theme.colors.background, 'rgba(114, 143, 150, 0.3)']}
         >
             <AppBarButton
                 href="/settings"
