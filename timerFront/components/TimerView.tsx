@@ -7,6 +7,8 @@ import { formatTime } from '@/utils/format'
 import TimeLogger from '@/utils/logger'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { getUserId } from '@/services/user'
+import { LinearGradient } from 'expo-linear-gradient'
+import theme from '@/theme'
 
 interface Props {
     time?: number
@@ -14,7 +16,7 @@ interface Props {
 }
 
 export default function TimerView({ time = 20, breakTime = 5 }: Props) {
-    const [timerTime, setTimerTime] = useState(time)
+    const [timerTime, setTimerTime] = useState(time - 1)
     const database = useDatabase()
     const userId = getUserId()
     useEffect(() => {
@@ -42,26 +44,26 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.fillerContainers}></View>
-            <View style={styles.timerContainer}>
-                <Pressable
-                    style={styles.timerPressable}
-                    onPress={handleTogglePause}
-                >
-                    <DirectionPad
-                        onUp={handleResetTimer}
-                        onLeft={handleAddTime}
-                        onRight={handleSwitchTimer}
+                <View style={styles.fillerContainers}></View>
+                <View style={styles.timerContainer}>
+                    <Pressable
+                        style={styles.timerPressable}
+                        onPress={handleTogglePause}
                     >
-                        <Text testID="timer-text" style={styles.text}>
-                            {formatTime(timerTime)}
-                        </Text>
-                    </DirectionPad>
-                </Pressable>
-            </View>
-            <View
-                style={[styles.fillerContainers, { marginBottom: 50 }]}
-            ></View>
+                        <DirectionPad
+                            onUp={handleResetTimer}
+                            onLeft={handleAddTime}
+                            onRight={handleSwitchTimer}
+                        >
+                            <Text testID="timer-text" style={styles.text}>
+                                {formatTime(timerTime)}
+                            </Text>
+                        </DirectionPad>
+                    </Pressable>
+                </View>
+                <View
+                    style={[styles.fillerContainers, { marginBottom: 50 }]}
+                ></View>
         </View>
     )
 }
@@ -80,4 +82,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    backGround: { flexGrow: 1 },
 })

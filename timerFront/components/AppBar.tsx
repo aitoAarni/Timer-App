@@ -1,8 +1,9 @@
 import { View, StyleSheet, Pressable, Dimensions } from 'react-native'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
-import { Link } from 'expo-router'
+import { Link, usePathname } from 'expo-router'
 import Text from './Text'
 import theme from '@/theme'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const screenWidth = Dimensions.get('window').width
 console.log(screenWidth)
@@ -11,24 +12,67 @@ export default function AppBar({
     options,
     back,
 }: NativeStackHeaderProps) {
+    console.log(navigation.getId())
+    const pathname = usePathname()
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            style={styles.container}
+            colors={[theme.colors.grayLight, theme.colors.background]}
+        >
             <Link href="/settings" asChild>
-                <Pressable style={styles.textContainer}>
-                    <Text style={styles.text}>settings</Text>
+                <Pressable
+                    style={[
+                        styles.textContainer,
+                        pathname === 'settings' ? styles.activeLink : null,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.text,
+                            pathname === '/settings' ? styles.acitveText : null,
+                        ]}
+                    >
+                        settings
+                    </Text>
                 </Pressable>
             </Link>
             <Link href="/" asChild>
-                <Pressable style={styles.textContainer}>
-                    <Text style={styles.text}>Timer</Text>
+                <Pressable
+                    style={[
+                        styles.textContainer,
+                        pathname === '/' ? styles.activeLink : null,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.text,
+                            pathname === '/' ? styles.acitveText : null,
+                        ]}
+                    >
+                        Timer
+                    </Text>
                 </Pressable>
             </Link>
             <Link href="/statistics" asChild>
-                <Pressable style={styles.textContainer}>
-                    <Text style={styles.text}>Statistics</Text>
+                <Pressable
+                    style={[
+                        styles.textContainer,
+                        pathname === '/statistics' ? styles.activeLink : null,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.text,
+                            pathname === '/statistics'
+                                ? styles.acitveText
+                                : null,
+                        ]}
+                    >
+                        Statistics
+                    </Text>
                 </Pressable>
             </Link>
-        </View>
+        </LinearGradient>
     )
 }
 
@@ -46,5 +90,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    acitveText: { color: 'white' },
+    activeLink: { backgroundColor: 'blue' },
     text: { fontSize: 20, color: theme.colors.grayLight },
 })
