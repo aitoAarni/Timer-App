@@ -3,20 +3,18 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import { Link, LinkProps, usePathname } from 'expo-router'
 import Text from './Text'
 import theme from '@/theme'
-import { LinearGradient } from 'expo-linear-gradient'
 
 const screenWidth = Dimensions.get('window').width
 export default function AppBar({
     navigation,
     options,
     back,
+    route,
 }: NativeStackHeaderProps) {
+    console.log(route)
     const pathname = usePathname()
     return (
-        <LinearGradient
-            style={styles.container}
-            colors={[theme.colors.background, 'rgba(114, 143, 150, 0.3)']}
-        >
+        <View style={styles.container}>
             <AppBarButton
                 href="/settings"
                 text="Settings"
@@ -28,7 +26,7 @@ export default function AppBar({
                 text="Statistics"
                 currentPath={pathname}
             />
-        </LinearGradient>
+        </View>
     )
 }
 
@@ -79,9 +77,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    acitveText: { color: 'white' },
+    acitveText: { color: theme.colors.text },
     activeLink: {
-        // backgroundColor: theme.colors.background
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 25,
