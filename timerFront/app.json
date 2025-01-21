@@ -1,7 +1,7 @@
 {
     "expo": {
         "owner": "isovertti",
-        
+
         "name": "timerFront",
         "slug": "timerFront",
         "version": "1.0.0",
@@ -19,7 +19,7 @@
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
             },
-            "package": "com.isovertti.timerFront.dev"
+            "package": "com.isovertti.timerFront"
         },
         "web": {
             "bundler": "metro",
