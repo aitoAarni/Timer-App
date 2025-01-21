@@ -22,3 +22,4 @@
 | 18.1.2025  | 3.5h | Added e2e testing and started doing CI workflow                                             |
 | 19.1.2025  | 3h   | configuring e2e testing for CI before giving up and just putting unit-testing there         |
 | 20.1.2025  | 6.5h | adding AppBar to the app, adding settings menu & some settings & reading about compnents    |
+| 21.1.2025  | 1.5h | made settings persistent with async storage and debugging app not working on emulator       |
