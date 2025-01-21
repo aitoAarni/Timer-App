@@ -4,13 +4,13 @@ export function isPositiveNumber(value: number): value is PositiveNumber {
     return value > 0
 }
 
-interface User {
+export interface User {
     id: number
     username: string
     created_at: string
 }
 
-interface TimeLogged {
+export interface TimeLogged {
     id: number
     category_id: number
     duration: number
@@ -18,16 +18,16 @@ interface TimeLogged {
     user_id: number
 }
 
-interface TimeDuratio {
+export interface TimeDuratio {
     duration: number
 }
 
-interface DatesWithDuration {
+export interface DatesWithDuration {
     date: string
     total_duration: number
 }
 
-interface AreaChartData {
+export interface AreaChartData {
     value: number
     label?: string
     endFillColor?: string
@@ -36,4 +36,7 @@ interface AreaChartData {
     labelTextStyle?: { color: string }
 }
 
-export { User, TimeLogged, TimeDuratio, DatesWithDuration, AreaChartData }
+export interface Settings {
+    workTimeLength: number
+    breakTimeLength: number
+}

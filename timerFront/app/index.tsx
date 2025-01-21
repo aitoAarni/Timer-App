@@ -2,17 +2,29 @@ import { Link } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 import TimerView from '@/components/TimerView'
 import theme from '@/theme'
-import { useContext } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 import { SettingsContext } from '@/contexts/SettingsContext'
+import { Settings } from '@/types'
+
+interface SettingsContextType {
+    settings: Settings
+    setSettings: Dispatch<SetStateAction<Settings | null>>
+}
 export default function HomePage() {
     const context = useContext(SettingsContext)
     if (!context) {
         throw new Error('SettingsView must be used within a SettingsProvider')
     }
-    const { workTime, breakTime } = context
+
+    const { settings } = context
+
+    const { workTimeLength, breakTimeLength } = settings
     return (
         <View style={styles.container}>
-            <TimerView time={workTime * 60} breakTime={breakTime * 60} />
+            <TimerView
+                time={workTimeLength * 60}
+                breakTime={breakTimeLength * 60}
+            />
         </View>
     )
 }
