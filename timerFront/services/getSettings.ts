@@ -6,6 +6,7 @@ export const getSettings = async function (): Promise<Settings> {
         workTimeLength: 25,
         breakTimeLength: 5,
     }
+
     const fetchedSettingsString = await getKeyValuePair('settings')
     const fetchedSettings = fetchedSettingsString
         ? JSON.parse(fetchedSettingsString)

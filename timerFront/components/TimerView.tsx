@@ -7,8 +7,6 @@ import { formatTime } from '@/utils/format'
 import TimeLogger from '@/utils/logger'
 import { useDatabase } from '@/contexts/DatabaseContext'
 import { getUserId } from '@/services/user'
-import { LinearGradient } from 'expo-linear-gradient'
-import theme from '@/theme'
 
 interface Props {
     time?: number

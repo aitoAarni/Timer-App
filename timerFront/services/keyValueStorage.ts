@@ -3,10 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export const getKeyValuePair = async function (key: string) {
     try {
         const value = await AsyncStorage.getItem(key)
-        if (value !== null) {
-            return value
-        }
-        throw new Error(`The key '${key}' doesn't have any value stored `)
+        return value
     } catch (error) {
         throw new Error(
             `Error fetching data: ${
