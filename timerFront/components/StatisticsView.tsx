@@ -30,7 +30,11 @@ export default function StatisticsView() {
                 setData(transformedData)
                 setMaxValue(maxVal)
             } catch (error) {
-                console.error('Error fetching data:', error)
+                throw new Error(
+                    `Error fetching data: ${
+                        error instanceof Error ? error.message : String(error)
+                    }`
+                )
             }
         }
         getData()

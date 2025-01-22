@@ -11,7 +11,6 @@ export default function AppBar({
     back,
     route,
 }: NativeStackHeaderProps) {
-    console.log(route)
     const pathname = usePathname()
     return (
         <View style={styles.container}>

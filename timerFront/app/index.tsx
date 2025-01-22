@@ -19,6 +19,7 @@ export default function HomePage() {
     const { settings } = context
 
     const { workTimeLength, breakTimeLength } = settings
+    console.log("refreshed")
     return (
         <View style={styles.container}>
             <TimerView
