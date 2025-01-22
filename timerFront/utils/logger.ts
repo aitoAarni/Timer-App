@@ -21,7 +21,6 @@ class TimeLogger {
             this.categoryId,
             this.userId
         )
-
         return success
     }
 }

@@ -40,7 +40,7 @@ export default function StatisticsView() {
         getData()
     }, [])
     return (
-        <View>
+        <View style={styles.container}>
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (

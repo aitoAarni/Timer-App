@@ -7,6 +7,7 @@ import {
     useState,
 } from 'react'
 import * as sqlite from 'expo-sqlite'
+import { getUsers, insertUser } from '@/storage/local/userQueries'
 
 const DatabaseContext = createContext<sqlite.SQLiteDatabase | null>(null)
 
@@ -33,6 +34,7 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
                 createTables(db)
                 setIsInitializing(false)
             } catch (error) {
+                console.log('errori databaseProvideris', error)
                 throw new Error(
                     `${error instanceof Error ? error.message : String(error)}`
                 )

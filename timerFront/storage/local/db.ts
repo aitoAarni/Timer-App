@@ -1,13 +1,11 @@
+import { isTest } from '@/utils/environment'
 import * as sqlite from 'expo-sqlite'
 
 const initializeDatabase = async () => {
-    let databaseName = process.env.EXPO_PUBLIC_TESTING
-        ? 'testDatabase'
-        : 'localDatabase'
-
+    const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
     const db = await sqlite.openDatabaseAsync(databaseName)
     await db.execAsync('PRAGMA foreign_keys = ON')
-    if (process.env.EXPO_PUBLIC_TESTING) {
+    if (isTest()) {
         dropTimerDatabase(db)
         dropUsersDatabase(db)
     }
@@ -43,7 +41,6 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
         )
     }
 }
-
 
 const dropUsersDatabase = async (db: sqlite.SQLiteDatabase) => {
     await db.execAsync(`DROP TABLE IF EXISTS users`)

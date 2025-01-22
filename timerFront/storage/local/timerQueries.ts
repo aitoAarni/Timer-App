@@ -14,6 +14,10 @@ const insertTimeToDb = async (
         )
         return true
     } catch (error) {
+        console.log(
+            'silent errori: ',
+            error instanceof Error ? error.message : String(error)
+        )
         throw new Error(
             `Error inserting data: ${
                 error instanceof Error ? error.message : String(error)
