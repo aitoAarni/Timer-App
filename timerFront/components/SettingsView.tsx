@@ -65,7 +65,7 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
                     maximumTrackTintColor={theme.colors.grayLight}
                     thumbTintColor={theme.colors.text}
                     step={1}
-                    value={10}
+                    value={initialValue}
                     onValueChange={value => onValueChange(value)}
                     onSlidingComplete={onRelease}
                 />

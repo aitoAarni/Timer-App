@@ -1,5 +1,4 @@
-import Timer from '@/utils/timers'
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
