@@ -1,44 +1,34 @@
 import Timer from '@/utils/timers'
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
-import TimeLogger from '@/utils/logger'
-import { useDatabase } from '@/contexts/DatabaseContext'
-import { getUserId } from '@/services/user'
+import { useTimer } from '@/contexts/TimerContext'
 
-interface Props {
-    time?: number
-    breakTime?: number
-}
-
-export default function TimerView({ time = 20, breakTime = 5 }: Props) {
-    const [timerTime, setTimerTime] = useState(time - 1)
-    const database = useDatabase()
-    const userId = getUserId()
+export default function TimerView() {
+    const timer = useRef(useTimer())
+    const [time, setTime] = useState(timer.current.getSecondsRemaining())
     useEffect(() => {
         const interval = setInterval(() => {
-            const t = timerRef.current.getSecondsRemaining()
-            setTimerTime(t)
+            const t = timer.current.getSecondsRemaining()
+            setTime(t)
         }, 100)
 
         return () => clearInterval(interval)
     }, [])
-    const loggerRef = useRef(new TimeLogger(database, userId, 1))
-    const timerRef = useRef(new Timer(time, breakTime, loggerRef.current))
 
     const handleTogglePause = function () {
-        timerRef.current.pauseToggle()
+        timer.current.pauseToggle()
     }
     const handleResetTimer = function () {
-        timerRef.current.resetTimer()
+        timer.current.resetTimer()
     }
     const handleAddTime = function () {
-        timerRef.current.addTime(60)
+        timer.current.addTime(60)
     }
     const handleSwitchTimer = function () {
-        timerRef.current.switchTimer()
+        timer.current.switchTimer()
     }
     return (
         <View style={styles.container}>
@@ -54,7 +44,7 @@ export default function TimerView({ time = 20, breakTime = 5 }: Props) {
                         onRight={handleSwitchTimer}
                     >
                         <Text testID="timer-text" style={styles.text}>
-                            {formatTime(timerTime)}
+                            {formatTime(time)}
                         </Text>
                     </DirectionPad>
                 </Pressable>

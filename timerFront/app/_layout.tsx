@@ -12,6 +12,7 @@ import { DatabaseProvider } from '@/contexts/DatabaseContext'
 import AppBar from '@/components/AppBar'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import SettingsProvider from '@/contexts/SettingsContext'
+import { TimerProvider } from '@/contexts/TimerContext'
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -36,21 +37,23 @@ export default function RootLayout() {
             <SafeAreaView style={styles.container}>
                 <DatabaseProvider>
                     <SettingsProvider>
-                        <StatusBar
-                            backgroundColor={theme.colors.background}
-                            style="light"
-                        />
-                        <Stack
-                            screenOptions={{
-                                header: (props: NativeStackHeaderProps) => (
-                                    <AppBar {...props} />
-                                ),
-                            }}
-                        >
-                            <Stack.Screen name="index" />
-                            <Stack.Screen name="settings" />
-                            <Stack.Screen name="statistics" />
-                        </Stack>
+                        <TimerProvider>
+                            <StatusBar
+                                backgroundColor={theme.colors.background}
+                                style="light"
+                            />
+                            <Stack
+                                screenOptions={{
+                                    header: (props: NativeStackHeaderProps) => (
+                                        <AppBar {...props} />
+                                    ),
+                                }}
+                            >
+                                <Stack.Screen name="index" />
+                                <Stack.Screen name="settings" />
+                                <Stack.Screen name="statistics" />
+                            </Stack>
+                        </TimerProvider>
                     </SettingsProvider>
                 </DatabaseProvider>
             </SafeAreaView>
