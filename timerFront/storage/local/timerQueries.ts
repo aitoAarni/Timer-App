@@ -15,7 +15,7 @@ const insertTimeToDb = async (
         return true
     } catch (error) {
         console.log(
-            'silent errori: ',
+            'silent errori in insertTimeToDb: ',
             error instanceof Error ? error.message : String(error)
         )
         throw new Error(
@@ -33,6 +33,7 @@ const getAllTimeData = async (db: sqlite.SQLiteDatabase) => {
         )) as TimeLogged[]
         return timeData
     } catch (error) {
+        console.log('errori in getAllTimeData', error)
         throw new Error(
             `Error fetching time data: ${
                 error instanceof Error ? error.message : String(error)
@@ -47,6 +48,7 @@ const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
         const times = (await db.getAllAsync(query)) as TimeDuratio[]
         return times
     } catch (error) {
+        console.log('errori in getAllTimes', error)
         throw new Error(
             `Error fetching times: ${
                 error instanceof Error ? error.message : String(error)
@@ -69,6 +71,7 @@ const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
         const data = (await db.getAllAsync(query)) as DatesWithDuration[]
         return data
     } catch (error) {
+        console.log('error in getTimesGroupedByData', error)
         throw new Error(
             `Error fetching times: ${
                 error instanceof Error ? error.message : String(error)

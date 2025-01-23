@@ -5,6 +5,7 @@ const insertUser = async (db: sqlite.SQLiteDatabase, username: string) => {
     try {
         await db.runAsync(`INSERT INTO users (username) VALUES (?)`, username)
     } catch (error) {
+        console.log('errori in InsertUser', error)
         throw new Error(
             `Database insert failed: ${
                 error instanceof Error ? error.message : String(error)
@@ -18,6 +19,7 @@ const getUsers = async (db: sqlite.SQLiteDatabase) => {
         const query = (await db.getAllAsync('SELECT * FROM users')) as User[]
         return query
     } catch (error) {
+        console.log('errori in getUsers', error)
         throw new Error(
             `Database fetch failed: ${
                 error instanceof Error ? error.message : String(error)

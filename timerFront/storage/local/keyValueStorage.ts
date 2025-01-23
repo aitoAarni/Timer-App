@@ -5,6 +5,7 @@ export const getKeyValuePair = async function (key: string) {
         const value = await AsyncStorage.getItem(key)
         return value
     } catch (error) {
+        console.log('error in getKeyValuePair', error)
         throw new Error(
             `Error fetching data: ${
                 error instanceof Error ? error.message : String(error)
@@ -17,6 +18,7 @@ export const setKeyValuePair = async function (key: string, value: string) {
     try {
         await AsyncStorage.setItem(key, value)
     } catch (error) {
+        console.log('error in setKeyValuePair', error)
         throw new Error(
             `Error setting data ${
                 error instanceof Error ? error.message : String(error)

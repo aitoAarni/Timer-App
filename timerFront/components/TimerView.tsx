@@ -4,12 +4,21 @@ import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
 import { useTimer } from '@/contexts/TimerContext'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
+    const { workTimeLength, breakTimeLength } = useSelector(
+        (state: RootState) => state.settings
+    )
+    timer.current.setNextWorkTime(workTimeLength * 60)
+    timer.current.setNextBreakTime(breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
+    console.log('currently heree')
     useEffect(() => {
         const interval = setInterval(() => {
+            timer.current.updateTimer()
             const t = timer.current.getSecondsRemaining()
             setTime(t)
         }, 100)

@@ -34,6 +34,7 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
             FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE);
             `)
     } catch (error) {
+        console.log('error in createTables', error)
         throw new Error(
             `Databse table creation failed: ${
                 error instanceof Error ? error.message : String(error)

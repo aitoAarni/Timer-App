@@ -31,6 +31,13 @@ export class CountdownTimer {
         }
     }
 
+    setTimerLength(time: number) {
+        if (!isPositiveNumber(time)) {
+            throw new Error('time must be a positive number')
+        }
+        this.timeLength = time - 1
+    }
+
     pauseToggle() {
         this.paused = !this.paused
         if (this.paused) {
@@ -71,26 +78,26 @@ export class CountdownTimer {
 }
 
 export default class Timer {
-    timerLength: number
+    workLength: number
     breakLength: number
     timerActive: boolean
-    activeTimer: CountdownTimer
+    workTimer: CountdownTimer
     breakTimer: CountdownTimer
     constructor(
-        timerLength: number,
+        workLength: number,
         breakLength: number,
         timeLogger: TimeLogger | null = null
     ) {
-        this.timerLength = timerLength
+        this.workLength = workLength
         this.breakLength = breakLength
         this.timerActive = true
-        this.activeTimer = new CountdownTimer(timerLength, timeLogger)
+        this.workTimer = new CountdownTimer(workLength, timeLogger)
         this.breakTimer = new CountdownTimer(breakLength)
     }
 
     pauseToggle() {
         if (this.timerActive) {
-            this.activeTimer.pauseToggle()
+            this.workTimer.pauseToggle()
         } else {
             this.breakTimer.pauseToggle()
         }
@@ -98,7 +105,11 @@ export default class Timer {
 
     resetTimer() {
         this.timerActive = true
-        this.activeTimer.resetTimer()
+        const nextWorkLength = this.workLength
+        const nextBreakLength = this.breakLength
+        this.workTimer.setTimerLength(nextWorkLength)
+        this.breakTimer.setTimerLength(nextBreakLength)
+        this.workTimer.resetTimer()
         this.breakTimer.resetTimer()
     }
 
@@ -107,38 +118,61 @@ export default class Timer {
             throw new Error('Time must be a positive number')
         }
         if (this.timerActive) {
-            this.activeTimer.addTime(time)
+            this.workTimer.addTime(time)
         } else {
             this.breakTimer.addTime(time)
         }
     }
 
+    setNextWorkTime(time: number) {
+        if (!isPositiveNumber(time)) {
+            throw new Error('Time must be a positive number')
+        }
+        this.workLength = time
+    }
+    setNextBreakTime(time: number) {
+        if (!isPositiveNumber(time)) {
+            throw new Error('Time must be a positive number')
+        }
+        this.breakLength = time
+    }
+
     switchTimer() {
         if (this.timerActive) {
             this.timerActive = !this.timerActive
-            this.activeTimer.resetTimer()
+            this.workTimer.resetTimer()
+            const nextBreakLength = this.breakLength
+            this.breakTimer.setTimerLength(nextBreakLength)
             this.breakTimer.pauseToggle()
         } else {
             this.timerActive = !this.timerActive
             this.breakTimer.resetTimer()
-            this.activeTimer.pauseToggle()
+            const nextWorkLength = this.workLength
+            this.workTimer.setTimerLength(nextWorkLength)
+            this.workTimer.pauseToggle()
+        }
+    }
+
+    updateTimer() {
+        if (this.timerActive) {
+            let timeRemaining = this.workTimer.getTime()
+            if (timeRemaining < 0) {
+                this.switchTimer()
+            }
+        } else {
+            let timeRemaining = this.breakTimer.getTime()
+            if (timeRemaining < 0) {
+                this.switchTimer()
+            }
         }
     }
 
     getSecondsRemaining() {
         if (this.timerActive) {
-            let timeRemaining = this.activeTimer.getTime()
-            if (timeRemaining < 0) {
-                this.switchTimer()
-                timeRemaining = this.breakTimer.getTime()
-            }
+            let timeRemaining = this.workTimer.getTime()
             return timeRemaining
         } else {
             let timeRemaining = this.breakTimer.getTime()
-            if (timeRemaining < 0) {
-                this.switchTimer()
-                timeRemaining = this.activeTimer.getTime()
-            }
             return timeRemaining
         }
     }

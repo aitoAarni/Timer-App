@@ -3,8 +3,6 @@ import TimerView from '@/components/TimerView'
 import theme from '@/theme'
 
 export default function HomePage() {
-    
-    
     return (
         <View style={styles.container}>
             <TimerView />
