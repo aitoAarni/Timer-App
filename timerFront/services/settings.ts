@@ -1,5 +1,8 @@
 import { Settings } from '@/types'
-import { getKeyValuePair } from './keyValueStorage'
+import {
+    getKeyValuePair,
+    setKeyValuePair,
+} from '@/storage/local/keyValueStorage'
 
 export const getSettings = async function (): Promise<Settings> {
     const defaultSettings: Settings = {
@@ -13,4 +16,9 @@ export const getSettings = async function (): Promise<Settings> {
         : {}
     const settings = { ...defaultSettings, ...fetchedSettings }
     return settings
+}
+
+export const setSettings = async function (settings: Settings) {
+    const settingsString = JSON.stringify(settings)
+    await setKeyValuePair('settings', settingsString)
 }

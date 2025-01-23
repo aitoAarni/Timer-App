@@ -9,10 +9,16 @@ import Text from './Text'
 import theme from '@/theme'
 import Slider from '@react-native-community/slider'
 import { useContext, useState } from 'react'
-import { SettingsContext } from '@/contexts/SettingsContext'
 import { Settings } from '@/types'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { setSettings } from '@/services/settings'
+import { useDispatch } from 'react-redux'
+import { updateSettings } from '@/features/settingsSlice'
 
 export default function SettingsView() {
+    const settings = useSelector((state: RootState) => state.settings)
+    console.log(settings)
     return (
         <ScrollView style={styles.container}>
             <TimerSlider
@@ -32,11 +38,9 @@ interface TimerSliderProps {
 }
 
 const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
-    const context = useContext(SettingsContext)
-    if (!context) {
-        throw new Error('SettingsView must be used within a SettingsProvider')
-    }
-    const { settings, setSettings } = context
+    const settings = useSelector((state: RootState) => state.settings)
+    const dispatch = useDispatch()
+    const [sliderValue, setSliderValue] = useState(0)
     const initialValue = settings[settingsKey] ?? 20
     const [timer, setTime] = useState(initialValue)
     const onValueChange = (value: number) => {
@@ -45,8 +49,7 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
     const onRelease = (value: number) => {
         setTime(value)
         if (settingsKey && settingsKey in settings) {
-            const updatedSettings = { ...settings, [settingsKey]: value }
-            setSettings(updatedSettings)
+            dispatch(updateSettings({ [settingsKey]: value }))
         }
     }
 

@@ -11,8 +11,10 @@ import theme from '@/theme'
 import { DatabaseProvider } from '@/contexts/DatabaseContext'
 import AppBar from '@/components/AppBar'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
-import SettingsProvider from '@/contexts/SettingsContext'
 import { TimerProvider } from '@/contexts/TimerContext'
+import { Provider } from 'react-redux'
+import { store } from '@/store'
+
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -36,7 +38,7 @@ export default function RootLayout() {
         <GestureHandlerRootView>
             <SafeAreaView style={styles.container}>
                 <DatabaseProvider>
-                    <SettingsProvider>
+                    <Provider store={store}>
                         <TimerProvider>
                             <StatusBar
                                 backgroundColor={theme.colors.background}
@@ -54,7 +56,7 @@ export default function RootLayout() {
                                 <Stack.Screen name="statistics" />
                             </Stack>
                         </TimerProvider>
-                    </SettingsProvider>
+                    </Provider>
                 </DatabaseProvider>
             </SafeAreaView>
         </GestureHandlerRootView>
