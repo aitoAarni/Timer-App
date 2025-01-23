@@ -1,4 +1,4 @@
-import 'expo-dev-client'
+// import 'expo-dev-client'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/store'
 
 SplashScreen.preventAutoHideAsync()
+
 
 export default function RootLayout() {
     const [loaded, error] = useFonts({

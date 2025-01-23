@@ -15,7 +15,6 @@ export default function TimerView() {
     timer.current.setNextWorkTime(workTimeLength * 60)
     timer.current.setNextBreakTime(breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
-    console.log('currently heree')
     useEffect(() => {
         const interval = setInterval(() => {
             timer.current.updateTimer()

@@ -15,13 +15,20 @@ class TimeLogger {
         this.categoryId = categoryId
     }
     async addTimeLog(timeMs: number) {
-        const success = await insertTimeToDb(
-            this.db,
-            timeMs,
-            this.categoryId,
-            this.userId
-        )
-        return success
+        try {
+            const success = await insertTimeToDb(
+                this.db,
+                timeMs,
+                this.categoryId,
+                this.userId
+            )
+            return success
+        } catch (error) {
+            console.log('errori addTimeLog')
+            throw new Error(
+                `${error instanceof Error ? error.message : String(error)}`
+            )
+        }
     }
 }
 

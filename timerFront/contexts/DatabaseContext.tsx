@@ -32,15 +32,20 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
                 const db = await initializeDatabase()
                 setDatabase(db)
                 createTables(db)
+                const users = await getUsers(db)
+                if (!users) {
+                    await insertUser(db, 'lil bro')
+                }
                 setIsInitializing(false)
             } catch (error) {
-                console.log('errori databaseProvideris', error)
+                console.error('databaseProvider', error)
                 throw new Error(
                     `${error instanceof Error ? error.message : String(error)}`
                 )
             }
         }
         startAndSetDatabase()
+        console.log('clsoing the database')
         return () => {
             if (database) {
                 database.closeAsync()
