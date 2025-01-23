@@ -62,6 +62,7 @@ const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
         DATE(created_at) DESC;`
     try {
         const data = (await db.getAllAsync(query)) as DatesWithDuration[]
+        console.log('timer entires', (await getAllTimeData(db)).length)
         return data
     } catch (error) {
         console.error('getTimesGroupedByData', error)

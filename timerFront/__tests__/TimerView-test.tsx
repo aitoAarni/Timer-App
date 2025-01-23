@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
-import Timer from '@/utils/timers'
 
 jest.mock('@/utils/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
@@ -25,8 +24,21 @@ jest.mock('@/contexts/DatabaseContext', () => {
 jest.mock('@/contexts/TimerContext', () => {
     return {
         useTimer: jest.fn().mockImplementation(() => {
-            return { getSecondsRemaining: jest.fn(() => 59) }
+            return {
+                getSecondsRemaining: jest.fn(() => 59),
+                setNextWorkTime: jest.fn(value => {}),
+                setNextBreakTime: jest.fn(value => {}),
+            }
         }),
+    }
+})
+
+jest.mock('react-redux', () => {
+    return {
+        useSelector: jest.fn(something => ({
+            workTimeLength: 59,
+            breakTimeLength: 12,
+        })),
     }
 })
 
