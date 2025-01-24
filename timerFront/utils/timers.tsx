@@ -18,7 +18,6 @@ export class CountdownTimer {
      * @param timeLogger - Optional time logger
      */
     constructor(length: Seconds, timeLogger: TimeLogger | null = null) {
-        console.log('length: ', length)
         this.timeLength = length - 1 // in seconds
         this.paused = true
         this.timerStart = 0
@@ -44,9 +43,7 @@ export class CountdownTimer {
     }
 
     setTimerLength(time: Seconds) {
-        if (!isPositiveNumber(time)) {
-            throw new Error('time must be a positive number')
-        }
+        checkPositiveNumber(time)
         this.timeLength = time - 1
     }
 
@@ -62,9 +59,7 @@ export class CountdownTimer {
     }
 
     addTime(time: Seconds) {
-        if (!isPositiveNumber(time)) {
-            throw new Error('time must be a positive number')
-        }
+        checkPositiveNumber(time)
         this.previousTime -= time * 1000
     }
 
@@ -131,9 +126,7 @@ export default class Timer {
     }
 
     addTime(time: Seconds) {
-        if (!isPositiveNumber(time)) {
-            throw new Error('Time must be a positive number')
-        }
+        checkPositiveNumber(time)
         if (this.timerActive) {
             this.workTimer.addTime(time)
         } else {
@@ -142,15 +135,11 @@ export default class Timer {
     }
 
     setNextWorkTime(time: Seconds) {
-        if (!isPositiveNumber(time)) {
-            throw new Error('Time must be a positive number')
-        }
+        checkPositiveNumber(time)
         this.workLength = time
     }
     setNextBreakTime(time: Seconds) {
-        if (!isPositiveNumber(time)) {
-            throw new Error('Time must be a positive number')
-        }
+        checkPositiveNumber(time)
         this.breakLength = time
     }
 
@@ -192,5 +181,11 @@ export default class Timer {
             let timeRemaining = this.breakTimer.getTime()
             return timeRemaining
         }
+    }
+}
+
+const checkPositiveNumber = (value: number) => {
+    if (!isPositiveNumber(value)) {
+        throw new Error('time must be a positive number')
     }
 }
