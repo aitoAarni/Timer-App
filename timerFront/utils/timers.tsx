@@ -1,16 +1,28 @@
 import { isPositiveNumber } from '@/types'
 import TimeLogger from './logger'
+
+type Seconds = number
+type Milliseconds = number
+
 export class CountdownTimer {
-    timeLength: number
+    /** Timer length in seconds */
+    timeLength: Seconds
     paused: boolean
-    timerStart: number
-    previousTime: number
+    /** Start time in milliseconds */
+    timerStart: Milliseconds
+    /** Previous time in milliseconds */
+    previousTime: Milliseconds
     timeLogger: TimeLogger | null
-    constructor(length: number, timeLogger: TimeLogger | null = null) {
-        this.timeLength = length - 1
+    /**
+     * @param length - Timer length in seconds
+     * @param timeLogger - Optional time logger
+     */
+    constructor(length: Seconds, timeLogger: TimeLogger | null = null) {
+        console.log('length: ', length)
+        this.timeLength = length - 1 // in seconds
         this.paused = true
         this.timerStart = 0
-        this.previousTime = 0
+        this.previousTime = 0 // in milliseconds
         this.timeLogger = timeLogger
     }
 
@@ -25,13 +37,13 @@ export class CountdownTimer {
         return currentTime - this.timerStart
     }
 
-    async #logTime(timeMs: number) {
+    async #logTime(timeMs: Milliseconds) {
         if (this.timeLogger) {
             await this.timeLogger.addTimeLog(timeMs)
         }
     }
 
-    setTimerLength(time: number) {
+    setTimerLength(time: Seconds) {
         if (!isPositiveNumber(time)) {
             throw new Error('time must be a positive number')
         }
@@ -49,7 +61,7 @@ export class CountdownTimer {
         }
     }
 
-    addTime(time: number) {
+    addTime(time: Seconds) {
         if (!isPositiveNumber(time)) {
             throw new Error('time must be a positive number')
         }
@@ -78,14 +90,19 @@ export class CountdownTimer {
 }
 
 export default class Timer {
-    workLength: number
-    breakLength: number
+    workLength: Seconds
+    breakLength: Seconds
+    /** true if timer is in work time, false if timer is in break time  */
     timerActive: boolean
     workTimer: CountdownTimer
     breakTimer: CountdownTimer
+    /**
+     * @param workLength - Work length in seconds
+     * @param breakLength - Break length in seconds
+     */
     constructor(
-        workLength: number,
-        breakLength: number,
+        workLength: Seconds,
+        breakLength: Seconds,
         timeLogger: TimeLogger | null = null
     ) {
         this.workLength = workLength
@@ -113,7 +130,7 @@ export default class Timer {
         this.breakTimer.resetTimer()
     }
 
-    addTime(time: number) {
+    addTime(time: Seconds) {
         if (!isPositiveNumber(time)) {
             throw new Error('Time must be a positive number')
         }
@@ -124,13 +141,13 @@ export default class Timer {
         }
     }
 
-    setNextWorkTime(time: number) {
+    setNextWorkTime(time: Seconds) {
         if (!isPositiveNumber(time)) {
             throw new Error('Time must be a positive number')
         }
         this.workLength = time
     }
-    setNextBreakTime(time: number) {
+    setNextBreakTime(time: Seconds) {
         if (!isPositiveNumber(time)) {
             throw new Error('Time must be a positive number')
         }
