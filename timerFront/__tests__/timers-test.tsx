@@ -75,6 +75,10 @@ describe('timers.tsx file', () => {
             expect(addTimeLogMock).toHaveBeenCalledTimes(1)
             expect(addTimeLogMock).toHaveBeenCalledWith(3_000)
         })
+        it('sets new timeLength when setTimerLength() is called', () => {
+            countdownTimer.setTimerLength(72)
+            expect(countdownTimer.getTime()).toBe(71)
+        })
     })
     describe('Timer', () => {
         let timer: Timer
