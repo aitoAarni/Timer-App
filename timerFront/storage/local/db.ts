@@ -3,6 +3,7 @@ import * as sqlite from 'expo-sqlite'
 
 const initializeDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
+    console.log('isTest(): ', isTest(), databaseName)
     const db = await sqlite.openDatabaseAsync(databaseName)
     await db.execAsync('PRAGMA foreign_keys = ON')
     if (isTest()) {

@@ -31,11 +31,14 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
             try {
                 const db = await initializeDatabase()
                 setDatabase(db)
-                createTables(db)
+                await createTables(db)
                 const users = await getUsers(db)
-                if (!users) {
+                console.log('!users: ', users)
+                if (users.length === 0) {
+                    console.log('inserting users')
                     await insertUser(db, 'lil bro')
                 }
+                console.log('userls', users)
                 setIsInitializing(false)
             } catch (error) {
                 console.error('databaseProvider', error)
@@ -45,9 +48,9 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
             }
         }
         startAndSetDatabase()
-        console.log('clsoing the database')
         return () => {
             if (database) {
+                console.log('not clsoing the database')
                 database.closeAsync()
             }
         }

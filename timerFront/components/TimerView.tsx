@@ -24,7 +24,6 @@ export default function TimerView() {
 
         return () => clearInterval(interval)
     }, [])
-
     const handleTogglePause = function () {
         timer.current.pauseToggle()
     }
