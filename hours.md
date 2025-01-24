@@ -25,3 +25,4 @@
 | 21.1.2025  | 1.5h | made settings persistent with async storage and debugging app not working on emulator           |
 | 22.1.2025  | 3.5h | finalize persistent settings and switch timer state to to context, debug silent errors          |
 | 23.1.2025  | 3.5h | add recux, updated how timer works when settings are changed, debugging hidden errors, fix test |
+| 24.1.2025  | 2h   | add unit tests, fix bugs in app, make a error component to notify user                          |
