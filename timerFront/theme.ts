@@ -6,6 +6,7 @@ const theme = {
         background: '#101010',
         text: '#f0f0f0',
         grayLight: 'rgba(153,153, 153,1)',
+        error: 'red',
     },
 
     fontSizes: {
