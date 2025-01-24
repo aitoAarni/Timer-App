@@ -1,20 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Button, Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
 import { useTimer } from '@/contexts/TimerContext'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
+import ErrorBox from './ErrorBox'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
-    const { workTimeLength, breakTimeLength } = useSelector(
-        (state: RootState) => state.settings
-    )
-    timer.current.setNextWorkTime(workTimeLength * 60)
-    timer.current.setNextBreakTime(breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    try {
+        const { workTimeLength, breakTimeLength } = useSelector(
+            (state: RootState) => state.settings
+        )
+        timer.current.setNextWorkTime(workTimeLength * 60)
+        timer.current.setNextBreakTime(breakTimeLength * 60)
+    } catch (error) {
+        console.error(error)
+        setErrorMessage('Internal app error occurred')
+    }
     useEffect(() => {
         const interval = setInterval(() => {
             timer.current.updateTimer()
@@ -38,7 +45,12 @@ export default function TimerView() {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.fillerContainers}></View>
+            <View style={styles.fillerContainers}>
+                <ErrorBox
+                    errorMessage={errorMessage}
+                    setErrorMessage={setErrorMessage}
+                />
+            </View>
             <View style={styles.timerContainer}>
                 <Pressable
                     style={styles.timerPressable}
@@ -55,9 +67,14 @@ export default function TimerView() {
                     </DirectionPad>
                 </Pressable>
             </View>
-            <View
-                style={[styles.fillerContainers, { marginBottom: 50 }]}
-            ></View>
+            <View style={[styles.fillerContainers, { marginBottom: 50 }]}>
+                <Button
+                    title="wetError"
+                    onPress={() => {
+                        setErrorMessage('error happenedi brosef')
+                    }}
+                ></Button>
+            </View>
         </View>
     )
 }
@@ -70,7 +87,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    fillerContainers: { flexGrow: 1 },
+    fillerContainers: { flex: 1 },
     timerPressable: {
         flexGrow: 1,
         alignItems: 'center',

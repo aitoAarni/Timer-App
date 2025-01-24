@@ -11,7 +11,7 @@ interface ErrorBoxProps {
 }
 
 const ErrorBox = ({ errorMessage, setErrorMessage }: ErrorBoxProps) => {
-    if ((errorMessage = null)) return null
+    if (errorMessage === null) return null
     useEffect(() => {
         setTimeout(() => {
             setErrorMessage(null)
@@ -20,17 +20,20 @@ const ErrorBox = ({ errorMessage, setErrorMessage }: ErrorBoxProps) => {
 
     return (
         <View style={styles.container}>
-            <Text>{errorMessage}</Text>
+            <Text fontSize={20}>{errorMessage}</Text>
         </View>
     )
 }
 
+export default ErrorBox
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.error,
-        width: screenWidth,
-        height: 100,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: 10,
+        marginHorizontal: 10,
     },
 })
