@@ -7,21 +7,13 @@ import { useTimer } from '@/contexts/TimerContext'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import ErrorBox from './ErrorBox'
+import { Link } from 'expo-router'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    try {
-        const { workTimeLength, breakTimeLength } = useSelector(
-            (state: RootState) => state.settings
-        )
-        timer.current.setNextWorkTime(workTimeLength * 60)
-        timer.current.setNextBreakTime(breakTimeLength * 60)
-    } catch (error) {
-        console.error(error)
-        setErrorMessage('Internal app error occurred')
-    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             timer.current.updateTimer()
@@ -68,12 +60,9 @@ export default function TimerView() {
                 </Pressable>
             </View>
             <View style={[styles.fillerContainers, { marginBottom: 50 }]}>
-                <Button
-                    title="wetError"
-                    onPress={() => {
-                        setErrorMessage('error happenedi brosef')
-                    }}
-                ></Button>
+                <Link href="/login" style={{ color: 'white', fontSize: 20 }}>
+                    To logiin
+                </Link>
             </View>
         </View>
     )

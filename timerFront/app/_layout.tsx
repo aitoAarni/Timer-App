@@ -17,7 +17,6 @@ import { store } from '@/store'
 
 SplashScreen.preventAutoHideAsync()
 
-
 export default function RootLayout() {
     const [loaded, error] = useFonts({
         'PermanentMarker-Regular': require('@/assets/fonts/PermanentMarker-Regular.ttf'),
@@ -55,6 +54,7 @@ export default function RootLayout() {
                                 <Stack.Screen name="index" />
                                 <Stack.Screen name="settings" />
                                 <Stack.Screen name="statistics" />
+                                <Stack.Screen name="login" />
                             </Stack>
                         </TimerProvider>
                     </Provider>
