@@ -1,17 +1,11 @@
-import {
-    TextInput,
-    View,
-    StyleSheet,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native'
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import Text from './Text'
 import theme from '@/theme'
 import ErrorBox from './ErrorBox'
 import { useState } from 'react'
 import * as yup from 'yup'
-
+import { yupResolver } from '@hookform/resolvers/yup'
 interface Inputs {
     username: string
     password: string
@@ -29,7 +23,7 @@ const validationSchema = yup.object().shape({
         .min(8, 'Must be at least 8 characters long')
         .max(25, 'Cannot exceed 20 characters')
         .required('Required field'),
-    confirmPassword: yup
+    verifyPassword: yup
         .string()
         .oneOf([yup.ref('password')], "Passwords don't match")
         .required('Required field'),
@@ -42,7 +36,7 @@ export default function SignInView() {
         control,
         formState: { errors },
     } = useForm<Inputs>({
-        resolver: yupResolver(validationSchema), // Use yupResolver with the validation schema
+        resolver: yupResolver(validationSchema),
 
         defaultValues: {
             username: '',
@@ -77,7 +71,7 @@ export default function SignInView() {
                     />
                 )}
             />
-            <Text fontSize={12} color={theme.colors.error}>
+            <Text fontSize={15} color={theme.colors.error}>
                 {errors.username?.message ?? ''}
             </Text>
             <Text style={styles.text}>Password:</Text>
@@ -96,11 +90,10 @@ export default function SignInView() {
                     />
                 )}
             />
-            {errors.password && (
-                <Text fontSize={12} color={theme.colors.error}>
-                    {errors.password.message}
-                </Text>
-            )}
+
+            <Text fontSize={15} color={theme.colors.error}>
+                {errors.password?.message ?? ''}
+            </Text>
 
             <Text style={styles.text}>Verify password:</Text>
             <Controller
@@ -118,11 +111,9 @@ export default function SignInView() {
                     />
                 )}
             />
-            {errors.verifyPassword && (
-                <Text fontSize={12} color={theme.colors.error}>
-                    {errors.verifyPassword.message}
-                </Text>
-            )}
+            <Text fontSize={15} color={theme.colors.error}>
+                {errors.verifyPassword?.message ?? ''}
+            </Text>
 
             <TouchableOpacity
                 style={styles.button}
@@ -160,17 +151,3 @@ const styles = StyleSheet.create({
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
 })
-function yupResolver(
-    validationSchema: yup.ObjectSchema<
-        { username: string; password: string; confirmPassword: string },
-        yup.AnyObject,
-        {
-            username: undefined
-            password: undefined
-            confirmPassword: undefined
-        },
-        ''
-    >
-): import('react-hook-form').Resolver<Inputs, any> | undefined {
-    throw new Error('Function not implemented.')
-}
