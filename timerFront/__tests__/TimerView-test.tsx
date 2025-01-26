@@ -15,13 +15,13 @@ jest.mock('@/utils/timers', () => {
     return mockTimer
 })
 
-jest.mock('@/contexts/DatabaseContext', () => {
+jest.mock('@/hooks/useDatabase', () => {
     return {
         useDatabase: jest.fn(),
     }
 })
 
-jest.mock('@/contexts/TimerContext', () => {
+jest.mock('@/hooks/useTimer', () => {
     return {
         useTimer: jest.fn().mockImplementation(() => {
             return {

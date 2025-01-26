@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button, Pressable, StyleSheet, View } from 'react-native'
+import {  Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
 import { useTimer } from '@/hooks/useTimer'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
 import ErrorBox from './ErrorBox'
 import { Link } from 'expo-router'
 
