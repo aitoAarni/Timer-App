@@ -1,8 +1,4 @@
-import {
-    createTables,
-    initializeDatabase,
-    logTableSchema,
-} from '@/storage/local/db'
+import { createTables, initializeDatabase } from '@/storage/local/db'
 import {
     createContext,
     ReactNode,

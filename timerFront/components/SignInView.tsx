@@ -9,38 +9,31 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import Text from './Text'
 import theme from '@/theme'
 import ErrorBox from './ErrorBox'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import * as yup from 'yup'
 
 interface Inputs {
     username: string
     password: string
+    verifyPassword: string
 }
 
-const rules = {
-    username: {
-        required: 'Username is required',
-        minLength: {
-            value: 3,
-            message: 'Username must be at least 3 characters long',
-        },
-        maxLength: {
-            value: 20,
-            message: 'Username cannot exceed 20 characters',
-        },
-    },
-    password: {
-        required: 'Password is required',
-        minLength: {
-            value: 8,
-            message: 'Password must be at least 8 characters long',
-        },
-        maxLength: {
-            value: 25,
-            message: 'Password cannot exceed 25 characters',
-        },
-    },
-}
-
+const validationSchema = yup.object().shape({
+    username: yup
+        .string()
+        .min(3, 'Must be at least 3 characters long')
+        .max(20, 'Cannot exceed 20 characters')
+        .required('Required field'),
+    password: yup
+        .string()
+        .min(8, 'Must be at least 8 characters long')
+        .max(25, 'Cannot exceed 20 characters')
+        .required('Required field'),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password')], "Passwords don't match")
+        .required('Required field'),
+})
 
 export default function SignInView() {
     const {
@@ -49,9 +42,12 @@ export default function SignInView() {
         control,
         formState: { errors },
     } = useForm<Inputs>({
+        resolver: yupResolver(validationSchema), // Use yupResolver with the validation schema
+
         defaultValues: {
             username: '',
             password: '',
+            verifyPassword: '',
         },
     })
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -69,7 +65,6 @@ export default function SignInView() {
             <Text style={styles.text}>Username:</Text>
             <Controller
                 control={control}
-                rules={rules.username}
                 name="username"
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
@@ -88,7 +83,6 @@ export default function SignInView() {
             <Text style={styles.text}>Password:</Text>
             <Controller
                 control={control}
-                rules={rules.password}
                 name="password"
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
@@ -105,6 +99,28 @@ export default function SignInView() {
             {errors.password && (
                 <Text fontSize={12} color={theme.colors.error}>
                     {errors.password.message}
+                </Text>
+            )}
+
+            <Text style={styles.text}>Verify password:</Text>
+            <Controller
+                control={control}
+                name="verifyPassword"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        secureTextEntry
+                        maxLength={25}
+                        placeholderTextColor={theme.colors.grayLight}
+                        style={styles.input}
+                        onChangeText={onChange}
+                        value={value}
+                        placeholder="verify password"
+                    />
+                )}
+            />
+            {errors.verifyPassword && (
+                <Text fontSize={12} color={theme.colors.error}>
+                    {errors.verifyPassword.message}
                 </Text>
             )}
 
@@ -144,3 +160,17 @@ const styles = StyleSheet.create({
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
 })
+function yupResolver(
+    validationSchema: yup.ObjectSchema<
+        { username: string; password: string; confirmPassword: string },
+        yup.AnyObject,
+        {
+            username: undefined
+            password: undefined
+            confirmPassword: undefined
+        },
+        ''
+    >
+): import('react-hook-form').Resolver<Inputs, any> | undefined {
+    throw new Error('Function not implemented.')
+}
