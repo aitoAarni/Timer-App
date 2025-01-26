@@ -27,3 +27,5 @@
 | 23.1.2025  | 3.5h  | add redux, updated how timer works when settings are change, debugging hidden errors,fix test |
 | 24.1.2025  | 2h    | add unit tests, fix bugs in app, make a error component to notify user                        |
 | in total   | 79.5h |                                                                                               |
+| 26.1.2025  | 5h    | create singIngPage, update db, refactoring, fix bug, plan app structure                       |
+| 27.1.2025  | 0.5h  | add secure kvs                                                                                |
