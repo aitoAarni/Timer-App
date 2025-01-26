@@ -41,7 +41,6 @@ const rules = {
     },
 }
 
-const width = Dimensions.get('window').width
 
 export default function SignInView() {
     const {
@@ -56,7 +55,7 @@ export default function SignInView() {
         },
     })
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  
+
     const onSubmit: SubmitHandler<Inputs> = data => {
         console.log(data)
     }
@@ -126,7 +125,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         paddingHorizontal: 10,
     },
-    header: { fontSize: 30, marginBottom: 15, marginTop: 10 },
+    header: {
+        fontSize: 30,
+        marginBottom: 50,
+        marginTop: 10,
+        alignSelf: 'center',
+    },
     input: {
         color: 'white',
         width: '100%',

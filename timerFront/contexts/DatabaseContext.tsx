@@ -34,14 +34,14 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
         const startAndSetDatabase = async () => {
             try {
                 const db = await initializeDatabase()
-                const d = await logTableSchema(db)
-                console.log('schema: ', d)
                 setDatabase(db)
                 await createTables(db)
                 const users = await getUsers(db)
+
                 if (users.length === 0) {
-                    await insertUser(db, 'lil bro')
+                    await insertUser(db, 'lil bro', 'lil_hashh', 1)
                 }
+                console.log('users', users)
                 setIsInitializing(false)
             } catch (error) {
                 console.error('databaseProvider', error)

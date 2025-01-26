@@ -5,19 +5,14 @@ const initializeDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
     console.log('isTest(): ', isTest(), databaseName)
     const db = await sqlite.openDatabaseAsync(databaseName)
-    dropUsersDatabase(db)
     await db.execAsync('PRAGMA foreign_keys = ON')
     if (isTest()) {
-        dropTimerDatabase(db)
-        dropUsersDatabase(db)
+        await dropTimerDatabase(db)
+        await dropUsersDatabase(db)
     }
     return db
 }
 
-const logTableSchema = async (db: sqlite.SQLiteDatabase) => {
-    const schema = await db.getAllAsync('PRAGMA table_info(timer)')
-    console.log(schema)
-}
 const createTables = async (db: sqlite.SQLiteDatabase) => {
     try {
         await db.runAsync(`
@@ -60,5 +55,4 @@ export {
     createTables,
     dropUsersDatabase,
     dropTimerDatabase,
-    logTableSchema,
 }
