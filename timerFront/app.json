@@ -1,66 +1,66 @@
 {
-    "expo": {
-        "owner": "isovertti",
-
-        "name": "timerFront",
-        "slug": "timerFront",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/images/icon.png",
-        "scheme": "myapp",
-        "userInterfaceStyle": "automatic",
-        "newArchEnabled": true,
-        "ios": {
-            "supportsTablet": true,
-            "bundleIdentifier": "com.isovertti.timerFront"
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/images/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            },
-            "package": "com.isovertti.timerFront"
-        },
-        "web": {
-            "bundler": "metro",
-            "output": "static",
-            "favicon": "./assets/images/favicon.png"
-        },
-        "plugins": [
-            [
-                "expo-font",
-                {
-                    "fonts": [
-                        "./assets/fonts/PlaywriteFont.ttf",
-                        "./assets/fonts/PermanentMarker-Regular.ttf",
-                        "./assets/fonts/SpaceMono-Regular.ttf",
-                        "./assets/fonts/IBMPlexMono-Bold.ttf",
-                        "./assets/fonts/DancingScript-VariableFont_wght.ttf"
-                    ]
-                }
-            ],
-            "expo-router",
-            [
-                "expo-splash-screen",
-                {
-                    "image": "./assets/images/splash-icon.png",
-                    "imageWidth": 200,
-                    "resizeMode": "contain",
-                    "backgroundColor": "#ffffff"
-                }
-            ],
-            "expo-sqlite"
-        ],
-        "experiments": {
-            "typedRoutes": true
-        },
-        "extra": {
-            "router": {
-                "origin": false
-            },
-            "eas": {
-                "projectId": "fe45723a-f80f-4f23-8897-6294150ed20f"
-            }
+  "expo": {
+    "owner": "isovertti",
+    "name": "timerFront",
+    "slug": "timerFront",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.isovertti.timerFront"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.isovertti.timerFront"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/PlaywriteFont.ttf",
+            "./assets/fonts/PermanentMarker-Regular.ttf",
+            "./assets/fonts/SpaceMono-Regular.ttf",
+            "./assets/fonts/IBMPlexMono-Bold.ttf",
+            "./assets/fonts/DancingScript-VariableFont_wght.ttf"
+          ]
         }
+      ],
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-sqlite",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fe45723a-f80f-4f23-8897-6294150ed20f"
+      }
     }
+  }
 }
