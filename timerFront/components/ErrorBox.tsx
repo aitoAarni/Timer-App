@@ -12,14 +12,15 @@ interface ErrorBoxProps {
 
 const ErrorBox = ({ errorMessage, setErrorMessage }: ErrorBoxProps) => {
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setErrorMessage(null)
-        }, 5_000)
-
-        return () => clearTimeout(timer)
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5_000)
+        }
     }, [errorMessage, setErrorMessage])
-
-    if (!errorMessage) return null
+    if (!errorMessage) {
+        return <View style={{ height: 50, width: '100%', opacity: 0 }} />
+    }
     return (
         <View style={styles.container}>
             <Text fontSize={20}>{errorMessage}</Text>
