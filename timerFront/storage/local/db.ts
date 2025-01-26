@@ -5,6 +5,7 @@ const initializeDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
     console.log('isTest(): ', isTest(), databaseName)
     const db = await sqlite.openDatabaseAsync(databaseName)
+    dropUsersDatabase(db)
     await db.execAsync('PRAGMA foreign_keys = ON')
     if (isTest()) {
         dropTimerDatabase(db)
@@ -23,6 +24,8 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
             CREATE TABLE IF NOT EXISTS users 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE,
+            password TEXT,
+            server_id INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );`)
         await db.runAsync(`

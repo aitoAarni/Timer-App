@@ -1,9 +1,19 @@
 import { User } from '@/types'
 import * as sqlite from 'expo-sqlite'
 
-const insertUser = async (db: sqlite.SQLiteDatabase, username: string) => {
+const insertUser = async (
+    db: sqlite.SQLiteDatabase,
+    username: string,
+    password: string,
+    server_id: number
+) => {
     try {
-        await db.runAsync(`INSERT INTO users (username) VALUES (?)`, username)
+        await db.runAsync(
+            `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`,
+            username,
+            password,
+            server_id
+        )
     } catch (error) {
         console.log('errori in InsertUser', error)
         throw new Error(

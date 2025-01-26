@@ -56,9 +56,7 @@ export default function SignInView() {
         },
     })
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    useEffect(() => {
-        setErrorMessage('errorii nääs')
-    }, [])
+  
     const onSubmit: SubmitHandler<Inputs> = data => {
         console.log(data)
     }

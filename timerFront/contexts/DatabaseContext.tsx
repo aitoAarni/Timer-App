@@ -1,4 +1,8 @@
-import { createTables, initializeDatabase } from '@/storage/local/db'
+import {
+    createTables,
+    initializeDatabase,
+    logTableSchema,
+} from '@/storage/local/db'
 import {
     createContext,
     ReactNode,
@@ -30,15 +34,14 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
         const startAndSetDatabase = async () => {
             try {
                 const db = await initializeDatabase()
+                const d = await logTableSchema(db)
+                console.log('schema: ', d)
                 setDatabase(db)
                 await createTables(db)
                 const users = await getUsers(db)
-                console.log('!users: ', users)
                 if (users.length === 0) {
-                    console.log('inserting users')
                     await insertUser(db, 'lil bro')
                 }
-                console.log('userls', users)
                 setIsInitializing(false)
             } catch (error) {
                 console.error('databaseProvider', error)
@@ -50,7 +53,7 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
         startAndSetDatabase()
         return () => {
             if (database) {
-                console.log('not clsoing the database')
+                console.log('closing the database')
                 database.closeAsync()
             }
         }
