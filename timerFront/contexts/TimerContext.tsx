@@ -1,20 +1,14 @@
 import { createContext, ReactNode, useContext, useRef } from 'react'
-import { useDatabase } from './DatabaseContext'
+import { useDatabase } from '@/hooks/useDatabase'
 import { getUserId } from '@/services/user'
 import TimeLogger from '@/utils/logger'
 import Timer from '@/utils/timers'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 
-const TimerContext = createContext<Timer | null>(null)
+export const TimerContext = createContext<Timer | null>(null)
 
-export const useTimer = () => {
-    const context = useContext(TimerContext)
-    if (!context) {
-        throw new Error(`useTimer must be used within TimerProvider`)
-    }
-    return context
-}
+
 
 export const TimerProvider = function ({ children }: { children: ReactNode }) {
     const settings = useSelector((state: RootState) => state.settings)

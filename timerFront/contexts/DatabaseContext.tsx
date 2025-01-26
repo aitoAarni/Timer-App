@@ -9,15 +9,8 @@ import {
 import * as sqlite from 'expo-sqlite'
 import { getUsers, insertUser } from '@/storage/local/userQueries'
 
-const DatabaseContext = createContext<sqlite.SQLiteDatabase | null>(null)
+export const DatabaseContext = createContext<sqlite.SQLiteDatabase | null>(null)
 
-export const useDatabase = () => {
-    const database = useContext(DatabaseContext)
-    if (!database) {
-        throw new Error('useDatabase must be used within DatabaseProvider')
-    }
-    return database
-}
 
 interface DatabaseProviderProps {
     children: ReactNode

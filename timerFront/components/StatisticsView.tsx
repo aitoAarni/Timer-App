@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
-import { useDatabase } from '@/contexts/DatabaseContext'
+import { useDatabase } from '@/hooks/useDatabase'
 import AreaChartView from './AreaChartView'
 import {
     getPlaceholderDataForChart,
