@@ -7,6 +7,8 @@ export function isPositiveNumber(value: number): value is PositiveNumber {
 export interface User {
     id: number
     username: string
+    password: string
+    server_id: string
     created_at: string
 }
 
