@@ -4,7 +4,7 @@ import {
 } from '@/storage/local/secureKeyValueStorage'
 import { User } from '@/types'
 
-export default class authStorage {
+export default class AuthStorage {
     key: string
     constructor() {
         this.key = 'authUser'
