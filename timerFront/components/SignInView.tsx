@@ -6,6 +6,9 @@ import ErrorBox from './ErrorBox'
 import { useState } from 'react'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import useCreateUser from '@/hooks/useCreateUser'
+import { useDatabase } from '@/hooks/useDatabase'
+import { getUsers } from '@/storage/local/userQueries'
 interface Inputs {
     username: string
     password: string
@@ -44,10 +47,21 @@ export default function SignInView() {
             verifyPassword: '',
         },
     })
+    const createUser = useCreateUser()
+    const db = useDatabase()
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const onSubmit: SubmitHandler<Inputs> = data => {
+    const onSubmit: SubmitHandler<Inputs> = async data => {
         console.log(data)
+        try {
+            await createUser(data.username, data.password)
+            const users = await getUsers(db)
+            console.log('usersss:', users)
+        } catch (error) {
+            console.error(error)
+            setErrorMessage('Username must be unique')
+        }
     }
     return (
         <View style={styles.container}>
