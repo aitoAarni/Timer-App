@@ -29,13 +29,21 @@ const getUsers = async (db: sqlite.SQLiteDatabase) => {
         const query = (await db.getAllAsync('SELECT * FROM users')) as User[]
         return query
     } catch (error) {
-        console.log('errori in getUsers', error)
-        throw new Error(
-            `Database fetch failed: ${
-                error instanceof Error ? error.message : String(error)
-            }`
-        )
+        console.error(error)
+        throw error
     }
 }
 
-export { insertUser, getUsers }
+const getUserByUsername = async (db: sqlite.SQLiteDatabase, username: string) => {
+    try {
+        const query = (await db.getAllAsync('SELECT * FROM users WHERE username = ?', username)) as User[]
+        return query
+    } catch (error) {
+        console.error(error)
+        throw error
+    };
+    ;
+    
+}
+
+export { insertUser, getUsers, getUserByUsername }

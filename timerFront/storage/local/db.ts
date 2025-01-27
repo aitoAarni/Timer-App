@@ -3,9 +3,9 @@ import * as sqlite from 'expo-sqlite'
 
 const initializeDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
-    console.log('isTest(): ', isTest(), databaseName)
     const db = await sqlite.openDatabaseAsync(databaseName)
     await db.execAsync('PRAGMA foreign_keys = ON')
+    console.log('user table dropped and created')
     if (isTest()) {
         await dropTimerDatabase(db)
         await dropUsersDatabase(db)
@@ -33,12 +33,8 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
             FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE);
             `)
     } catch (error) {
-        console.log('error in createTables', error)
-        throw new Error(
-            `Databse table creation failed: ${
-                error instanceof Error ? error.message : String(error)
-            }`
-        )
+        console.error('error in createTables', error)
+        throw error
     }
 }
 
