@@ -1,12 +1,14 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from './Text'
 import * as yup from 'yup'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import theme from '@/theme'
 import { TextInput } from 'react-native-gesture-handler'
 import { useState } from 'react'
 import ErrorBox from './ErrorBox'
+import useLogIn from '@/useLogIn'
+import AuthStorage from '@/utils/authStorage'
 
 const validationSchema = yup.object().shape({
     username: yup.string().required('Required field'),
@@ -18,9 +20,13 @@ interface Inputs {
     password: string
 }
 
-export default function LogInView() {
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+interface LogInViewProps {
+    setLogin: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+export default function LogInView({ setLogin }: LogInViewProps) {
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const login = useLogIn()
     const {
         handleSubmit,
         register,
@@ -31,7 +37,13 @@ export default function LogInView() {
         resolver: yupResolver(validationSchema),
         defaultValues: { username: '', password: '' },
     })
-    const onSubmit = async () => {}
+    const onSubmit: SubmitHandler<Inputs> = async values => {
+        console.log(values)
+        await login(values.username, values.password)
+        console.log('logged in')
+        const authStorage = new AuthStorage()
+        console.log(await authStorage.getUser())
+    }
 
     return (
         <View style={styles.container}>
@@ -64,8 +76,9 @@ export default function LogInView() {
                 name="password"
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
+                        secureTextEntry
                         maxLength={25}
-                        placeholder="Password"
+                        placeholder="password"
                         placeholderTextColor={theme.colors.grayLight}
                         onChangeText={onChange}
                         value={value}
@@ -80,7 +93,15 @@ export default function LogInView() {
                 style={styles.button}
                 onPress={handleSubmit(onSubmit)}
             >
-                <Text style={styles.button}>Submit</Text>
+                <Text style={styles.button}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, { marginTop: 10 }]}
+                onPress={() => {
+                    setLogin(false)
+                }}
+            >
+                <Text style={styles.button}>Create an account</Text>
             </TouchableOpacity>
         </View>
     )

@@ -32,7 +32,11 @@ const validationSchema = yup.object().shape({
         .required('Required field'),
 })
 
-export default function SignInView() {
+interface SignInViewProps {
+    setLogin: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function SignInView({ setLogin }: SignInViewProps) {
     const {
         register,
         handleSubmit,
@@ -133,7 +137,15 @@ export default function SignInView() {
                 style={styles.button}
                 onPress={handleSubmit(onSubmit)}
             >
-                <Text style={styles.button}>Submit</Text>
+                <Text style={styles.button}>Create</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, { marginTop: 10 }]}
+                onPress={() => {
+                    setLogin(true)
+                }}
+            >
+                <Text style={styles.button}>Got to login</Text>
             </TouchableOpacity>
         </View>
     )

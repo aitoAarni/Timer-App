@@ -19,6 +19,7 @@ const useLogIn = () => {
             throw error
         }
     }
+    return logIn
 }
 
 export default useLogIn
