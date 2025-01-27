@@ -1,14 +1,24 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+    Alert,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 import Text from './Text'
 import * as yup from 'yup'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import theme from '@/theme'
 import { TextInput } from 'react-native-gesture-handler'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ErrorBox from './ErrorBox'
 import useLogIn from '@/useLogIn'
 import AuthStorage from '@/utils/authStorage'
+import { useRouter } from 'expo-router'
+import { User } from '@/types'
+import { useDatabase } from '@/hooks/useDatabase'
+import { getUsers } from '@/storage/local/userQueries'
 
 const validationSchema = yup.object().shape({
     username: yup.string().required('Required field'),
@@ -26,7 +36,10 @@ interface LogInViewProps {
 
 export default function LogInView({ setLogin }: LogInViewProps) {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [users, setUsers] = useState<User[] | null>(null)
     const login = useLogIn()
+    const db = useDatabase()
+    const router = useRouter()
     const {
         handleSubmit,
         register,
@@ -38,12 +51,19 @@ export default function LogInView({ setLogin }: LogInViewProps) {
         defaultValues: { username: '', password: '' },
     })
     const onSubmit: SubmitHandler<Inputs> = async values => {
-        console.log(values)
         await login(values.username, values.password)
-        console.log('logged in')
         const authStorage = new AuthStorage()
+        router.back()
         console.log(await authStorage.getUser())
     }
+
+    useEffect(() => {
+        const getUsersFromDb = async () => {
+            const usrs = await getUsers(db)
+            setUsers(usrs)
+        }
+        getUsersFromDb()
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -103,9 +123,23 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             >
                 <Text style={styles.button}>Create an account</Text>
             </TouchableOpacity>
+            {users && users.length && (
+                <FlatList
+                    data={users}
+                    renderItem={user => (
+                        <RenderName username={user.item.username} />
+                    )}
+                    keyExtractor={user => String(user.id)}
+                />
+            )}
         </View>
     )
 }
+
+const RenderName = ({ username }: { username: string }) => {
+    return <Text>{username}</Text>
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
