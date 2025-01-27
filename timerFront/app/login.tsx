@@ -1,13 +1,13 @@
-import ErrorBox from '@/components/ErrorBox'
-import SignInView from '@/components/SignInView'
+import LogInView from '@/components/LogInView'
+import SignInView from '@/components/SignUpView'
 import theme from '@/theme'
-import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 export default function LoginPage() {
     return (
         <View style={styles.container}>
-            <SignInView />
+            {/* <SignInView /> */}
+            <LogInView />
         </View>
     )
 }
