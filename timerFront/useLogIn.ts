@@ -1,19 +1,25 @@
+import { useRouter } from 'expo-router'
 import { useDatabase } from './hooks/useDatabase'
 import { getUserByUsername } from './storage/local/userQueries'
 import AuthStorage from './utils/authStorage'
+import { useDispatch } from 'react-redux'
+import { setLoggedInUser } from './redux/userSlice'
 
 const useLogIn = () => {
     const db = useDatabase()
-    const authStorage = new AuthStorage()
+    const dispatch = useDispatch()
     const logIn = async (username: string, password: string) => {
         try {
             const user = (await getUserByUsername(db, username))[0]
 
             if (user.password === password) {
+                const authStorage = new AuthStorage()
                 await authStorage.setUser(user)
-                return user
+                dispatch(setLoggedInUser(user))
+                console.log(await authStorage.getUser())
+                return true
             }
-            return null
+            return false
         } catch (error) {
             console.error(error)
             throw error

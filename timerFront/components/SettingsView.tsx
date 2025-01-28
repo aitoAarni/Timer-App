@@ -11,10 +11,10 @@ import Slider from '@react-native-community/slider'
 import { useContext, useState } from 'react'
 import { Settings } from '@/types'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { RootState } from '@/redux/store'
 import { setSettings } from '@/services/settings'
 import { useDispatch } from 'react-redux'
-import { updateSettings } from '@/features/settingsSlice'
+import { updateSettings } from '@/redux/settingsSlice'
 
 export default function SettingsView() {
     const settings = useSelector((state: RootState) => state.settings)

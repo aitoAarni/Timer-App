@@ -12,7 +12,8 @@ export default class AuthStorage {
     async getUser() {
         try {
             const user = await getSecureKeyValuePair(this.key)
-            return user
+            if (typeof user === 'string') return JSON.parse(user) as User
+            return null
         } catch (error) {
             throw error
         }

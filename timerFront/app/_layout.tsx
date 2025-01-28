@@ -13,7 +13,7 @@ import AppBar from '@/components/AppBar'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { Provider } from 'react-redux'
-import { store } from '@/store'
+import { store } from '@/redux/store'
 
 SplashScreen.preventAutoHideAsync()
 

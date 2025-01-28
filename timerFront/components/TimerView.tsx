@@ -7,7 +7,7 @@ import { useTimer } from '@/hooks/useTimer'
 import ErrorBox from './ErrorBox'
 import { Link } from 'expo-router'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
+import { RootState } from '@/redux/store'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
