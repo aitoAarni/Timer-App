@@ -11,9 +11,9 @@ const useLogIn = () => {
 
             if (user.password === password) {
                 await authStorage.setUser(user)
-                return true
+                return user
             }
-            return false
+            return null
         } catch (error) {
             console.error(error)
             throw error

@@ -52,16 +52,24 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     })
 
     const logUserIn = async (user: { username: string; password: string }) => {
-        await login(user.username, user.password)
-        const authStorage = new AuthStorage()
-
-        if (router.canGoBack()) {
-            router.back()
-        } else {
-            router.push('/')
+        try {
+            const loggedUser = await login(user.username, user.password)
+            if (loggedUser) {
+                const authStorage = new AuthStorage()
+                authStorage.setUser(loggedUser)
+                console.log(await authStorage.getUser())
+                if (router.canGoBack()) {
+                    router.back()
+                } else {
+                    router.push('/')
+                }
+            } else {
+                setErrorMessage("Username and password don't match")
+            }
+        } catch (error) {
+            console.error(error)
+            setErrorMessage('Internal error validating login information')
         }
-
-        console.log(await authStorage.getUser())
     }
     const onSubmit: SubmitHandler<Inputs> = async values => {
         await logUserIn(values)
@@ -135,6 +143,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             </TouchableOpacity>
             {users && users.length && (
                 <FlatList
+                    showsVerticalScrollIndicator={false}
                     style={styles.flatList}
                     ItemSeparatorComponent={ItemSeparator}
                     data={users}
@@ -200,7 +209,11 @@ const styles = StyleSheet.create({
     },
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
-    listHeader: { fontSize: 24, color: theme.colors.grayLight, marginBottom: 20 },
+    listHeader: {
+        fontSize: 24,
+        color: theme.colors.grayLight,
+        marginBottom: 20,
+    },
     separator: { height: 20 },
     listContainer: {
         padding: 10,

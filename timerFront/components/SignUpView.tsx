@@ -7,8 +7,9 @@ import { useState } from 'react'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import useCreateUser from '@/hooks/useCreateUser'
-import { useDatabase } from '@/hooks/useDatabase'
-import { getUsers } from '@/storage/local/userQueries'
+import useLogIn from '@/useLogIn'
+import { useRouter } from 'expo-router'
+import AuthStorage from '@/utils/authStorage'
 interface Inputs {
     username: string
     password: string
@@ -52,16 +53,27 @@ export default function SignInView({ setLogin }: SignInViewProps) {
         },
     })
     const createUser = useCreateUser()
-    const db = useDatabase()
+    const login = useLogIn()
+    const router = useRouter()
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
-        console.log(data)
         try {
             await createUser(data.username, data.password)
-            const users = await getUsers(db)
-            console.log('usersss:', users)
+            const loggedUser = await login(data.username, data.password)
+            if (loggedUser) {
+                const authStorage = new AuthStorage()
+                authStorage.setUser(loggedUser)
+                console.log(await authStorage.getUser())
+                if (router.canGoBack()) {
+                    router.back()
+                } else {
+                    router.push('/')
+                }
+            } else {
+                setErrorMessage('Error while logging in')
+            }
         } catch (error) {
             console.error(error)
             setErrorMessage('Username must be unique')
@@ -145,7 +157,7 @@ export default function SignInView({ setLogin }: SignInViewProps) {
                     setLogin(true)
                 }}
             >
-                <Text style={styles.button}>Got to login</Text>
+                <Text style={styles.button}>Go to login</Text>
             </TouchableOpacity>
         </View>
     )
@@ -160,7 +172,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 30,
-        marginBottom: 50,
+        marginBottom: 20,
         marginTop: 10,
         alignSelf: 'center',
     },
