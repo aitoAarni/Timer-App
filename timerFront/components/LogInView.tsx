@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 30,
-        marginBottom: 50,
+        marginBottom: 20,
         marginTop: 10,
         alignSelf: 'center',
     },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     },
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
-    listHeader: { fontSize: 20, color: theme.colors.grayLight, marginBottom: 40 },
+    listHeader: { fontSize: 24, color: theme.colors.grayLight, marginBottom: 20 },
     separator: { height: 20 },
     listContainer: {
         padding: 10,
