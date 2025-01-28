@@ -11,7 +11,7 @@ export class CountdownTimer {
     /** Start time in milliseconds */
     timerStart: Milliseconds
     /** Previous time in milliseconds */
-    previousTime: Milliseconds
+    accumulatedTime: Milliseconds
     timeLogger: TimeLogger | null
     /**
      * @param length - Timer length in seconds
@@ -21,7 +21,7 @@ export class CountdownTimer {
         this.timeLength = length - 1 // in seconds
         this.paused = true
         this.timerStart = 0
-        this.previousTime = 0 // in milliseconds
+        this.accumulatedTime = 0 // in milliseconds
         this.timeLogger = timeLogger
     }
 
@@ -52,7 +52,7 @@ export class CountdownTimer {
         if (this.paused) {
             const elapsedTime = this.#timeElapsed()
             this.#logTime(elapsedTime)
-            this.previousTime += elapsedTime
+            this.accumulatedTime += elapsedTime
         } else {
             this.timerStart = this.#getEpoch()
         }
@@ -60,7 +60,7 @@ export class CountdownTimer {
 
     addTime(time: Seconds) {
         checkPositiveNumber(time)
-        this.previousTime -= time * 1000
+        this.accumulatedTime -= time * 1000
     }
 
     resetTimer() {
@@ -68,16 +68,16 @@ export class CountdownTimer {
         if (!this.paused) {
             this.#logTime(timeElapsed)
         }
-        this.previousTime = 0
+        this.accumulatedTime = 0
         this.paused = true
     }
 
     getTime() {
         let displayTime
         if (this.paused) {
-            displayTime = this.previousTime
+            displayTime = this.accumulatedTime
         } else {
-            displayTime = this.#timeElapsed() + this.previousTime
+            displayTime = this.#timeElapsed() + this.accumulatedTime
         }
 
         return this.timeLength - Math.floor(displayTime / 1000)
