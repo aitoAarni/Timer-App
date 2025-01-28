@@ -40,7 +40,6 @@ interface TimerSliderProps {
 const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
     const settings = useSelector((state: RootState) => state.settings)
     const dispatch = useDispatch()
-    const [sliderValue, setSliderValue] = useState(0)
     const initialValue = settings[settingsKey] ?? 20
     const [timer, setTime] = useState(initialValue)
     const onValueChange = (value: number) => {

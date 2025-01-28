@@ -1,25 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
-import {  Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
 import { useTimer } from '@/hooks/useTimer'
 import ErrorBox from './ErrorBox'
 import { Link } from 'expo-router'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
+    const settings = useSelector((state: RootState) => state.settings)
+    timer.current.setNextWorkTime(settings.workTimeLength * 60)
+    timer.current.setNextBreakTime(settings.breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        setInterval(() => {
             timer.current.updateTimer()
             const t = timer.current.getSecondsRemaining()
             setTime(t)
         }, 100)
-
-        return () => clearInterval(interval)
     }, [])
     const handleTogglePause = function () {
         timer.current.pauseToggle()
