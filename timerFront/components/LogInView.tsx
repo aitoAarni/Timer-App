@@ -55,9 +55,6 @@ export default function LogInView({ setLogin }: LogInViewProps) {
         try {
             const loggedUser = await login(user.username, user.password)
             if (loggedUser) {
-                const authStorage = new AuthStorage()
-                authStorage.setUser(loggedUser)
-                console.log(await authStorage.getUser())
                 if (router.canGoBack()) {
                     router.back()
                 } else {
