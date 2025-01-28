@@ -28,4 +28,4 @@
 | 24.1.2025  | 2h    | add unit tests, fix bugs in app, make a error component to notify user                        |
 | in total   | 79.5h |                                                                                               |
 | 26.1.2025  | 5h    | create singIngPage, update db, refactoring, fix bug, plan app structure                       |
-| 27.1.2025  | 0.5h  | add secure kvs                                                                                |
+| 27.1.2025  | 4h    | add secure kvs, reasearch backend hosting, add login view and logic, fix bug w user creation  |
