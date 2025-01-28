@@ -1,26 +1,26 @@
+import store from '@/redux/store'
 import { insertTimeToDb } from '@/storage/local/timerQueries'
 import * as sqlite from 'expo-sqlite'
 
 class TimeLogger {
     db: sqlite.SQLiteDatabase
-    userId: number
     categoryId: number
-    constructor(
-        db: sqlite.SQLiteDatabase,
-        userId: number,
-        categoryId: number = 1
-    ) {
+    constructor(db: sqlite.SQLiteDatabase, categoryId: number = 1) {
         this.db = db
-        this.userId = userId
         this.categoryId = categoryId
     }
     async addTimeLog(timeMs: number) {
+        const state = store.getState()
+        console.log(`user: ${state.user.loggedInUser}`)
+        const userId = state.user.loggedInUser?.id
+
+        if (!userId) return false
         try {
             const success = await insertTimeToDb(
                 this.db,
                 timeMs,
                 this.categoryId,
-                this.userId
+                userId
             )
             return success
         } catch (error) {
