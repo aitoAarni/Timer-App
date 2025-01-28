@@ -54,7 +54,13 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     const logUserIn = async (user: { username: string; password: string }) => {
         await login(user.username, user.password)
         const authStorage = new AuthStorage()
-        router.back()
+
+        if (router.canGoBack()) {
+            router.back()
+        } else {
+            router.push('/')
+        }
+
         console.log(await authStorage.getUser())
     }
     const onSubmit: SubmitHandler<Inputs> = async values => {
@@ -129,8 +135,17 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             </TouchableOpacity>
             {users && users.length && (
                 <FlatList
+                    style={styles.flatList}
+                    ItemSeparatorComponent={ItemSeparator}
                     data={users}
-                    renderItem={user => <RenderName user={user.item} />}
+                    ListHeaderComponent={
+                        <Text style={styles.listHeader}>
+                            Use and existing account
+                        </Text>
+                    }
+                    renderItem={user => (
+                        <Item user={user.item} logUserIn={logUserIn} />
+                    )}
                     keyExtractor={user => String(user.id)}
                 />
             )}
@@ -138,12 +153,12 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     )
 }
 
-interface RenderNameProps {
+interface ItemProps {
     user: User
     logUserIn: (user: { username: string; password: string }) => Promise<void>
 }
 
-const RenderName = ({ user, logUserIn }: RenderNameProps) => {
+const Item = ({ user, logUserIn }: ItemProps) => {
     return (
         <TouchableOpacity
             style={styles.listContainer}
@@ -154,6 +169,10 @@ const RenderName = ({ user, logUserIn }: RenderNameProps) => {
             <Text style={styles.listText}>{user.username}</Text>
         </TouchableOpacity>
     )
+}
+
+const ItemSeparator = () => {
+    return <View style={styles.separator}></View>
 }
 
 const styles = StyleSheet.create({
@@ -181,6 +200,14 @@ const styles = StyleSheet.create({
     },
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
-    listContainer: {},
-    listText: {},
+    listHeader: { fontSize: 20, color: theme.colors.grayLight, marginBottom: 40 },
+    separator: { height: 20 },
+    listContainer: {
+        padding: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: theme.colors.grayLight,
+    },
+    listText: { fontSize: 30, color: theme.colors.grayLight },
+    flatList: { alignSelf: 'center', marginTop: 30 },
 })
