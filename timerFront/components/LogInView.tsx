@@ -50,11 +50,15 @@ export default function LogInView({ setLogin }: LogInViewProps) {
         resolver: yupResolver(validationSchema),
         defaultValues: { username: '', password: '' },
     })
-    const onSubmit: SubmitHandler<Inputs> = async values => {
-        await login(values.username, values.password)
+
+    const logUserIn = async (user: { username: string; password: string }) => {
+        await login(user.username, user.password)
         const authStorage = new AuthStorage()
         router.back()
         console.log(await authStorage.getUser())
+    }
+    const onSubmit: SubmitHandler<Inputs> = async values => {
+        await logUserIn(values)
     }
 
     useEffect(() => {
@@ -126,9 +130,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             {users && users.length && (
                 <FlatList
                     data={users}
-                    renderItem={user => (
-                        <RenderName username={user.item.username} />
-                    )}
+                    renderItem={user => <RenderName user={user.item} />}
                     keyExtractor={user => String(user.id)}
                 />
             )}
@@ -136,8 +138,22 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     )
 }
 
-const RenderName = ({ username }: { username: string }) => {
-    return <Text>{username}</Text>
+interface RenderNameProps {
+    user: User
+    logUserIn: (user: { username: string; password: string }) => Promise<void>
+}
+
+const RenderName = ({ user, logUserIn }: RenderNameProps) => {
+    return (
+        <TouchableOpacity
+            style={styles.listContainer}
+            onPress={() => {
+                logUserIn(user)
+            }}
+        >
+            <Text style={styles.listText}>{user.username}</Text>
+        </TouchableOpacity>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -165,4 +181,6 @@ const styles = StyleSheet.create({
     },
     text: { fontSize: 20, color: theme.colors.grayLight },
     button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
+    listContainer: {},
+    listText: {},
 })
