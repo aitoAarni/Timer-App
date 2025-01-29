@@ -9,14 +9,18 @@ import {
     transformDatesAndDurationDataForChart,
 } from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import theme from '@/theme'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
-
     const db = useDatabase()
+    const user = useSelector((state: RootState) => state.user.loggedInUser)
     useEffect(() => {
         const getData = async () => {
+            if (!user) return
             try {
                 const {
                     transformedData: placeholderData,
@@ -24,7 +28,7 @@ export default function StatisticsView() {
                 } = getPlaceholderDataForChart()
                 setData(placeholderData)
                 setMaxValue(placeholderMaxValue)
-                const datesData = await getTimesGroupedByDate(db)
+                const datesData = await getTimesGroupedByDate(db, user.id)
                 const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)
@@ -40,6 +44,14 @@ export default function StatisticsView() {
         }
         getData()
     }, [])
+    if (!user) {
+        return (
+            <Text style={styles.notLoggedIn}>
+                You must be logged in to get statistics
+            </Text>
+        )
+    }
+
     return (
         <View style={styles.container}>
             {data ? (
@@ -51,4 +63,7 @@ export default function StatisticsView() {
     )
 }
 
-const styles = StyleSheet.create({ container: { flexGrow: 1 } })
+const styles = StyleSheet.create({
+    container: { flexGrow: 1 },
+    notLoggedIn: { fontSize: 30, marginTop: 20, color: theme.colors.text },
+})

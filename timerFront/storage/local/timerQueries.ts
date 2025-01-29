@@ -54,19 +54,25 @@ const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
     }
 }
 
-const getTimesGroupedByDate = async (db: sqlite.SQLiteDatabase) => {
+const getTimesGroupedByDate = async (
+    db: sqlite.SQLiteDatabase,
+    userId: number
+) => {
     const query = ` SELECT 
         DATE(created_at) AS date, 
         SUM(duration) AS total_duration
     FROM 
         timer
+    WHERE
+            user_id = ?
     GROUP BY 
         DATE(created_at)
     ORDER BY 
         DATE(created_at) DESC;`
     try {
-        const data = (await db.getAllAsync(query)) as DatesWithDuration[]
-        console.log('timer entires', (await getAllTimeData(db)).length)
+        const data = (await db.getAllAsync(query, [
+            userId,
+        ])) as DatesWithDuration[]
         return data
     } catch (error) {
         console.error('getTimesGroupedByData', error)
