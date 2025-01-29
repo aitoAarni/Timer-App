@@ -1,27 +1,34 @@
 import { useEffect, useRef, useState } from 'react'
-import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
 import { useTimer } from '@/hooks/useTimer'
 import ErrorBox from './ErrorBox'
-import { Link } from 'expo-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import logout from '@/utils/logout'
 import ModalView from './modal/ModalView'
 
 export default function TimerView() {
+    console.log(1)
     const timer = useRef(useTimer())
+    console.log(2)
     const settings = useSelector((state: RootState) => state.settings)
+    console.log(3)
     timer.current.setNextWorkTime(settings.workTimeLength * 60)
+    console.log(4)
     timer.current.setNextBreakTime(settings.breakTimeLength * 60)
+    console.log(5)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
+    console.log(6)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    console.log(7)
 
     useEffect(() => {
+        console.log(8)
         setInterval(() => {
             timer.current.updateTimer()
+            
             const t = timer.current.getSecondsRemaining()
             setTime(t)
         }, 100)

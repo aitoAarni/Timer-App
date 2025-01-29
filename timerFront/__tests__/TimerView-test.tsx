@@ -1,8 +1,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
-import { useSelector } from 'react-redux'
 
+console.log(9)
 jest.mock('@/utils/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
         return {
@@ -15,6 +15,17 @@ jest.mock('@/utils/timers', () => {
     })
     return mockTimer
 })
+
+jest.mock('@expo/vector-icons/Feather', () => {
+    return (props: React.ComponentProps<'svg'>) => {
+        return <svg {...props} />;
+    };
+});
+jest.mock('@react-native-async-storage/async-storage', () => ({
+    getItem: jest.fn(async key => null),
+    setItem: jest.fn(async (key, value) => Promise.resolve()),
+    removeItem: jest.fn(async key => Promise.resolve()),
+}))
 
 jest.mock('react-redux', () => ({
     useSelector: jest.fn().mockImplementation(() => {
