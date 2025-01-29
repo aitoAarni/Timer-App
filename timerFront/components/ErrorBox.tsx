@@ -19,7 +19,7 @@ const ErrorBox = ({ errorMessage, setErrorMessage }: ErrorBoxProps) => {
         }
     }, [errorMessage, setErrorMessage])
     if (!errorMessage) {
-        return <View style={{ height: 50, width: '100%', opacity: 0 }} />
+        return null
     }
     return (
         <View style={styles.container}>
@@ -32,12 +32,15 @@ export default ErrorBox
 
 const styles = StyleSheet.create({
     container: {
+        position: 'absolute',
         backgroundColor: theme.colors.error,
         width: '100%',
-        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
         marginHorizontal: 10,
+        zIndex: 999,
+        elevation: 10,
+        shadowColor: '#000',
     },
 })

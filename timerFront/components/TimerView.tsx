@@ -49,7 +49,6 @@ export default function TimerView() {
             <View style={styles.timerContainer}>
                 <TouchableOpacity
                     style={styles.timerPressable}
-                    // onPress={}
                     onPressIn={handleTogglePause}
                 >
                     <DirectionPad
