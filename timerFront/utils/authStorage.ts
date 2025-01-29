@@ -1,5 +1,6 @@
 import {
     getSecureKeyValuePair,
+    removeSecureKeyValuePair,
     setSecureKeyValuePair,
 } from '@/storage/local/secureKeyValueStorage'
 import { User } from '@/types'
@@ -23,6 +24,14 @@ export default class AuthStorage {
         try {
             await setSecureKeyValuePair(this.key, userString)
         } catch (error) {
+            throw error
+        }
+    }
+    async removeUser() {
+        try {
+            await removeSecureKeyValuePair(this.key)
+        } catch (error) {
+            console.error(error)
             throw error
         }
     }

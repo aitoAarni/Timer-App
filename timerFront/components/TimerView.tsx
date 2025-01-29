@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
@@ -8,6 +8,8 @@ import ErrorBox from './ErrorBox'
 import { Link } from 'expo-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import logout from '@/utils/logout'
+import ModalView from './ModalView'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
@@ -64,6 +66,10 @@ export default function TimerView() {
                 <Link href="/login" style={{ color: 'white', fontSize: 20 }}>
                     To logiin
                 </Link>
+                <TouchableOpacity onPress={logout}>
+                    <Text fontSize={20}>logout</Text>
+                </TouchableOpacity>
+                <ModalView />
             </View>
         </View>
     )
