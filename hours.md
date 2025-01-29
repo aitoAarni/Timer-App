@@ -29,3 +29,5 @@
 | in total   | 79.5h |                                                                                               |
 | 26.1.2025  | 5h    | create singIngPage, update db, refactoring, fix bug, plan app structure                       |
 | 27.1.2025  | 4h    | add secure kvs, reasearch backend hosting, add login view and logic, fix bug w user creation  |
+| 28.1.2025  | 3h    | update loginView, added redux store, debugging expo eas problems                              |
+| 29.1.2025  | 1.5h  | refactor file structure, use redux storage fix unit testing, debug expo eas problems          |
