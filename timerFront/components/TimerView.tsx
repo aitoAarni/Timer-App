@@ -9,7 +9,7 @@ import { Link } from 'expo-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import logout from '@/utils/logout'
-import ModalView from './ModalView'
+import ModalView from './modal/ModalView'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
@@ -62,21 +62,16 @@ export default function TimerView() {
                     </DirectionPad>
                 </Pressable>
             </View>
-            <View style={[styles.fillerContainers, { marginBottom: 50 }]}>
-                <Link href="/login" style={{ color: 'white', fontSize: 20 }}>
-                    To logiin
-                </Link>
-                <TouchableOpacity onPress={logout}>
-                    <Text fontSize={20}>logout</Text>
-                </TouchableOpacity>
-                <ModalView />
-            </View>
+            <View
+                style={[styles.fillerContainers, styles.bottomContainer]}
+            ></View>
+            <ModalView />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1, justifyContent: 'center' },
+    container: { flexGrow: 1, justifyContent: 'center', paddingVertical: 20 },
     timerContainer: {
         flexGrow: 1,
     },
@@ -90,4 +85,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     backGround: { flexGrow: 1 },
+    bottomContainer: {
+        marginBottom: 50,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+    },
 })

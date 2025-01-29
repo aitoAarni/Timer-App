@@ -12,7 +12,7 @@ const useLogIn = () => {
         try {
             const user = (await getUserByUsername(db, username))[0]
 
-            if (user.password === password) {
+            if (user && user.password === password) {
                 const authStorage = new AuthStorage()
                 await authStorage.setUser(user)
                 dispatch(setLoggedInUser(user))
