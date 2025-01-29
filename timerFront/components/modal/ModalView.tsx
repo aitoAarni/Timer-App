@@ -59,5 +59,5 @@ const sytles = StyleSheet.create({
     },
     transparentPressable: { flex: 1 },
     modalContainer: { backgroundColor: '#222', paddingVertical: 20 },
-    openModalButton: { marginLeft: 20 },
+    openModalButton: { marginLeft: 20, marginBottom: 20 },
 })

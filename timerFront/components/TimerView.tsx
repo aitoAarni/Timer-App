@@ -71,7 +71,7 @@ export default function TimerView() {
 }
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1, justifyContent: 'center', paddingVertical: 20 },
+    container: { flexGrow: 1, justifyContent: 'center' },
     timerContainer: {
         flexGrow: 1,
     },
