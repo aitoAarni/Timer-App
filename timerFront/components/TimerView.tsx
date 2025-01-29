@@ -39,7 +39,15 @@ export default function TimerView() {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.fillerContainers}>
+            <View
+                style={styles.fillerContainers}
+                // onTouchStart={e => {
+                //     console.log(e.nativeEvent.changedTouches[0].pageX)
+                // }}
+                // onTouchEnd={e => {
+                //     console.log(e.nativeEvent.changedTouches[0].pageX)
+                // }}
+            >
                 <ErrorBox
                     errorMessage={errorMessage}
                     setErrorMessage={setErrorMessage}
@@ -77,7 +85,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    fillerContainers: { flex: 1 },
+    fillerContainers: { flex: 1, backgroundColor: 'green' },
     timerPressable: {
         flexGrow: 1,
         alignItems: 'center',
