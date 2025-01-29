@@ -11,7 +11,6 @@ class TimeLogger {
     }
     async addTimeLog(timeMs: number) {
         const state = store.getState()
-        console.log(`user: ${state.user.loggedInUser}`)
         const userId = state.user.loggedInUser?.id
 
         if (!userId) return false

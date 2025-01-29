@@ -65,7 +65,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             }
         } catch (error) {
             console.error(error)
-            setErrorMessage('Internal error validating login information')
+            setErrorMessage('Internal error logging in')
         }
     }
     const onSubmit: SubmitHandler<Inputs> = async values => {
