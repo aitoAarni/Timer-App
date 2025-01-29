@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
 
-console.log(9)
 jest.mock('@/utils/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
         return {
