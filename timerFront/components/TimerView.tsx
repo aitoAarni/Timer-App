@@ -47,9 +47,10 @@ export default function TimerView() {
                 />
             </View>
             <View style={styles.timerContainer}>
-                <Pressable
+                <TouchableOpacity
                     style={styles.timerPressable}
-                    onPress={handleTogglePause}
+                    // onPress={}
+                    onPressIn={handleTogglePause}
                 >
                     <DirectionPad
                         onUp={handleResetTimer}
@@ -60,7 +61,7 @@ export default function TimerView() {
                             {formatTime(time)}
                         </Text>
                     </DirectionPad>
-                </Pressable>
+                </TouchableOpacity>
             </View>
             <View
                 style={[styles.fillerContainers, styles.bottomContainer]}
