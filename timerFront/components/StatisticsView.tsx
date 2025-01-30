@@ -12,12 +12,16 @@ import { AreaChartData } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import theme from '@/theme'
+import SwipeNavigation from './SwipeNavigation'
+import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
     const db = useDatabase()
     const user = useSelector((state: RootState) => state.user.loggedInUser)
+    const navigateLeft = useNavigateTo('/')
+
     useEffect(() => {
         const getData = async () => {
             if (!user) return
@@ -53,17 +57,16 @@ export default function StatisticsView() {
     }
 
     return (
-        <View style={styles.container}>
+        <SwipeNavigation leftSwipeCallback={navigateLeft}>
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (
                 <Text>Loading data...</Text>
             )}
-        </View>
+        </SwipeNavigation>
     )
 }
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
     notLoggedIn: { fontSize: 30, marginTop: 20, color: theme.colors.text },
 })

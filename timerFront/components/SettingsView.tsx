@@ -8,26 +8,34 @@ import {
 import Text from './Text'
 import theme from '@/theme'
 import Slider from '@react-native-community/slider'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Settings } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { setSettings } from '@/services/settings'
 import { useDispatch } from 'react-redux'
 import { updateSettings } from '@/redux/settingsSlice'
+import SwipeNavigation from './SwipeNavigation'
+import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function SettingsView() {
-    const settings = useSelector((state: RootState) => state.settings)
-    console.log(settings)
+    const navigateRight = useNavigateTo('/')
     return (
-        <ScrollView style={styles.container}>
-            <TimerSlider
-                settingsKey="workTimeLength"
-                style={{ marginBottom: 30 }}
-                text="Work duration"
-            />
-            <TimerSlider settingsKey="breakTimeLength" text="Break duration" />
-        </ScrollView>
+        <SwipeNavigation
+            style={styles.container}
+            rightSwipeCallback={navigateRight}
+        >
+            <ScrollView style={styles.scrollView}>
+                <TimerSlider
+                    settingsKey="workTimeLength"
+                    style={{ marginBottom: 30 }}
+                    text="Work duration"
+                />
+                <TimerSlider
+                    settingsKey="breakTimeLength"
+                    text="Break duration"
+                />
+            </ScrollView>
+        </SwipeNavigation>
     )
 }
 
@@ -84,7 +92,9 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
 }
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1, marginTop: 40 },
+    container: { paddingTop: 30 },
+
+    scrollView: { flexGrow: 1 },
 
     timerSliderContainer: {
         alignItems: 'center',

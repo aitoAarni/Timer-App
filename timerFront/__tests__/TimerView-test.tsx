@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
@@ -10,6 +11,7 @@ jest.mock('@/utils/timers', () => {
             addTime: jest.fn(),
             switchTimer: jest.fn(),
             getSecondsRemaining: jest.fn().mockReturnValue(5),
+            updateTimer: jest.fn(),
         }
     })
     return mockTimer
@@ -17,9 +19,9 @@ jest.mock('@/utils/timers', () => {
 
 jest.mock('@expo/vector-icons/Feather', () => {
     return (props: React.ComponentProps<'svg'>) => {
-        return <svg {...props} />;
-    };
-});
+        return <svg {...props} />
+    }
+})
 jest.mock('@react-native-async-storage/async-storage', () => ({
     getItem: jest.fn(async key => null),
     setItem: jest.fn(async (key, value) => Promise.resolve()),

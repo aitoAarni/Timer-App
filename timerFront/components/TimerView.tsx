@@ -8,6 +8,9 @@ import ErrorBox from './ErrorBox'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import ModalView from './modal/ModalView'
+import SwipeNavigation from './SwipeNavigation'
+import { useRouter } from 'expo-router'
+import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
@@ -16,6 +19,8 @@ export default function TimerView() {
     timer.current.setNextBreakTime(settings.breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const navigateRight = useNavigateTo('/statistics')
+    const navigateLeft = useNavigateTo('/settings')
 
     useEffect(() => {
         setInterval(() => {
@@ -37,17 +42,14 @@ export default function TimerView() {
     const handleSwitchTimer = function () {
         timer.current.switchTimer()
     }
+
     return (
-        <View style={styles.container}>
-            <View
-                style={styles.fillerContainers}
-                // onTouchStart={e => {
-                //     console.log(e.nativeEvent.changedTouches[0].pageX)
-                // }}
-                // onTouchEnd={e => {
-                //     console.log(e.nativeEvent.changedTouches[0].pageX)
-                // }}
-            >
+        <SwipeNavigation
+            style={styles.container}
+            leftSwipeCallback={navigateLeft}
+            rightSwipeCallback={navigateRight}
+        >
+            <View style={styles.fillerContainers}>
                 <ErrorBox
                     errorMessage={errorMessage}
                     setErrorMessage={setErrorMessage}
@@ -73,7 +75,7 @@ export default function TimerView() {
                 style={[styles.fillerContainers, styles.bottomContainer]}
             ></View>
             <ModalView />
-        </View>
+        </SwipeNavigation>
     )
 }
 
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
     },
-    fillerContainers: { flex: 1, backgroundColor: 'green' },
+    fillerContainers: { flex: 1 },
     timerPressable: {
         flexGrow: 1,
         alignItems: 'center',

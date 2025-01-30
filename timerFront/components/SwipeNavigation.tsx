@@ -8,21 +8,21 @@ import {
 } from 'react-native'
 
 interface SwipeNavigationProps {
-    registerSwipe: boolean
-    rightSwipeCallback: () => void | null
-    leftSwipeCallback: () => void | null
-    children: ReactNode
-    swipeDelta: number
-    style: StyleProp<ViewStyle>
+    registerSwipe?: boolean
+    rightSwipeCallback?: () => void | null
+    leftSwipeCallback?: () => void | null
+    children?: ReactNode
+    swipeDelta?: number
+    style?: StyleProp<ViewStyle>
 }
 
 export default function SwipeNavigation({
-    registerSwipe,
     rightSwipeCallback,
     leftSwipeCallback,
     children,
-    swipeDelta = 50,
     style,
+    registerSwipe = true,
+    swipeDelta = 80,
 }: SwipeNavigationProps) {
     const [touchStartX, setTouchStartX] = useState(0)
 
@@ -35,18 +35,22 @@ export default function SwipeNavigation({
         const endX = event.nativeEvent.pageX
         const currentSwipeDelta = endX - touchStartX
         console.log('swipe: ', currentSwipeDelta)
-        if (currentSwipeDelta > swipeDelta) {
+        if (currentSwipeDelta > swipeDelta && leftSwipeCallback) {
             leftSwipeCallback()
             return
         }
-        if (currentSwipeDelta < swipeDelta) {
+        if (currentSwipeDelta < swipeDelta && rightSwipeCallback) {
             rightSwipeCallback()
             return
         }
     }
 
     return (
-        <View onResponderStart={onTouchStart} style={[styles.container, style]}>
+        <View
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            style={[styles.container, style]}
+        >
             {children}
         </View>
     )
