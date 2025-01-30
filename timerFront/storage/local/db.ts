@@ -5,7 +5,6 @@ const initializeDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
     const db = await sqlite.openDatabaseAsync(databaseName)
     await db.execAsync('PRAGMA foreign_keys = ON')
-    console.log('user table dropped and created')
     if (isTest()) {
         await dropTimerDatabase(db)
         await dropUsersDatabase(db)

@@ -15,7 +15,7 @@ const insertUser = async (
             server_id
         )
     } catch (error) {
-        console.log('errori in InsertUser', error)
+        console.error('errori in InsertUser', error)
         throw new Error(
             `Database insert failed: ${
                 error instanceof Error ? error.message : String(error)

@@ -23,7 +23,7 @@ class TimeLogger {
             )
             return success
         } catch (error) {
-            console.log('errori addTimeLog')
+            console.error(error)
             throw new Error(
                 `${error instanceof Error ? error.message : String(error)}`
             )

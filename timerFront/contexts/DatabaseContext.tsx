@@ -30,7 +30,6 @@ export const DatabaseProvider = ({ children }: DatabaseProviderProps) => {
                 if (users.length === 0) {
                     await insertUser(db, 'lil bro', 'lil_hashh', 1)
                 }
-                console.log('users', users)
                 setIsInitializing(false)
             } catch (error) {
                 console.error('databaseProvider', error)

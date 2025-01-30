@@ -1,6 +1,5 @@
 import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
-import { getUsers } from './userQueries'
 
 const insertTimeToDb = async (
     db: sqlite.SQLiteDatabase,
@@ -9,9 +8,6 @@ const insertTimeToDb = async (
     user_id: number
 ) => {
     try {
-        const users = await getUsers(db)
-        console.log('users', users)
-        console.log('user_id', user_id)
         await db.runAsync(
             `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`,
             [duration, category_id, user_id]
