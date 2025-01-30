@@ -1,4 +1,5 @@
 import {
+    GestureResponderEvent,
     ScrollView,
     StyleProp,
     StyleSheet,
@@ -18,19 +19,23 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function SettingsView() {
+    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const navigateRight = useNavigateTo('/')
     return (
         <SwipeNavigation
             style={styles.container}
             rightSwipeCallback={navigateRight}
+            registerSwipe={swipeNavigationActive}
         >
             <ScrollView style={styles.scrollView}>
                 <TimerSlider
+                    setSwipeNavigationActive={setSwipeNavigationActive}
                     settingsKey="workTimeLength"
                     style={{ marginBottom: 30 }}
                     text="Work duration"
                 />
                 <TimerSlider
+                    setSwipeNavigationActive={setSwipeNavigationActive}
                     settingsKey="breakTimeLength"
                     text="Break duration"
                 />
@@ -43,9 +48,15 @@ interface TimerSliderProps {
     style?: StyleProp<ViewStyle>
     text?: string
     settingsKey: keyof Settings
+    setSwipeNavigationActive: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
+const TimerSlider = function ({
+    style,
+    text,
+    settingsKey,
+    setSwipeNavigationActive,
+}: TimerSliderProps) {
     const settings = useSelector((state: RootState) => state.settings)
     const dispatch = useDispatch()
     const initialValue = settings[settingsKey] ?? 20
@@ -78,6 +89,12 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
                     value={initialValue}
                     onValueChange={value => onValueChange(value)}
                     onSlidingComplete={onRelease}
+                    onTouchStart={(event: GestureResponderEvent) => {
+                        setSwipeNavigationActive(false)
+                    }}
+                    onTouchEnd={(event: GestureResponderEvent) => {
+                        setSwipeNavigationActive(true)
+                    }}
                 />
                 <Text
                     style={{ flexGrow: 1 }}
@@ -104,5 +121,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
-    slider: { width: 300 },
+    slider: { width: 300, backgroundColor: 'green' },
 })
