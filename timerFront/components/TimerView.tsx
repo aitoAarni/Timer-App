@@ -30,7 +30,7 @@ export default function TimerView() {
 
             const t = timer.current.getSecondsRemaining()
             setTime(t)
-        }, 100)
+        }, 200)
     }, [])
     const handleTogglePause = function () {
         timer.current.pauseToggle()

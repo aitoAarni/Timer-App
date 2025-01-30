@@ -1,5 +1,4 @@
 import {
-    Alert,
     FlatList,
     StyleSheet,
     TouchableOpacity,
@@ -14,7 +13,6 @@ import { TextInput } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
 import ErrorBox from './ErrorBox'
 import useLogIn from '@/useLogIn'
-import AuthStorage from '@/utils/authStorage'
 import { useRouter } from 'expo-router'
 import { User } from '@/types'
 import { useDatabase } from '@/hooks/useDatabase'

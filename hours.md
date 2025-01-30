@@ -31,3 +31,4 @@
 | 27.1.2025  | 4h    | add secure kvs, reasearch backend hosting, add login view and logic, fix bug w user creation  |
 | 28.1.2025  | 3h    | update loginView, added redux store, debugging expo eas problems                              |
 | 29.1.2025  | 5.5h  | refactor file structure, use redux storage fix unit testing, create modal & more              |
+| 30.1.2025  | 4.5h  | create swipe navigation, change navigation to align with swipe navigation, performane improv. |
