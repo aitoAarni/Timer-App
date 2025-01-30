@@ -4,6 +4,8 @@ import { Link, LinkProps, usePathname } from 'expo-router'
 import Text from './Text'
 import theme from '@/theme'
 
+// TODO: optimize how long it takes from clicking link to showing page
+
 const screenWidth = Dimensions.get('window').width
 export default function AppBar({
     navigation,

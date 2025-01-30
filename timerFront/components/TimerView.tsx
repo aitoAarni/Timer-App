@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import {
-    GestureResponderEvent,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-} from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
@@ -16,12 +11,15 @@ import ModalView from './modal/ModalView'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 
+// TODO: when navigating between pages, fix animation to not show always from one side,
+// and show white on the left of the screen
+// TODO: when timer is swiped to right, then swipe navigation is off unitll timer is pressed again
+
 export default function TimerView() {
     const timer = useRef(useTimer())
     const settings = useSelector((state: RootState) => state.settings)
     timer.current.setNextWorkTime(settings.workTimeLength * 60)
     timer.current.setNextBreakTime(settings.breakTimeLength * 60)
-    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
@@ -48,27 +46,17 @@ export default function TimerView() {
     }
 
     return (
-        <SwipeNavigation
-            style={styles.container}
-            leftSwipeCallback={navigateLeft}
-            rightSwipeCallback={navigateRight}
-            registerSwipe={swipeNavigationActive}
-        >
-            <View style={styles.fillerContainers}>
-                <ErrorBox
-                    errorMessage={errorMessage}
-                    setErrorMessage={setErrorMessage}
-                />
-            </View>
-            <View
-                style={styles.timerContainer}
-                onTouchStart={(event: GestureResponderEvent) => {
-                    setSwipeNavigationActive(false)
-                }}
-                onTouchEnd={(event: GestureResponderEvent) => {
-                    setSwipeNavigationActive(true)
-                }}
-            >
+        <View style={styles.container}>
+            <ErrorBox
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+            />
+            <SwipeNavigation
+                style={styles.fillerContainers}
+                leftSwipeCallback={navigateLeft}
+                rightSwipeCallback={navigateRight}
+            ></SwipeNavigation>
+            <View style={styles.timerContainer}>
                 <TouchableOpacity
                     style={styles.timerPressable}
                     onPressIn={handleTogglePause}
@@ -84,11 +72,13 @@ export default function TimerView() {
                     </DirectionPad>
                 </TouchableOpacity>
             </View>
-            <View
+            <SwipeNavigation
                 style={[styles.fillerContainers, styles.bottomContainer]}
-            ></View>
+                leftSwipeCallback={navigateLeft}
+                rightSwipeCallback={navigateRight}
+            ></SwipeNavigation>
             <ModalView />
-        </SwipeNavigation>
+        </View>
     )
 }
 
