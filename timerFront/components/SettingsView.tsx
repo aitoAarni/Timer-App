@@ -121,5 +121,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
-    slider: { width: 300, backgroundColor: 'green' },
+    slider: { width: 300 },
 })

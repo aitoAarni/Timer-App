@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+    GestureResponderEvent,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
@@ -16,11 +21,11 @@ export default function TimerView() {
     const settings = useSelector((state: RootState) => state.settings)
     timer.current.setNextWorkTime(settings.workTimeLength * 60)
     timer.current.setNextBreakTime(settings.breakTimeLength * 60)
+    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
-
     useEffect(() => {
         setInterval(() => {
             timer.current.updateTimer()
@@ -47,6 +52,7 @@ export default function TimerView() {
             style={styles.container}
             leftSwipeCallback={navigateLeft}
             rightSwipeCallback={navigateRight}
+            registerSwipe={swipeNavigationActive}
         >
             <View style={styles.fillerContainers}>
                 <ErrorBox
@@ -54,7 +60,15 @@ export default function TimerView() {
                     setErrorMessage={setErrorMessage}
                 />
             </View>
-            <View style={styles.timerContainer}>
+            <View
+                style={styles.timerContainer}
+                onTouchStart={(event: GestureResponderEvent) => {
+                    setSwipeNavigationActive(false)
+                }}
+                onTouchEnd={(event: GestureResponderEvent) => {
+                    setSwipeNavigationActive(true)
+                }}
+            >
                 <TouchableOpacity
                     style={styles.timerPressable}
                     onPressIn={handleTogglePause}
