@@ -1,15 +1,12 @@
 import {
     View,
     StyleSheet,
-    Pressable,
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import {
     ExternalPathString,
-    Link,
-    LinkProps,
     RelativePathString,
     usePathname,
     useRouter,

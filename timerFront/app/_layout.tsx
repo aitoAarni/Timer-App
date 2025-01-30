@@ -51,7 +51,7 @@ export default function RootLayout() {
                                     ),
                                     animation: 'none',
                                     gestureEnabled: true,
-                                    gestureDirection: "horizontal"
+                                    gestureDirection: 'horizontal',
                                 }}
                             >
                                 <Stack.Screen name="index" />
@@ -62,6 +62,10 @@ export default function RootLayout() {
                                 <Stack.Screen
                                     options={{ animation: 'slide_from_right' }}
                                     name="statistics"
+                                />
+                                <Stack.Screen
+                                    options={{ animation: 'slide_from_bottom' }}
+                                    name="login"
                                 />
                             </Stack>
                         </TimerProvider>
