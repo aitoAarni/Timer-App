@@ -1,6 +1,19 @@
-import { View, StyleSheet, Pressable, Dimensions } from 'react-native'
+import {
+    View,
+    StyleSheet,
+    Pressable,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
-import { Link, LinkProps, usePathname } from 'expo-router'
+import {
+    ExternalPathString,
+    Link,
+    LinkProps,
+    RelativePathString,
+    usePathname,
+    useRouter,
+} from 'expo-router'
 import Text from './Text'
 import theme from '@/theme'
 
@@ -14,16 +27,17 @@ export default function AppBar({
     route,
 }: NativeStackHeaderProps) {
     const pathname = usePathname()
+
     return (
         <View style={styles.container}>
             <AppBarButton
-                href="/settings"
+                path="/settings"
                 text="Settings"
                 currentPath={pathname}
             />
-            <AppBarButton href="/" text="Timer" currentPath={pathname} />
+            <AppBarButton path="/" text="Timer" currentPath={pathname} />
             <AppBarButton
-                href="/statistics"
+                path="/statistics"
                 text="Statistics"
                 currentPath={pathname}
             />
@@ -32,33 +46,45 @@ export default function AppBar({
 }
 
 const AppBarButton = function ({
-    href,
+    path,
     text,
     currentPath,
 }: {
-    href: LinkProps['href']
+    path:
+        | RelativePathString
+        | ExternalPathString
+        | '/'
+        | '/login'
+        | '/settings'
+        | '/statistics'
+        | '/_sitemap'
+        | '/+not-found'
     text: string
     currentPath: string
 }) {
+    const router = useRouter()
+    const onPress = () => {
+        const from = currentPath.replace('/', '')
+        router.push({
+            pathname: path,
+            params: { from },
+        })
+    }
     return (
-        <View
-            style={[
-                styles.textContainer,
-                currentPath === href ? styles.activeLink : null,
-            ]}
-        >
-            <Link href={href} asChild>
-                <Pressable>
-                    <Text
-                        style={[
-                            styles.text,
-                            currentPath === href ? styles.acitveText : null,
-                        ]}
-                    >
-                        {text}
-                    </Text>
-                </Pressable>
-            </Link>
+        <View style={styles.textContainer}>
+            <TouchableOpacity
+                onPressIn={onPress}
+                style={styles.touchableOpacity}
+            >
+                <Text
+                    style={[
+                        styles.text,
+                        currentPath === path ? styles.acitveText : null,
+                    ]}
+                >
+                    {text}
+                </Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -79,10 +105,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     acitveText: { color: theme.colors.text },
-    activeLink: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 25,
-    },
+
     text: { fontSize: 20, color: theme.colors.grayLight },
+    touchableOpacity: { width: '100%' },
 })

@@ -58,7 +58,8 @@ export const transformDatesAndDurationDataForChart = (
     return { transformedData, maxValue }
 }
 
-export const getPlaceholderDataForChart = (daysOfData: number = 30) => {
+export const getPlaceholderDataForChart = (daysOfData: number = 5) => {
+    // TODO: remove or change for quicker loading
     const months = [
         'Jan',
         'Feb',

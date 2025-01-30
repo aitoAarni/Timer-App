@@ -49,12 +49,20 @@ export default function RootLayout() {
                                     header: (props: NativeStackHeaderProps) => (
                                         <AppBar {...props} />
                                     ),
+                                    animation: 'none',
+                                    gestureEnabled: true,
+                                    gestureDirection: "horizontal"
                                 }}
                             >
                                 <Stack.Screen name="index" />
-                                <Stack.Screen name="settings" />
-                                <Stack.Screen name="statistics" />
-                                <Stack.Screen name="login" />
+                                <Stack.Screen
+                                    options={{ animation: 'slide_from_left' }}
+                                    name="settings"
+                                />
+                                <Stack.Screen
+                                    options={{ animation: 'slide_from_right' }}
+                                    name="statistics"
+                                />
                             </Stack>
                         </TimerProvider>
                     </Provider>

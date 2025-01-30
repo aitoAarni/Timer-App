@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
@@ -20,25 +20,29 @@ export default function StatisticsView() {
     const [maxValue, setMaxValue] = useState(0)
     const db = useDatabase()
     const user = useSelector((state: RootState) => state.user.loggedInUser)
-    const navigateLeft = useNavigateTo('/')
+    const navigateLeft = useNavigateTo({
+        pathname: '/',
+        params: { from: 'statistics' },
+    })
 
     useEffect(() => {
         const getData = async () => {
             if (!user) return
             try {
-                const {
-                    transformedData: placeholderData,
-                    maxValue: placeholderMaxValue,
-                } = getPlaceholderDataForChart()
-                setData(placeholderData)
-                setMaxValue(placeholderMaxValue)
+                // TODO: increase perfomance
+                // const {
+                //     transformedData: placeholderData,
+                //     maxValue: placeholderMaxValue,
+                // } = getPlaceholderDataForChart()
+                // setData(placeholderData)
+                // setMaxValue(placeholderMaxValue)
                 const datesData = await getTimesGroupedByDate(db, user.id)
                 const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)
                 setMaxValue(maxVal)
             } catch (error) {
-                console.log('error in StatisticsView', error)
+                console.error('error in StatisticsView', error)
                 throw new Error(
                     `Error fetching data: ${
                         error instanceof Error ? error.message : String(error)
@@ -63,7 +67,10 @@ export default function StatisticsView() {
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (
-                <Text>Loading data...</Text>
+                <ActivityIndicator
+                    style={styles.acitivityIndicator}
+                    size="large"
+                />
             )}
         </SwipeNavigation>
     )
@@ -71,4 +78,6 @@ export default function StatisticsView() {
 
 const styles = StyleSheet.create({
     notLoggedIn: { fontSize: 30, marginTop: 20, color: theme.colors.text },
+
+    acitivityIndicator: { top: '30%' },
 })

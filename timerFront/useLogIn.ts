@@ -1,4 +1,3 @@
-import { useRouter } from 'expo-router'
 import { useDatabase } from './hooks/useDatabase'
 import { getUserByUsername } from './storage/local/userQueries'
 import AuthStorage from './utils/authStorage'
@@ -16,7 +15,6 @@ const useLogIn = () => {
                 const authStorage = new AuthStorage()
                 await authStorage.setUser(user)
                 dispatch(setLoggedInUser(user))
-                console.log(await authStorage.getUser())
                 return true
             }
             return false

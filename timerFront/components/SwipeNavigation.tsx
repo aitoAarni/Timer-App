@@ -22,7 +22,7 @@ export default function SwipeNavigation({
     children,
     style,
     registerSwipe = true,
-    swipeDelta = 80,
+    swipeDelta = 50,
 }: SwipeNavigationProps) {
     const [touchStartX, setTouchStartX] = useState(0)
 

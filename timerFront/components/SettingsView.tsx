@@ -1,5 +1,6 @@
 import {
     GestureResponderEvent,
+    Pressable,
     ScrollView,
     StyleProp,
     StyleSheet,
@@ -20,7 +21,11 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function SettingsView() {
     const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
-    const navigateRight = useNavigateTo('/')
+    const navigateRight = useNavigateTo({
+        pathname: '/',
+        params: { from: 'settings' },
+    })
+
     return (
         <SwipeNavigation
             style={styles.container}
