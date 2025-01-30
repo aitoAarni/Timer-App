@@ -34,12 +34,11 @@ export default function SwipeNavigation({
         if (!registerSwipe) return
         const endX = event.nativeEvent.pageX
         const currentSwipeDelta = endX - touchStartX
-        console.log('swipe: ', currentSwipeDelta)
         if (currentSwipeDelta > swipeDelta && leftSwipeCallback) {
             leftSwipeCallback()
             return
         }
-        if (currentSwipeDelta < swipeDelta && rightSwipeCallback) {
+        if (currentSwipeDelta < -swipeDelta && rightSwipeCallback) {
             rightSwipeCallback()
             return
         }

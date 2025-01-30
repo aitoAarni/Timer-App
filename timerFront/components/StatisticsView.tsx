@@ -50,9 +50,11 @@ export default function StatisticsView() {
     }, [])
     if (!user) {
         return (
-            <Text style={styles.notLoggedIn}>
-                You must be logged in to get statistics
-            </Text>
+            <SwipeNavigation leftSwipeCallback={navigateLeft}>
+                <Text style={styles.notLoggedIn}>
+                    You must be logged in to get statistics
+                </Text>
+            </SwipeNavigation>
         )
     }
 

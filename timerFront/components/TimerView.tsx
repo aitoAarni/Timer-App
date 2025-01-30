@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import ModalView from './modal/ModalView'
 import SwipeNavigation from './SwipeNavigation'
-import { useRouter } from 'expo-router'
 import useNavigateTo from '@/hooks/useNavigateTo'
 
 export default function TimerView() {
