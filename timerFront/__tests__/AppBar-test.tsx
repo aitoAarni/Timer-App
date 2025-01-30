@@ -5,9 +5,8 @@ import AppBar from '@/components/AppBar'
 import theme from '@/theme'
 
 jest.mock('expo-router', () => ({
-    Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
-        <div data-testid={`link-${href}`}>{children}</div>
-    ),
+    useRouter: jest.fn(),
+
     usePathname: jest.fn(),
 }))
 
