@@ -7,55 +7,53 @@ import {
     View,
     ViewStyle,
 } from 'react-native'
+import {
+    Directions,
+    Gesture,
+    GestureDetector,
+} from 'react-native-gesture-handler'
+import { runOnJS } from 'react-native-reanimated'
 
 interface SwipeNavigationProps {
     registerSwipe?: boolean
-    rightSwipeCallback?: () => void | null
-    leftSwipeCallback?: () => void | null
+    rightSwipeCallback?: () => void | undefined
+    leftSwipeCallback?: () => void | undefined
     children?: ReactNode
-    swipeDelta?: number
     style?: StyleProp<ViewStyle>
 }
 
-export default function SwipeNavigation({
+function SwipeNavigation({
     rightSwipeCallback,
     leftSwipeCallback,
     children,
     style,
     registerSwipe = true,
-    swipeDelta = 30,
 }: SwipeNavigationProps) {
-    const [touchStartX, setTouchStartX] = useState(0)
-
-    const onTouchStart = (event: GestureResponderEvent) => {
-        const startX = event.nativeEvent.pageX
-        setTouchStartX(startX)
-    }
-    const onTouchEnd = (event: GestureResponderEvent) => {
-        if (!registerSwipe) return
-        const endX = event.nativeEvent.pageX
-        const currentSwipeDelta = endX - touchStartX
-        if (currentSwipeDelta > swipeDelta && leftSwipeCallback) {
-            leftSwipeCallback()
-            return
-        }
-        if (currentSwipeDelta < -swipeDelta && rightSwipeCallback) {
-            rightSwipeCallback()
-            return
-        }
-    }
+    const flingRight = Gesture.Fling()
+        .direction(Directions.RIGHT)
+        .onStart(_ => {
+            if (leftSwipeCallback && registerSwipe) {
+                runOnJS(leftSwipeCallback)()
+            }
+        })
+    const flingLeft = Gesture.Fling()
+        .direction(Directions.LEFT)
+        .onStart(_ => {
+            if (rightSwipeCallback && registerSwipe) {
+                runOnJS(rightSwipeCallback)()
+            }
+        })
+    const composed = Gesture.Race(flingLeft, flingRight)
 
     return (
-        <View
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-            style={[styles.container, style]}
-        >
-            {children}
-        </View>
+        <GestureDetector gesture={composed}>
+            <View style={[styles.container, style]}>{children}</View>
+        </GestureDetector>
     )
 }
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: theme.colors.background },
 })
+
+export default SwipeNavigation
