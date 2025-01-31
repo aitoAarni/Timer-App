@@ -15,6 +15,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { createTables, initializeDatabase } from '@/storage/local/db'
 import { getUsers } from '@/storage/local/userQueries'
+import { insertUser } from '@/storage/local/userQueries'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,10 +33,10 @@ export default function RootLayout() {
         const initialize = async () => {
             await initializeDatabase()
             await createTables()
-            const users = await getUsers(db)
+            const users = await getUsers()
 
             if (users.length === 0) {
-                await insertUser(db, 'test_user', 'password', 1)
+                await insertUser('test_user', 'password', 1)
             }
             setIsInitializing(false)
         }
