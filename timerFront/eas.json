@@ -15,7 +15,11 @@
             "distribution": "internal"
         },
         "preview": {
-            "distribution": "internal"
+            "distribution": "internal",
+            "extends": "production",
+            "env": {
+                "EXPO_PUBLIC_TESTING": "false"
+            }
         },
         "production": {
             "autoIncrement": true
