@@ -9,7 +9,11 @@ const ModalButton = ({ children }: { children: ReactNode }) => {
     return <View style={styles.modalButton}>{children}</View>
 }
 
-export function LoginButton({ closeModal }: { closeModal: () => void }) {
+interface ModalButtonProps {
+    closeModal: () => void
+}
+
+export function LoginButton({ closeModal }: ModalButtonProps) {
     const router = useRouter()
     const onPress = () => {
         closeModal()
@@ -32,6 +36,21 @@ export function LogoutButton() {
         <ModalButton>
             <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
                 <Text style={styles.buttonText}>Logout</Text>
+            </TouchableOpacity>
+        </ModalButton>
+    )
+}
+
+export function ProfileButton({ closeModal }: ModalButtonProps) {
+    const router = useRouter()
+    const onPress = () => {
+        closeModal()
+        router.push('/profile')
+    }
+    return (
+        <ModalButton>
+            <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
+                <Text style={styles.buttonText}>Profile</Text>
             </TouchableOpacity>
         </ModalButton>
     )

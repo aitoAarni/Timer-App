@@ -1,11 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import Text from '../Text'
 import theme from '@/theme'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
-import { LoginButton, LogoutButton } from './ModalButtons'
+import { LoginButton, LogoutButton, ProfileButton } from './ModalButtons'
 import useLoggedIn from '@/hooks/useLoggedIn'
 import Feather from '@expo/vector-icons/Feather'
 
@@ -40,6 +37,7 @@ export default function ModalView() {
                     ></TouchableOpacity>
                 </View>
                 <View style={sytles.modalContainer}>
+                    {loggedIn && <ProfileButton closeModal={closeModal} />}
                     {loggedIn ? (
                         <LogoutButton />
                     ) : (
