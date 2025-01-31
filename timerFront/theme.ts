@@ -11,6 +11,7 @@ const theme = {
 
     fontSizes: {
         body: 14,
+        header: 30,
         timer: 60,
     },
     fonts: {

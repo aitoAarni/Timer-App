@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     header: {
-        fontSize: 30,
+        fontSize: theme.fontSizes.header,
         marginBottom: 20,
         marginTop: 10,
         alignSelf: 'center',

@@ -1,3 +1,4 @@
+import theme from '@/theme'
 import { ReactNode, useState } from 'react'
 import {
     GestureResponderEvent,
@@ -55,4 +56,6 @@ export default function SwipeNavigation({
     )
 }
 
-const styles = StyleSheet.create({ container: { flex: 1 } })
+const styles = StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.colors.background },
+})
