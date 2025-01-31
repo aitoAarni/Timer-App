@@ -28,7 +28,6 @@ export default function TimerView() {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('here')
             let previousTime = -2
             const interval = setInterval(() => {
                 timer.current.updateTimer()
@@ -37,14 +36,11 @@ export default function TimerView() {
 
                 if (currentTime !== previousTime) {
                     previousTime = currentTime
-                    console.log('sama')
                     setTime(currentTime)
                 } else {
-                    console.log('eri')
                 }
             }, 200)
             return () => {
-                console.log('nmounting')
                 return clearInterval(interval)
             }
         }, [])
