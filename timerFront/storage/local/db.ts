@@ -1,19 +1,24 @@
 import { isTest } from '@/utils/environment'
 import * as sqlite from 'expo-sqlite'
 
-const initializeDatabase = async () => {
+const openDatabase = async () => {
     const databaseName = isTest() ? 'testDatabase' : 'localDatabase'
-    const db = await sqlite.openDatabaseAsync(databaseName)
-    await db.execAsync('PRAGMA foreign_keys = ON')
-    if (isTest()) {
-        await dropTimerDatabase(db)
-        await dropUsersDatabase(db)
-    }
-    return db
+    const database = await sqlite.openDatabaseAsync(databaseName)
+    return database
 }
 
-const createTables = async (db: sqlite.SQLiteDatabase) => {
+const initializeDatabase = async () => {
+    if (isTest()) {
+        await dropTimerDatabase()
+        await dropUsersDatabase()
+    }
+}
+
+const createTables = async () => {
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
+        db = await openDatabase()
         await db.runAsync(`
             CREATE TABLE IF NOT EXISTS users 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,18 +39,29 @@ const createTables = async (db: sqlite.SQLiteDatabase) => {
     } catch (error) {
         console.error('error in createTables', error)
         throw error
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const dropUsersDatabase = async (db: sqlite.SQLiteDatabase) => {
+const dropUsersDatabase = async () => {
+    const db = await openDatabase()
     await db.execAsync(`DROP TABLE IF EXISTS users`)
+    db.closeAsync()
 }
 
-const dropTimerDatabase = async (db: sqlite.SQLiteDatabase) => {
+const dropTimerDatabase = async () => {
+    const db = await openDatabase()
     await db.execAsync(`DROP TABLE IF EXISTS timer`)
+    if (db) {
+        db.closeAsync()
+    }
 }
 
 export {
+    openDatabase,
     initializeDatabase,
     createTables,
     dropUsersDatabase,

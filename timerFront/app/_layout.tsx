@@ -2,22 +2,24 @@
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { StyleSheet } from 'react-native'
+import { ActivityIndicator, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
-import { DatabaseProvider } from '@/contexts/DatabaseContext'
 import AppBar from '@/components/AppBar'
 import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { createTables, initializeDatabase } from '@/storage/local/db'
+import { getUsers } from '@/storage/local/userQueries'
 
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
+    const [isInitializing, setIsInitializing] = useState(true)
     const [loaded, error] = useFonts({
         'PermanentMarker-Regular': require('@/assets/fonts/PermanentMarker-Regular.ttf'),
         'IBM-Plex-Mono': require('@/assets/fonts/IBMPlexMono-Bold.ttf'),
@@ -25,52 +27,63 @@ export default function RootLayout() {
         'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
         DancingScript: require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
+
     useEffect(() => {
+        const initialize = async () => {
+            await initializeDatabase()
+            await createTables()
+            const users = await getUsers(db)
+
+            if (users.length === 0) {
+                await insertUser(db, 'test_user', 'password', 1)
+            }
+            setIsInitializing(false)
+        }
+        initialize()
         if (loaded || error) {
             SplashScreen.hideAsync()
         }
-    }, [loaded, error])
+    }, [])
 
     if (!loaded && !error) {
         return null
     }
+    if (isInitializing) <ActivityIndicator />
     return (
         <GestureHandlerRootView>
             <SafeAreaView style={styles.container}>
-                <DatabaseProvider>
-                    <Provider store={store}>
-                        <TimerProvider>
-                            <StatusBar
-                                backgroundColor={theme.colors.background}
-                                style="light"
+                <Provider store={store}>
+                    <TimerProvider>
+                        <StatusBar
+                            backgroundColor={theme.colors.background}
+                            style="light"
+                        />
+                        <Stack
+                            screenOptions={{
+                                header: (props: NativeStackHeaderProps) => (
+                                    <AppBar {...props} />
+                                ),
+                                animation: 'none',
+                                gestureEnabled: true,
+                                gestureDirection: 'horizontal',
+                            }}
+                        >
+                            <Stack.Screen name="index" />
+                            <Stack.Screen
+                                options={{ animation: 'slide_from_left' }}
+                                name="settings"
                             />
-                            <Stack
-                                screenOptions={{
-                                    header: (props: NativeStackHeaderProps) => (
-                                        <AppBar {...props} />
-                                    ),
-                                    animation: 'none',
-                                    gestureEnabled: true,
-                                    gestureDirection: 'horizontal',
-                                }}
-                            >
-                                <Stack.Screen name="index" />
-                                <Stack.Screen
-                                    options={{ animation: 'slide_from_left' }}
-                                    name="settings"
-                                />
-                                <Stack.Screen
-                                    options={{ animation: 'slide_from_right' }}
-                                    name="statistics"
-                                />
-                                <Stack.Screen
-                                    options={{ animation: 'slide_from_bottom' }}
-                                    name="login"
-                                />
-                            </Stack>
-                        </TimerProvider>
-                    </Provider>
-                </DatabaseProvider>
+                            <Stack.Screen
+                                options={{ animation: 'slide_from_right' }}
+                                name="statistics"
+                            />
+                            <Stack.Screen
+                                options={{ animation: 'slide_from_bottom' }}
+                                name="login"
+                            />
+                        </Stack>
+                    </TimerProvider>
+                </Provider>
             </SafeAreaView>
         </GestureHandlerRootView>
     )

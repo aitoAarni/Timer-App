@@ -1,13 +1,16 @@
 import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
+import { openDatabase } from './db'
 
 const insertTimeToDb = async (
-    db: sqlite.SQLiteDatabase,
     duration: number,
     category_id: number,
     user_id: number
 ) => {
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
+        db = await openDatabase()
         await db.runAsync(
             `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`,
             [duration, category_id, user_id]
@@ -16,11 +19,18 @@ const insertTimeToDb = async (
     } catch (error) {
         console.error('insertTimeToDb', error)
         throw new Error(`Error inserting data: ${error}`)
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const getAllTimeData = async (db: sqlite.SQLiteDatabase) => {
+const getAllTimeData = async () => {
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
+        db = await openDatabase()
         const timeData = (await db.getAllAsync(
             `SELECT * FROM timer`
         )) as TimeLogged[]
@@ -32,12 +42,19 @@ const getAllTimeData = async (db: sqlite.SQLiteDatabase) => {
                 error instanceof Error ? error.message : String(error)
             }`
         )
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
+const getAllTimes = async () => {
     const query = `SELECT duration FROM timer`
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
+        db = await openDatabase()
         const times = (await db.getAllAsync(query)) as TimeDuratio[]
         return times
     } catch (error) {
@@ -47,13 +64,14 @@ const getAllTimes = async (db: sqlite.SQLiteDatabase) => {
                 error instanceof Error ? error.message : String(error)
             }`
         )
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const getTimesGroupedByDate = async (
-    db: sqlite.SQLiteDatabase,
-    userId: number
-) => {
+const getTimesGroupedByDate = async (userId: number) => {
     const query = ` SELECT 
         DATE(created_at) AS date, 
         SUM(duration) AS total_duration
@@ -65,7 +83,10 @@ const getTimesGroupedByDate = async (
         DATE(created_at)
     ORDER BY 
         DATE(created_at) DESC;`
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
+        db = await openDatabase()
         const data = (await db.getAllAsync(query, [
             userId,
         ])) as DatesWithDuration[]
@@ -77,6 +98,10 @@ const getTimesGroupedByDate = async (
                 error instanceof Error ? error.message : String(error)
             }`
         )
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 

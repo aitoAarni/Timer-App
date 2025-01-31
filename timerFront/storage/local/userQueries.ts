@@ -1,13 +1,15 @@
 import { User } from '@/types'
 import * as sqlite from 'expo-sqlite'
+import { openDatabase } from './db'
 
 const insertUser = async (
-    db: sqlite.SQLiteDatabase,
     username: string,
     password: string,
     server_id: number
 ) => {
+    let db: sqlite.SQLiteDatabase | null = null
     try {
+        db = await openDatabase()
         await db.runAsync(
             `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`,
             username,
@@ -21,29 +23,47 @@ const insertUser = async (
                 error instanceof Error ? error.message : String(error)
             } `
         )
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const getUsers = async (db: sqlite.SQLiteDatabase) => {
+const getUsers = async () => {
+    let db: sqlite.SQLiteDatabase | null = null
     try {
+        db = await openDatabase()
         const query = (await db.getAllAsync('SELECT * FROM users')) as User[]
         return query
     } catch (error) {
         console.error(error)
         throw error
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
     }
 }
 
-const getUserByUsername = async (db: sqlite.SQLiteDatabase, username: string) => {
+const getUserByUsername = async (username: string) => {
+    let db: sqlite.SQLiteDatabase | null = null
+
     try {
-        const query = (await db.getAllAsync('SELECT * FROM users WHERE username = ?', username)) as User[]
+        db = await openDatabase()
+        const query = (await db.getAllAsync(
+            'SELECT * FROM users WHERE username = ?',
+            username
+        )) as User[]
         return query
     } catch (error) {
         console.error(error)
         throw error
-    };
-    ;
-    
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
+    }
 }
 
 export { insertUser, getUsers, getUserByUsername }

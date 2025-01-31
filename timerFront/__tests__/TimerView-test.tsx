@@ -38,11 +38,6 @@ jest.mock('react-redux', () => ({
     }),
 }))
 
-jest.mock('@/hooks/useDatabase', () => {
-    return {
-        useDatabase: jest.fn(),
-    }
-})
 
 jest.mock('@/hooks/useTimer', () => {
     return {

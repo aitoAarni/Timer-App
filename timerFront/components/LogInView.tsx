@@ -15,7 +15,6 @@ import ErrorBox from './ErrorBox'
 import useLogIn from '@/useLogIn'
 import { useRouter } from 'expo-router'
 import { User } from '@/types'
-import { useDatabase } from '@/hooks/useDatabase'
 import { getUsers } from '@/storage/local/userQueries'
 
 const validationSchema = yup.object().shape({
@@ -36,7 +35,6 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [users, setUsers] = useState<User[] | null>(null)
     const login = useLogIn()
-    const db = useDatabase()
     const router = useRouter()
     const {
         handleSubmit,
@@ -72,7 +70,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
 
     useEffect(() => {
         const getUsersFromDb = async () => {
-            const usrs = await getUsers(db)
+            const usrs = await getUsers()
             setUsers(usrs)
         }
         getUsersFromDb()

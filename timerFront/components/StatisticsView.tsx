@@ -2,7 +2,6 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
-import { useDatabase } from '@/hooks/useDatabase'
 import AreaChartView from './AreaChartView'
 import {
     getPlaceholderDataForChart,
@@ -18,7 +17,6 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
-    const db = useDatabase()
     const user = useSelector((state: RootState) => state.user.loggedInUser)
     const navigateLeft = useNavigateTo({
         pathname: '/',
@@ -36,7 +34,7 @@ export default function StatisticsView() {
                 // } = getPlaceholderDataForChart()
                 // setData(placeholderData)
                 // setMaxValue(placeholderMaxValue)
-                const datesData = await getTimesGroupedByDate(db, user.id)
+                const datesData = await getTimesGroupedByDate(user.id)
                 const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)
