@@ -2,6 +2,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '../components/TimerView'
+import { useFocusEffect } from 'expo-router'
 
 jest.mock('@/utils/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
@@ -54,6 +55,11 @@ jest.mock('@/hooks/useTimer', () => {
         }),
     }
 })
+
+jest.mock('expo-router', () => ({
+    useFocusEffect: jest.fn(),
+    useRouter: jest.fn(),
+}))
 
 jest.mock('react-redux', () => {
     return {

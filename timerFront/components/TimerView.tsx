@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
@@ -10,6 +10,7 @@ import { RootState } from '@/redux/store'
 import ModalView from './modal/ModalView'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
+import { useFocusEffect } from 'expo-router'
 
 // TODO: when navigating between pages, fix animation to not show always from one side,
 // and show white on the left of the screen
@@ -24,14 +25,30 @@ export default function TimerView() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
-    useEffect(() => {
-        setInterval(() => {
-            timer.current.updateTimer()
 
-            const t = timer.current.getSecondsRemaining()
-            setTime(t)
-        }, 200)
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            console.log('here')
+            let previousTime = -2
+            const interval = setInterval(() => {
+                timer.current.updateTimer()
+
+                const currentTime = timer.current.getSecondsRemaining()
+
+                if (currentTime !== previousTime) {
+                    previousTime = currentTime
+                    console.log('sama')
+                    setTime(currentTime)
+                } else {
+                    console.log('eri')
+                }
+            }, 200)
+            return () => {
+                console.log('nmounting')
+                return clearInterval(interval)
+            }
+        }, [])
+    )
     const handleTogglePause = function () {
         timer.current.pauseToggle()
     }
