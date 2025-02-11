@@ -59,11 +59,10 @@ export default function RootLayout() {
                             backgroundColor={theme.colors.background}
                             style="light"
                         />
+                        <AppBar />
                         <Stack
                             screenOptions={{
-                                header: (props: NativeStackHeaderProps) => (
-                                    <AppBar {...props} />
-                                ),
+                                headerShown: false,
                                 animation: 'none',
                                 gestureEnabled: true,
                                 gestureDirection: 'horizontal',

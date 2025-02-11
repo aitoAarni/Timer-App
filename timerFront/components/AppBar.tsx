@@ -1,10 +1,4 @@
-import {
-    View,
-    StyleSheet,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native'
-import { NativeStackHeaderProps } from '@react-navigation/native-stack'
+import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import {
     ExternalPathString,
     RelativePathString,
@@ -17,12 +11,7 @@ import theme from '@/theme'
 // TODO: optimize how long it takes from clicking link to showing page
 
 const screenWidth = Dimensions.get('window').width
-export default function AppBar({
-    navigation,
-    options,
-    back,
-    route,
-}: NativeStackHeaderProps) {
+export default function AppBar() {
     const pathname = usePathname()
 
     return (
