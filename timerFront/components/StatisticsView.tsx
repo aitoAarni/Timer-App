@@ -3,10 +3,7 @@ import Text from './Text'
 import { useEffect, useState } from 'react'
 import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
 import AreaChartView from './AreaChartView'
-import {
-    getPlaceholderDataForChart,
-    transformDatesAndDurationDataForChart,
-} from '@/utils/dataHandlers'
+import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -17,6 +14,7 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
+    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const user = useSelector((state: RootState) => state.user.loggedInUser)
     const navigateLeft = useNavigateTo({
         pathname: '/',
@@ -61,9 +59,16 @@ export default function StatisticsView() {
     }
 
     return (
-        <SwipeNavigation leftSwipeCallback={navigateLeft}>
+        <SwipeNavigation
+            leftSwipeCallback={navigateLeft}
+            registerSwipe={swipeNavigationActive}
+        >
             {data ? (
-                <AreaChartView data={data} maxValue={maxValue} />
+                <AreaChartView
+                    data={data}
+                    maxValue={maxValue}
+                    setSwipeNavigationActive={setSwipeNavigationActive}
+                />
             ) : (
                 <ActivityIndicator
                     style={styles.acitivityIndicator}
