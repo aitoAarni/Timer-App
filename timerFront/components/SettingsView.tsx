@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 import Text from './Text'
 import theme from '@/theme'
-import Slider from '@react-native-community/slider'
 import { useState } from 'react'
 import { Settings } from '@/types'
 import { useSelector } from 'react-redux'
@@ -18,9 +17,9 @@ import { useDispatch } from 'react-redux'
 import { updateSettings } from '@/redux/settingsSlice'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
-
+import { useSharedValue } from 'react-native-reanimated'
+import { Slider } from 'react-native-awesome-slider'
 export default function SettingsView() {
-    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const navigateRight = useNavigateTo({
         pathname: '/',
         params: { from: 'settings' },
@@ -30,17 +29,14 @@ export default function SettingsView() {
         <SwipeNavigation
             style={styles.container}
             rightSwipeCallback={navigateRight}
-            registerSwipe={swipeNavigationActive}
         >
             <ScrollView style={styles.scrollView}>
                 <TimerSlider
-                    setSwipeNavigationActive={setSwipeNavigationActive}
                     settingsKey="workTimeLength"
                     style={{ marginBottom: 30 }}
                     text="Work duration"
                 />
                 <TimerSlider
-                    setSwipeNavigationActive={setSwipeNavigationActive}
                     settingsKey="breakTimeLength"
                     text="Break duration"
                 />
@@ -53,28 +49,30 @@ interface TimerSliderProps {
     style?: StyleProp<ViewStyle>
     text?: string
     settingsKey: keyof Settings
-    setSwipeNavigationActive: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TimerSlider = function ({
-    style,
-    text,
-    settingsKey,
-    setSwipeNavigationActive,
-}: TimerSliderProps) {
+const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
     const settings = useSelector((state: RootState) => state.settings)
     const dispatch = useDispatch()
     const initialValue = settings[settingsKey] ?? 20
     const [timer, setTime] = useState(initialValue)
     const onValueChange = (value: number) => {
-        setTime(value)
+        const roundedValue = Math.round(value)
+        setTime(roundedValue)
+        progress.value = roundedValue
     }
     const onRelease = (value: number) => {
-        setTime(value)
+        const roundedValue = Math.round(value)
+
+        setTime(roundedValue)
         if (settingsKey && settingsKey in settings) {
-            dispatch(updateSettings({ [settingsKey]: value }))
+            dispatch(updateSettings({ [settingsKey]: roundedValue }))
         }
     }
+
+    const progress = useSharedValue(30)
+    const min = useSharedValue(1)
+    const max = useSharedValue(100)
 
     return (
         <View style={[styles.timerSliderContainer, style]}>
@@ -83,23 +81,14 @@ const TimerSlider = function ({
             </Text>
             <View style={styles.sliderContainer}>
                 <View style={{ flexGrow: 1 }}></View>
+
                 <Slider
-                    style={styles.slider}
-                    minimumValue={1}
-                    maximumValue={100}
-                    minimumTrackTintColor={theme.colors.text}
-                    maximumTrackTintColor={theme.colors.grayLight}
-                    thumbTintColor={theme.colors.text}
-                    step={1}
-                    value={initialValue}
-                    onValueChange={value => onValueChange(value)}
+                    style={styles.container}
+                    progress={progress}
+                    minimumValue={min}
+                    maximumValue={max}
+                    onValueChange={onValueChange}
                     onSlidingComplete={onRelease}
-                    onTouchStart={(event: GestureResponderEvent) => {
-                        setSwipeNavigationActive(false)
-                    }}
-                    onTouchEnd={(event: GestureResponderEvent) => {
-                        setSwipeNavigationActive(true)
-                    }}
                 />
                 <Text
                     style={{ flexGrow: 1 }}
