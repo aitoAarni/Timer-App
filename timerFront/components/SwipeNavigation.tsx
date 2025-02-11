@@ -53,7 +53,7 @@ function SwipeNavigation({
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: theme.colors.background },
+    container: { flex: 1 },
 })
 
 export default SwipeNavigation

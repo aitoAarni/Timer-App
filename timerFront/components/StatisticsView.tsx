@@ -14,7 +14,6 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
-    const [swipeNavigationActive, setSwipeNavigationActive] = useState(true)
     const user = useSelector((state: RootState) => state.user.loggedInUser)
     const navigateLeft = useNavigateTo({
         pathname: '/',
@@ -59,15 +58,11 @@ export default function StatisticsView() {
     }
 
     return (
-        <SwipeNavigation
-            leftSwipeCallback={navigateLeft}
-            registerSwipe={swipeNavigationActive}
-        >
+        <View style={styles.container}>
             {data ? (
                 <AreaChartView
                     data={data}
                     maxValue={maxValue}
-                    setSwipeNavigationActive={setSwipeNavigationActive}
                 />
             ) : (
                 <ActivityIndicator
@@ -75,11 +70,15 @@ export default function StatisticsView() {
                     size="large"
                 />
             )}
-        </SwipeNavigation>
+            <SwipeNavigation
+                leftSwipeCallback={navigateLeft}
+            ></SwipeNavigation>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: { flex: 1},
     notLoggedIn: { fontSize: 30, marginTop: 20, color: theme.colors.text },
 
     acitivityIndicator: { top: '30%' },

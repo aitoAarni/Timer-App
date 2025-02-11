@@ -32,7 +32,7 @@ function DirectionPad({
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
     const scale = useSharedValue<number>(1)
-    const modifiedScale = 0.9
+    const modifiedScale = 1.1
     const tap = Gesture.Tap()
         .onBegin(() => {
             scale.value = withTiming(modifiedScale, { duration: 150 })
@@ -72,7 +72,7 @@ function DirectionPad({
             }
             offsetX.value = withDelay(150, withTiming(0))
             offsetY.value = withDelay(150, withTiming(0))
-            scale.value = withTiming(1, { duration: 1000 })
+            scale.value = withTiming(1, { duration: 500 })
         })
 
     pan.withTestId('pan')

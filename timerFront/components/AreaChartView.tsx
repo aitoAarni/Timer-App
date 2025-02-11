@@ -6,25 +6,14 @@ import { AreaChartData } from '@/types'
 interface AreaChartViewProps {
     data: AreaChartData[]
     maxValue: number
-    setSwipeNavigationActive: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const { width } = Dimensions.get('window')
 
-const AreaChartView = ({
-    data,
-    maxValue,
-    setSwipeNavigationActive,
-}: AreaChartViewProps) => {
+const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
     return (
         <View>
             <LineChart
-                onScroll={() => {
-                    setSwipeNavigationActive(false)
-                }}
-                onMomentumScrollEnd={() => {
-                    setSwipeNavigationActive(true)
-                }}
                 dataPointLabelWidth={50}
                 areaChart
                 width={width - 25}
