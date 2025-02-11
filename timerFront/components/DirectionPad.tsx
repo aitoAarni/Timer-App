@@ -31,8 +31,9 @@ function DirectionPad({
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
     const tap = Gesture.Tap().onStart(() => {
-        console.log('tap')
-        onTap
+        if (onTap) {
+            runOnJS(onTap)()
+        }
     })
     const pan = Gesture.Pan()
         .onBegin(event => {})

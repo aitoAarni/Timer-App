@@ -70,20 +70,20 @@ export default function TimerView() {
                 rightSwipeCallback={navigateRight}
             ></SwipeNavigation>
             <View style={styles.timerContainer}>
-                <TouchableOpacity
+                <View
                     style={styles.timerPressable}
-                    onPressIn={handleTogglePause}
                 >
                     <DirectionPad
                         onUp={handleResetTimer}
                         onLeft={handleAddTime}
                         onRight={handleSwitchTimer}
+                        onTap={handleTogglePause}
                     >
                         <Text testID="timer-text" style={styles.text}>
                             {formatTime(time)}
                         </Text>
                     </DirectionPad>
-                </TouchableOpacity>
+                </View>
             </View>
             <SwipeNavigation
                 style={[styles.fillerContainers, styles.bottomContainer]}
