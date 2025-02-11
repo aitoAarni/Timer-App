@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useRef } from 'react'
 import { StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -9,6 +9,7 @@ import Animated, {
     withDelay,
     withTiming,
 } from 'react-native-reanimated'
+import Text from './Text'
 
 interface DirectionPadProps {
     children?: ReactNode
@@ -30,13 +31,21 @@ function DirectionPad({
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
-    const tap = Gesture.Tap().onStart(() => {
-        if (onTap) {
-            runOnJS(onTap)()
-        }
-    })
+    const scale = useSharedValue<number>(1)
+    const modifiedScale = 0.9
+    const tap = Gesture.Tap()
+        .onBegin(() => {
+            scale.value = withTiming(modifiedScale, { duration: 150 })
+        })
+        .onStart(() => {
+            if (onTap) {
+                runOnJS(onTap)()
+            }
+        })
+        .onEnd(() => {
+            scale.value = withTiming(1, { duration: 150 })
+        })
     const pan = Gesture.Pan()
-        .onBegin(event => {})
         .onUpdate(event => {
             offsetX.value = clamp(
                 event.translationX,
@@ -63,6 +72,7 @@ function DirectionPad({
             }
             offsetX.value = withDelay(150, withTiming(0))
             offsetY.value = withDelay(150, withTiming(0))
+            scale.value = withTiming(1, { duration: 1000 })
         })
 
     pan.withTestId('pan')
@@ -70,8 +80,10 @@ function DirectionPad({
         transform: [
             { translateX: offsetX.value },
             { translateY: offsetY.value },
+            { scale: scale.value },
         ],
     }))
+
     const composed = Gesture.Race(pan, tap)
     return (
         <GestureDetector gesture={composed}>

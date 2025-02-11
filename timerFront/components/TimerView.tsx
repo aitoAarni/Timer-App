@@ -70,9 +70,7 @@ export default function TimerView() {
                 rightSwipeCallback={navigateRight}
             ></SwipeNavigation>
             <View style={styles.timerContainer}>
-                <View
-                    style={styles.timerPressable}
-                >
+                <View style={styles.timerPressable}>
                     <DirectionPad
                         onUp={handleResetTimer}
                         onLeft={handleAddTime}
