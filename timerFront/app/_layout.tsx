@@ -68,7 +68,10 @@ export default function RootLayout() {
                                 gestureDirection: 'horizontal',
                             }}
                         >
-                            <Stack.Screen name="index" />
+                            <Stack.Screen
+                                options={{ animation: 'slide_from_bottom' }}
+                                name="profile"
+                            />
                             <Stack.Screen
                                 options={{ animation: 'slide_from_left' }}
                                 name="settings"

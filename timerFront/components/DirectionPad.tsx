@@ -16,6 +16,7 @@ interface DirectionPadProps {
     onRight?: () => void
     onDown?: () => void
     onLeft?: () => void
+    onTap?: () => void
 }
 
 function DirectionPad({
@@ -24,10 +25,15 @@ function DirectionPad({
     onRight,
     onDown,
     onLeft,
+    onTap,
 }: DirectionPadProps) {
     const movementClamp = 100
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
+    const tap = Gesture.Tap().onStart(() => {
+        console.log('tap')
+        onTap
+    })
     const pan = Gesture.Pan()
         .onBegin(event => {})
         .onUpdate(event => {
@@ -65,8 +71,9 @@ function DirectionPad({
             { translateY: offsetY.value },
         ],
     }))
+    const composed = Gesture.Race(pan, tap)
     return (
-        <GestureDetector gesture={pan}>
+        <GestureDetector gesture={composed}>
             <Animated.View
                 testID="animated-view"
                 style={[styles.animatedStick, animatedStyle]}
