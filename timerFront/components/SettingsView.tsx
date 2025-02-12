@@ -88,16 +88,21 @@ const TimerSlider = function ({
 
     const onTextSubmit = () => {
         const timerValueNumber = Number(timerValue)
-        if (!isNaN(timerValueNumber)) {
-            console.log('is not nan: ', timerValue, timerValueNumber)
-            dispatch(updateSettings({ [settingsKey]: Number(timerValue) }))
+        console.log(12)
+        if (!isNaN(timerValueNumber) && timerValueNumber > 0) {
+            console.log(`is not nan, ${timerValueNumber}, ${timerValue}`)
+            dispatch(updateSettings({ [settingsKey]: timerValueNumber }))
         } else {
-            console.log('is nan')
+            console.log(`was nan`)
+            console.log(`progress.value: ${progress.value}`)
+            
             setTimerValue(String(progress.value))
         }
     }
 
-    const onTextFocus = () => {}
+    const onTextFocus = () => {
+        setTimerValue('')
+    }
 
     const progress = useSharedValue(initialValue)
     const min = useSharedValue(minimumValue)
@@ -135,6 +140,7 @@ const TimerSlider = function ({
                     keyboardType="numeric"
                     onChangeText={onTextChange}
                     onBlur={onTextSubmit}
+                    onFocus={onTextFocus}
                     returnKeyType="done"
                 />
             </View>
