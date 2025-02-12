@@ -1,6 +1,4 @@
 import {
-    GestureResponderEvent,
-    Pressable,
     ScrollView,
     StyleProp,
     StyleSheet,
@@ -39,6 +37,8 @@ export default function SettingsView() {
                 <TimerSlider
                     settingsKey="breakTimeLength"
                     text="Break duration"
+                    minimumValue={1}
+                    maximumValue={20}
                 />
             </ScrollView>
         </SwipeNavigation>
@@ -68,7 +68,8 @@ const TimerSlider = function ({
         console.log(value)
         const roundedValue = Math.round(value)
         setTime(roundedValue)
-        // progress.value = roundedValue
+        progress.value = roundedValue
+        console.log("progress", progress.value)
     }
     const onRelease = (value: number) => {
         const roundedValue = Math.round(value)
@@ -80,6 +81,7 @@ const TimerSlider = function ({
     }
 
     const progress = useSharedValue(initialValue)
+    console.log(maximumValue)
     const min = useSharedValue(minimumValue)
     const max = useSharedValue(maximumValue)
 
@@ -98,8 +100,10 @@ const TimerSlider = function ({
                     maximumValue={max}
                     onValueChange={onValueChange}
                     onSlidingComplete={onRelease}
-                    steps={99}
-                    forceSnapToStep
+                    sliderHeight={20}
+                    
+                    // steps={maximumValue - minimumValue}
+                    // forceSnapToStep
                 />
                 <Text
                     style={{ flexGrow: 1 }}
