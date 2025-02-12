@@ -69,7 +69,7 @@ const TimerSlider = function ({
         const roundedValue = Math.round(value)
         setTime(roundedValue)
         progress.value = roundedValue
-        console.log("progress", progress.value)
+        console.log('progress', progress.value)
     }
     const onRelease = (value: number) => {
         const roundedValue = Math.round(value)
@@ -94,16 +94,15 @@ const TimerSlider = function ({
                 <View style={{ flexGrow: 1 }}></View>
 
                 <Slider
-                    style={styles.container}
+                    style={styles.slider}
+                    bubbleContainerStyle={styles.invisible}
+                    thumbWidth={0}
                     progress={progress}
                     minimumValue={min}
                     maximumValue={max}
                     onValueChange={onValueChange}
                     onSlidingComplete={onRelease}
                     sliderHeight={20}
-                    
-                    // steps={maximumValue - minimumValue}
-                    // forceSnapToStep
                 />
                 <Text
                     style={{ flexGrow: 1 }}
@@ -130,5 +129,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
-    slider: { width: 300 },
+    slider: { paddingTop: 30 },
+    invisible: {opacity: 0}
 })
