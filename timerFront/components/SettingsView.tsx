@@ -49,17 +49,26 @@ interface TimerSliderProps {
     style?: StyleProp<ViewStyle>
     text?: string
     settingsKey: keyof Settings
+    minimumValue?: number
+    maximumValue?: number
 }
 
-const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
+const TimerSlider = function ({
+    style,
+    text,
+    settingsKey,
+    minimumValue = 1,
+    maximumValue = 100,
+}: TimerSliderProps) {
     const settings = useSelector((state: RootState) => state.settings)
     const dispatch = useDispatch()
     const initialValue = settings[settingsKey] ?? 20
     const [timer, setTime] = useState(initialValue)
     const onValueChange = (value: number) => {
+        console.log(value)
         const roundedValue = Math.round(value)
         setTime(roundedValue)
-        progress.value = roundedValue
+        // progress.value = roundedValue
     }
     const onRelease = (value: number) => {
         const roundedValue = Math.round(value)
@@ -70,9 +79,9 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
         }
     }
 
-    const progress = useSharedValue(30)
-    const min = useSharedValue(1)
-    const max = useSharedValue(100)
+    const progress = useSharedValue(initialValue)
+    const min = useSharedValue(minimumValue)
+    const max = useSharedValue(maximumValue)
 
     return (
         <View style={[styles.timerSliderContainer, style]}>
@@ -89,6 +98,8 @@ const TimerSlider = function ({ style, text, settingsKey }: TimerSliderProps) {
                     maximumValue={max}
                     onValueChange={onValueChange}
                     onSlidingComplete={onRelease}
+                    steps={99}
+                    forceSnapToStep
                 />
                 <Text
                     style={{ flexGrow: 1 }}
