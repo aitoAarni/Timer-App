@@ -34,10 +34,11 @@ function DirectionPad({
     const scale = useSharedValue<number>(1)
     const modifiedScale = 1.1
     const tap = Gesture.Tap()
-        .onBegin(() => {
+        .onBegin(event => {
             scale.value = withTiming(modifiedScale, { duration: 150 })
         })
-        .onStart(() => {
+        .onStart(event => {
+            console.log('event', event)
             if (onTap) {
                 runOnJS(onTap)()
             }
@@ -75,6 +76,7 @@ function DirectionPad({
             scale.value = withTiming(1, { duration: 500 })
         })
 
+    tap.withTestId('tap')
     pan.withTestId('pan')
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [

@@ -1,9 +1,10 @@
-import { render } from '@testing-library/react-native'
+import { render, userEvent } from '@testing-library/react-native'
 import {
     Gesture,
     GestureHandlerRootView,
     PanGesture,
     State,
+    TapGesture,
 } from 'react-native-gesture-handler'
 import {
     fireGestureHandler,
@@ -65,13 +66,28 @@ describe('DirectionPad', () => {
             </GestureHandlerRootView>
         )
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
-            { state: State.BEGAN },
             { state: State.ACTIVE },
             { translationY: 200 },
             { state: State.END },
         ])
         expect(mockOnDown).toHaveBeenCalledTimes(1)
     })
+
+    it('triggers the onTap callback when tapped', () => {
+        const mockOnTap = jest.fn()
+
+        render(
+            <GestureHandlerRootView>
+                <DirectionPad onTap={mockOnTap}></DirectionPad>
+            </GestureHandlerRootView>
+        )
+        fireGestureHandler<TapGesture>(getByGestureTestId('tap'), [
+            { state: State.ACTIVE },
+            { state: State.END },
+        ])
+        expect(mockOnTap).toHaveBeenCalledTimes(1)
+    })
+
     it('does not triggers the onRight callback when half swiped right', () => {
         const mockOnRight = jest.fn()
         render(
