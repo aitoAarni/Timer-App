@@ -95,7 +95,7 @@ const TimerSlider = function ({
         } else {
             console.log(`was nan`)
             console.log(`progress.value: ${progress.value}`)
-            
+
             setTimerValue(String(progress.value))
         }
     }
@@ -127,13 +127,7 @@ const TimerSlider = function ({
                     onSlidingComplete={onRelease}
                     sliderHeight={20}
                 />
-                <Text
-                    style={styles.sliderText}
-                    color={theme.colors.grayLight}
-                    fontSize={20}
-                >
-                    {timerValue}
-                </Text>
+
                 <TextInput
                     style={styles.sliderTextInput}
                     value={String(timerValue)}
@@ -171,7 +165,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         color: theme.colors.grayLight,
-        borderBottomWidth: 1,
         borderColor: theme.colors.grayLight,
         paddingHorizontal: 10,
     },
