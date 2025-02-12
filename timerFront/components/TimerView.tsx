@@ -25,7 +25,7 @@ export default function TimerView() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
-
+    console.log('helooo')
     useFocusEffect(
         useCallback(() => {
             let previousTime = -2

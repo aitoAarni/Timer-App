@@ -8,6 +8,9 @@ import { updateSettings } from '@/redux/settingsSlice'
 export const TimerContext = createContext<Timer | null>(null)
 
 export const TimerProvider = function ({ children }: { children: ReactNode }) {
+    // const dispatch = useDispatch()
+    // dispatch(updateSettings({ workTimeLength: 25 }))
+    // dispatch(updateSettings({ breakTimeLength: 25 }))
     const settings = useSelector((state: RootState) => state.settings)
 
     const { workTimeLength, breakTimeLength } = settings

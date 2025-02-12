@@ -64,38 +64,36 @@ const TimerSlider = function ({
     const settings = useSelector((state: RootState) => state.settings)
     const dispatch = useDispatch()
     const initialValue = settings[settingsKey] ?? 20
-    const [timer, setTime] = useState(initialValue)
+    const [timerValue, setTimerValue] = useState(String(initialValue))
     const onValueChange = (value: number) => {
         const roundedValue = Math.round(value)
-        setTime(roundedValue)
+        setTimerValue(String(roundedValue))
         progress.value = roundedValue
         console.log('progress', progress.value)
     }
     const onRelease = (value: number) => {
         const roundedValue = Math.round(value)
 
-        setTime(roundedValue)
+        setTimerValue(String(roundedValue))
         if (settingsKey && settingsKey in settings) {
             dispatch(updateSettings({ [settingsKey]: roundedValue }))
         }
     }
 
     const onTextChange = (input: string) => {
-        const numericValue = parseInt(input, 10)
-        if (
-            !isNaN(numericValue) &&
-            numericValue >= min.value &&
-            numericValue <= max.value
-        ) {
-            setTime(numericValue)
-            progress.value = numericValue
-        }
+        setTimerValue(input)
     }
 
     const onTextSubmit = () => {
-        console.log("onblur calledi")
-        dispatch(updateSettings({ [settingsKey]: timer }))
+        console.log('onblur calledi')
+        const timerValueNumber = Number(timerValue)
+        if (!isNaN(timerValueNumber)) {
+            dispatch(updateSettings({ [settingsKey]: Number(timerValue) }))
+            progress.value = timerValueNumber
+        }
     }
+
+    const onTextFocus = () => {}
 
     const progress = useSharedValue(initialValue)
     const min = useSharedValue(minimumValue)
@@ -125,11 +123,11 @@ const TimerSlider = function ({
                     color={theme.colors.grayLight}
                     fontSize={20}
                 >
-                    {timer}
+                    {timerValue}
                 </Text>
                 <TextInput
                     style={styles.sliderTextInput}
-                    value={String(timer)}
+                    value={String(timerValue)}
                     keyboardType="numeric"
                     onChangeText={onTextChange}
                     onBlur={onTextSubmit}
