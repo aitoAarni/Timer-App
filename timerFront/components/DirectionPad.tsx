@@ -28,7 +28,7 @@ function DirectionPad({
     onLeft,
     onTap,
 }: DirectionPadProps) {
-    const movementClamp = 100
+    const movementClamp = 80
     const offsetX = useSharedValue<number>(0)
     const offsetY = useSharedValue<number>(0)
     const scale = useSharedValue<number>(1)

@@ -12,9 +12,6 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import { useFocusEffect } from 'expo-router'
 
-// TODO: when navigating between pages, fix animation to not show always from one side,
-// and show white on the left of the screen
-// TODO: when timer is swiped to right, then swipe navigation is off unitll timer is pressed again
 
 export default function TimerView() {
     const timer = useRef(useTimer())
