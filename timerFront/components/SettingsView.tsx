@@ -69,7 +69,6 @@ const TimerSlider = function ({
         const roundedValue = Math.round(value)
         setTimerValue(String(roundedValue))
         progress.value = roundedValue
-        console.log('progress', progress.value)
     }
     const onRelease = (value: number) => {
         const roundedValue = Math.round(value)
@@ -82,14 +81,15 @@ const TimerSlider = function ({
 
     const onTextChange = (input: string) => {
         setTimerValue(input)
+        if (!isNaN(Number(input))) {
+            progress.value = Number(input)
+        }
     }
 
     const onTextSubmit = () => {
-        console.log('onblur calledi')
         const timerValueNumber = Number(timerValue)
         if (!isNaN(timerValueNumber)) {
             dispatch(updateSettings({ [settingsKey]: Number(timerValue) }))
-            progress.value = timerValueNumber
         }
     }
 
