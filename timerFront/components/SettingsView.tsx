@@ -2,6 +2,7 @@ import {
     ScrollView,
     StyleProp,
     StyleSheet,
+    TextInput,
     View,
     ViewStyle,
 } from 'react-native'
@@ -79,6 +80,23 @@ const TimerSlider = function ({
         }
     }
 
+    const onTextChange = (input: string) => {
+        const numericValue = parseInt(input, 10)
+        if (
+            !isNaN(numericValue) &&
+            numericValue >= min.value &&
+            numericValue <= max.value
+        ) {
+            setTime(numericValue)
+            progress.value = numericValue
+        }
+    }
+
+    const onTextSubmit = () => {
+        console.log("onblur calledi")
+        dispatch(updateSettings({ [settingsKey]: timer }))
+    }
+
     const progress = useSharedValue(initialValue)
     const min = useSharedValue(minimumValue)
     const max = useSharedValue(maximumValue)
@@ -109,6 +127,14 @@ const TimerSlider = function ({
                 >
                     {timer}
                 </Text>
+                <TextInput
+                    style={styles.sliderTextInput}
+                    value={String(timer)}
+                    keyboardType="numeric"
+                    onChangeText={onTextChange}
+                    onBlur={onTextSubmit}
+                    returnKeyType="done"
+                />
             </View>
         </View>
     )
@@ -132,5 +158,14 @@ const styles = StyleSheet.create({
 
     slider: { flex: 3 },
     sliderText: { flex: 1, textAlignVertical: 'top' },
+    sliderTextInput: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 20,
+        color: theme.colors.grayLight,
+        borderBottomWidth: 1,
+        borderColor: theme.colors.grayLight,
+        paddingHorizontal: 10,
+    },
     invisible: { opacity: 0 },
 })
