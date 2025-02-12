@@ -65,7 +65,6 @@ const TimerSlider = function ({
     const initialValue = settings[settingsKey] ?? 20
     const [timer, setTime] = useState(initialValue)
     const onValueChange = (value: number) => {
-        console.log(value)
         const roundedValue = Math.round(value)
         setTime(roundedValue)
         progress.value = roundedValue
@@ -81,7 +80,6 @@ const TimerSlider = function ({
     }
 
     const progress = useSharedValue(initialValue)
-    console.log(maximumValue)
     const min = useSharedValue(minimumValue)
     const max = useSharedValue(maximumValue)
 
@@ -91,7 +89,7 @@ const TimerSlider = function ({
                 {text}
             </Text>
             <View style={styles.sliderContainer}>
-                <View style={{ flexGrow: 1 }}></View>
+                <View style={{ flex: 1 }}></View>
 
                 <Slider
                     style={styles.slider}
@@ -105,7 +103,7 @@ const TimerSlider = function ({
                     sliderHeight={20}
                 />
                 <Text
-                    style={{ flexGrow: 1 }}
+                    style={styles.sliderText}
                     color={theme.colors.grayLight}
                     fontSize={20}
                 >
@@ -127,8 +125,12 @@ const styles = StyleSheet.create({
     },
     sliderContainer: {
         flexDirection: 'row',
+        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
-    slider: { paddingTop: 30 },
-    invisible: {opacity: 0}
+    slider: { flex: 3 },
+    sliderText: { flex: 1, textAlignVertical: 'top' },
+    invisible: { opacity: 0 },
 })
