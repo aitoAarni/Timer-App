@@ -82,7 +82,7 @@ describe('DirectionPad', () => {
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
             { state: State.BEGAN },
             { state: State.ACTIVE },
-            { translationX: 99 },
+            { translationX: 75 },
             { state: State.END },
         ])
         expect(mockOnRight).toHaveBeenCalledTimes(0)
@@ -112,7 +112,7 @@ describe('DirectionPad', () => {
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
             { state: State.BEGAN },
             { state: State.ACTIVE },
-            { translationX: -99 },
+            { translationX: -79 },
             { state: State.END },
         ])
         expect(mockOnLeft).toHaveBeenCalledTimes(0)
@@ -127,7 +127,7 @@ describe('DirectionPad', () => {
         fireGestureHandler<PanGesture>(getByGestureTestId('pan'), [
             { state: State.BEGAN },
             { state: State.ACTIVE },
-            { translationY: 99 },
+            { translationY: 79 },
             { state: State.END },
         ])
         expect(mockOnDown).toHaveBeenCalledTimes(0)
