@@ -34,3 +34,4 @@
 | 30.1.2025  | 4.5h  | create swipe navigation, change navigation to align with swipe navigation, performane improv. |
 | 31.1.2025  | 5.5h  | cretea profile view, change swipe navigation, refactor db api, debug bad performance          |
 | 11.1.2025  | 3.5h  | fix bugs, refactor PauseToggle activation on timer and add style, refactor settings slider    |
+| 12.1.2025  | 3h    | refactor settings to use diffferent slider and inputs, battle with emulator, fix unit tests |
