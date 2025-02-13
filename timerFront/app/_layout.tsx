@@ -4,7 +4,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
 import { useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { ActivityIndicator, StyleSheet } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
@@ -28,7 +28,7 @@ export default function RootLayout() {
         'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
         DancingScript: require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
-
+    console.log('Fonts loaded:', loaded, 'Error:', error)
     useEffect(() => {
         const initialize = async () => {
             await initializeDatabase()
@@ -41,17 +41,16 @@ export default function RootLayout() {
             setIsInitializing(false)
         }
         initialize()
-        if (loaded || error) {
+        if (!isInitializing && (loaded || error)) {
             SplashScreen.hideAsync()
         }
     }, [])
-
-    if (!loaded && !error) {
-        return null
+    // return <View style={{ flexGrow: 1, backgroundColor: 'red' }}></View>
+    if (isInitializing || (!loaded && !error)) {
+        return <ActivityIndicator />
     }
-    if (isInitializing) <ActivityIndicator />
     return (
-        <GestureHandlerRootView>
+        <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={styles.container}>
                 <Provider store={store}>
                     <TimerProvider>
