@@ -1,31 +1,29 @@
 appId: com.isovertti.timerFront
 ---
 - launchApp
-- assertVisible: 'App Loaded'
+- tapOn:
+      text: '24:59'
+      retryTapIfNoChange: false
 
-# - tapOn:
-#       point: '50%,50%'
-#       retryTapIfNoChange: false
-
-# - extendedWaitUntil:
-#       visible: '24:57'
-#       timeout: 3200
-# - swipe:
-#       start: 50%, 50%
-#       end: 50%, 30%
-# - extendedWaitUntil:
-#       visible: '24:59'
-#       timeout: 1100
-# - swipe:
-#       start: 50%, 50%
-#       end: 10%, 50%
-# - assertVisible: '25:59'
-# - swipe:
-#       start: 50%, 50%
-#       end: 90%, 50%
-# - extendedWaitUntil:
-#       visible: '04:58'
-#       timeout: 2200
-# - swipe:
-#       start: 50%, 50%
-#       end: 50%, 30%
+- extendedWaitUntil:
+      visible: '24:57'
+      timeout: 3200
+- swipe:
+      start: 50%, 50%
+      end: 50%, 30%
+- extendedWaitUntil:
+      visible: '24:59'
+      timeout: 1100
+- swipe:
+      start: 50%, 50%
+      end: 10%, 50%
+- assertVisible: '25:59'
+- swipe:
+      start: 50%, 50%
+      end: 90%, 50%
+- extendedWaitUntil:
+      visible: '04:58'
+      timeout: 2200
+- swipe:
+      start: 50%, 50%
+      end: 50%, 30%
