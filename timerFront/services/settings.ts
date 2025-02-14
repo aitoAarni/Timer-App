@@ -1,6 +1,7 @@
 import { Settings } from '@/types'
 import {
     getKeyValuePair,
+    removeKeyValuePair,
     setKeyValuePair,
 } from '@/storage/local/keyValueStorage'
 
@@ -21,4 +22,8 @@ export const getSettings = async function (): Promise<Settings> {
 export const setSettings = async function (settings: Settings) {
     const settingsString = JSON.stringify(settings)
     await setKeyValuePair('settings', settingsString)
+}
+
+export const clearSettings = async function () {
+    await removeKeyValuePair('settings')
 }
