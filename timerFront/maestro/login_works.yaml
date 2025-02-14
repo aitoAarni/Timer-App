@@ -1,0 +1,20 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Login'
+- tapOn: 'username'
+- inputText: 'test_user'
+- tapOn: password
+- inputText: 'password'
+- tapOn: 'Login'
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Logout'
+- tapOn: 'Login'
+- tapOn: 'test_user'
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Profile'
+- assertVisible: 'test_user'
