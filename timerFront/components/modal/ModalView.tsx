@@ -6,6 +6,8 @@ import { LoginButton, LogoutButton, ProfileButton } from './ModalButtons'
 import useLoggedIn from '@/hooks/useLoggedIn'
 import Feather from '@expo/vector-icons/Feather'
 
+// create testing init that deletes also user login info
+
 export default function ModalView() {
     const [showModal, setShowModal] = useState<boolean>(false)
     const loggedIn = useLoggedIn()
@@ -16,7 +18,7 @@ export default function ModalView() {
         setShowModal(false)
     }
     return (
-        <View>
+        <View testID="modal-view">
             <TouchableOpacity
                 style={sytles.openModalButton}
                 onPress={openModal}

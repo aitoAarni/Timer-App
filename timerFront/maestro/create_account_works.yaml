@@ -1,0 +1,18 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Login'
+- tapOn: 'Create an account'
+- tapOn: 'username'
+- inputText: 'Tech bro'
+- tapOn: 'password'
+- inputText: 'secret password'
+- tapOn: 'verify password'
+- inputText: 'secret password'
+- tapOn: 'Create'
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Profile'
+- assertVisible: 'Tech bro'
