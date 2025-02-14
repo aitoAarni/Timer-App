@@ -36,3 +36,4 @@
 | 11.1.2025  | 3.5h  | fix bugs, refactor PauseToggle activation on timer and add style, refactor settings slider    |
 | 12.1.2025  | 3h    | refactor settings to use diffferent slider and inputs, battle with emulator, fix unit tests   |
 | 13.1.2025  | 1h    | debugging e2e tests not rendering app and app not rendering also always                       |
+| 14.1.2025  | 3h    | fix app not rendering bug, refactor code, research and create e2e test                        |
