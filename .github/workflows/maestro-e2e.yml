@@ -1,0 +1,67 @@
+name: E2E Tests with Maestro on Android
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    e2e-tests:
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Set Up JDK (Required for Android SDK)
+              uses: actions/setup-java@v3
+              with:
+                  distribution: 'temurin'
+                  java-version: '17'
+
+            - name: Set Up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+
+            - name: Install Dependencies
+              run: |
+                  npm install
+
+            - name: Install Expo CLI
+              run: |
+                  npm install -g expo-cli
+
+            - name: Install Maestro CLI
+              run: |
+                  curl -Ls "https://get.maestro.mobile.dev" | bash
+                  echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+            - name: Cache Gradle Dependencies
+              uses: actions/cache@v3
+              with:
+                  path: ~/.gradle/caches
+                  key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/*.xml') }}
+                  restore-keys: gradle-${{ runner.os }}
+
+            - name: Set Up Android SDK
+              uses: android-actions/setup-android@v3
+
+            - name: Start Android Emulator
+              run: |
+                  sudo $ANDROID_HOME/emulator/emulator -avd testAVD -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
+                  adb wait-for-device
+                  adb shell input keyevent 82  # Unlocks the emulator
+
+            - name: Build and Start Expo Project
+              run: |
+                  npx expo prebuild  # Generates native android files if needed
+                  npx expo start --no-dev --minify &  # Start the Expo dev server in the background
+                  sleep 20  # Give it time to start
+
+            - name: Run Maestro E2E Tests
+              run: |
+                  maestro test maestro/
