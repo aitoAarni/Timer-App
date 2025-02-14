@@ -12,6 +12,7 @@ const initializeDatabase = async () => {
         await dropTimerDatabase()
         await dropUsersDatabase()
     }
+    return true
 }
 
 const createTables = async () => {
@@ -43,6 +44,7 @@ const createTables = async () => {
         if (db) {
             db.closeAsync()
         }
+        return true
     }
 }
 

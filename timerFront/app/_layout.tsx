@@ -16,8 +16,10 @@ import { store } from '@/redux/store'
 import { createTables, initializeDatabase } from '@/storage/local/db'
 import { getUsers } from '@/storage/local/userQueries'
 import { insertUser } from '@/storage/local/userQueries'
+import Text from '@/components/Text'
 
 SplashScreen.preventAutoHideAsync()
+console.log('splash screen enabled')
 
 export default function RootLayout() {
     const [isInitializing, setIsInitializing] = useState(true)
@@ -28,7 +30,6 @@ export default function RootLayout() {
         'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
         DancingScript: require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
-    console.log('Fonts loaded:', loaded, 'Error:', error)
     useEffect(() => {
         const initialize = async () => {
             await initializeDatabase()
@@ -41,54 +42,70 @@ export default function RootLayout() {
             setIsInitializing(false)
         }
         initialize()
-        if (!isInitializing && (loaded || error)) {
-            SplashScreen.hideAsync()
-        }
     }, [])
-    // return <View style={{ flexGrow: 1, backgroundColor: 'red' }}></View>
+    console.log(
+        `(!isInitializing (${!isInitializing}) && (loaded (${loaded}) || error (${error}))): ${
+            !isInitializing && (loaded || error)
+        }`
+    )
+    if (!isInitializing && (loaded || error)) {
+        SplashScreen.hide()
+    }
+    return (
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: 'blue',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <Text style={{ color: 'white', fontSize: 24 }}>App Loaded</Text>
+        </View>
+    )
     if (isInitializing || (!loaded && !error)) {
         return <ActivityIndicator />
     }
-    return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView style={styles.container}>
-                <Provider store={store}>
-                    <TimerProvider>
-                        <StatusBar
-                            backgroundColor={theme.colors.background}
-                            style="light"
-                        />
-                        <AppBar />
-                        <Stack
-                            screenOptions={{
-                                headerShown: false,
-                                animation: 'none',
-                                gestureEnabled: true,
-                                gestureDirection: 'horizontal',
-                            }}
-                        >
-                            <Stack.Screen
-                                options={{ animation: 'slide_from_bottom' }}
-                                name="profile"
-                            />
-                            <Stack.Screen
-                                options={{ animation: 'slide_from_left' }}
-                                name="settings"
-                            />
-                            <Stack.Screen
-                                options={{ animation: 'slide_from_right' }}
-                                name="statistics"
-                            />
-                            <Stack.Screen
-                                options={{ animation: 'slide_from_bottom' }}
-                                name="login"
-                            />
-                        </Stack>
-                    </TimerProvider>
-                </Provider>
-            </SafeAreaView>
-        </GestureHandlerRootView>
-    )
+    // return (
+    //     <GestureHandlerRootView style={{ flex: 1 }}>
+    //         <SafeAreaView style={styles.container}>
+    //             <Provider store={store}>
+    //                 <TimerProvider>
+    //                     <StatusBar
+    //                         backgroundColor={theme.colors.background}
+    //                         style="light"
+    //                     />
+    //                     <AppBar />
+    //                     <Stack
+    //                         screenOptions={{
+    //                             headerShown: false,
+    //                             animation: 'none',
+    //                             gestureEnabled: true,
+    //                             gestureDirection: 'horizontal',
+    //                         }}
+    //                     >
+    //                         <Stack.Screen
+    //                             options={{ animation: 'slide_from_bottom' }}
+    //                             name="profile"
+    //                         />
+    //                         <Stack.Screen
+    //                             options={{ animation: 'slide_from_left' }}
+    //                             name="settings"
+    //                         />
+    //                         <Stack.Screen
+    //                             options={{ animation: 'slide_from_right' }}
+    //                             name="statistics"
+    //                         />
+    //                         <Stack.Screen
+    //                             options={{ animation: 'slide_from_bottom' }}
+    //                             name="login"
+    //                         />
+    //                     </Stack>
+    //                 </TimerProvider>
+    //             </Provider>
+    //         </SafeAreaView>
+    //     </GestureHandlerRootView>
+    // )
 }
 const styles = StyleSheet.create({
     container: {
