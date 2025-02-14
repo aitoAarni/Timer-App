@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
