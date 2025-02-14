@@ -19,7 +19,7 @@ import { insertUser } from '@/storage/local/userQueries'
 import initializeStorage from '@/storage/local/initializeStorage'
 
 SplashScreen.preventAutoHideAsync()
-console.log('splash screen enabled')
+console.log('NODE_ENV:', process.env.NODE_ENV)
 
 export default function RootLayout() {
     const [isInitializing, setIsInitializing] = useState(true)
