@@ -28,12 +28,12 @@ jobs:
                   node-version: 18
 
             - name: Install Dependencies
-              run: |
-                  npm install
+              working-directory: timerFront # 👈 Fix: Run inside `timerFront`
+              run: npm install
 
             - name: Install Expo CLI
-              run: |
-                  npm install -g expo-cli
+              working-directory: timerFront
+              run: npm install -g expo-cli
 
             - name: Install Maestro CLI
               run: |
@@ -57,11 +57,12 @@ jobs:
                   adb shell input keyevent 82  # Unlocks the emulator
 
             - name: Build and Start Expo Project
+              working-directory: timerFront
               run: |
                   npx expo prebuild  # Generates native android files if needed
                   npx expo start --no-dev --minify &  # Start the Expo dev server in the background
                   sleep 20  # Give it time to start
 
             - name: Run Maestro E2E Tests
-              run: |
-                  maestro test maestro/
+              working-directory: timerFront
+              run: maestro test maestro/
