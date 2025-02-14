@@ -26,3 +26,12 @@ export const setKeyValuePair = async function (key: string, value: string) {
         )
     }
 }
+
+export const removeKeyValuePair = async function (key: string) {
+    try {
+        await AsyncStorage.removeItem(key)
+    } catch (error) {
+        console.error('error in removeKeyValuePair', error)
+        throw error
+    }
+}
