@@ -15,14 +15,14 @@ import { useFocusEffect } from 'expo-router'
 export default function TimerView() {
     const timer = useRef(useTimer())
     const settings = useSelector((state: RootState) => state.settings)
-    timer.current.setNextWorkTime(settings.workTimeLength * 60)
-    timer.current.setNextBreakTime(settings.breakTimeLength * 60)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
     useFocusEffect(
         useCallback(() => {
+            timer.current.setNextWorkTime(settings.workTimeLength * 60)
+            timer.current.setNextBreakTime(settings.breakTimeLength * 60)
             let previousTime = -2
             const interval = setInterval(() => {
                 timer.current.updateTimer()

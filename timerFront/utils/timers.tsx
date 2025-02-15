@@ -138,18 +138,24 @@ export default class Timer {
         checkPositiveNumber(time)
         const oldWorkLength = this.workLength
         this.workLength = time
-
-        
+        console.log('calledi tää')
         if (
             this.workTimer.paused &&
             oldWorkLength - 1 === this.workTimer.getTime()
         ) {
-            this.resetTimer()
+            this.workTimer.setTimerLength(this.workLength)
         }
     }
     setNextBreakTime(time: Seconds) {
         checkPositiveNumber(time)
+        const oldBreakLength = this.breakLength
         this.breakLength = time
+        if (
+            this.breakTimer.paused &&
+            oldBreakLength - 1 === this.breakTimer.getTime()
+        ) {
+            this.breakTimer.setTimerLength(this.breakLength)
+        }
     }
 
     switchTimer() {

@@ -74,11 +74,7 @@ jobs:
                   script: |
                       adb devices
                       adb wait-for-device
-                      sleep 10
-                      until [[ "$(adb shell getprop sys.boot_completed)" == "1" ]]; do 
-                          echo "Waiting for emulator to fully boot..."; 
-                          sleep 5; 
-                      done
+                      sleep 30
                       adb wait-for-device shell input keyevent 82 # Unlock screen
                       cd timerFront
                       npx maestro test maestro/
