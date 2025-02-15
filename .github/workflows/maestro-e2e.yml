@@ -43,7 +43,7 @@ jobs:
 
             - name: Install Maestro CLI
               run: |
-                  curl -Ls "https://get.maestro.mobile.dev" | bash
+                  curl -fsSL "https://get.maestro.mobile.dev" | bash
                   echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
             - name: Cache Gradle Dependencies
@@ -56,7 +56,11 @@ jobs:
             - name: Set Up Android SDK
               uses: android-actions/setup-android@v3
 
-            - name: Start Android Emulator
+            - name: Start Expo Server
+              run: NODE_ENV=test npx expo start --dev-client --non-interactive &
+              working-directory: timerFront
+
+            - name: Start Android Emulator and run maestro e2e tests
               uses: reactivecircus/android-emulator-runner@v2
               with:
                   api-level: 30
@@ -66,15 +70,14 @@ jobs:
                   disable-animations: true
                   script: |
                       adb devices
-                      adb shell input keyevent 82 # Unlock screen
+                      adb wait-for-device shell settings put global window_animation_scale 0
+                      adb wait-for-device shell settings put global transition_animation_scale 0
+                      adb wait-for-device shell settings put global animator_duration_scale 0
+                      adb wait-for-device shell input keyevent 82 # Unlock screen
+                      adb wait-for-device shell wm dismiss-keyguard # Dismiss lock screen
+                      adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
+                      cd timerFront
+                      npx maestro test maestro/
 
-            - name: Start Expo Server
-              run: NODE_ENV=test npx expo start --dev-client --non-interactive &
-              working-directory: timerFront
-
-            - name: Wait for Expo to be ready
-              run: sleep 60
-
-            - name: Run Maestro E2E Tests
-              run: npx maestro test maestro/
-              working-directory: timerFront
+            - name: Verify Emulator is Running
+              run: adb shell getprop sys.boot_completed
