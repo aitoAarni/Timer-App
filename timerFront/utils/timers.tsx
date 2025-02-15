@@ -138,7 +138,6 @@ export default class Timer {
         checkPositiveNumber(time)
         const oldWorkLength = this.workLength
         this.workLength = time
-        console.log('calledi tää')
         if (
             this.workTimer.paused &&
             oldWorkLength - 1 === this.workTimer.getTime()

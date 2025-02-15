@@ -38,7 +38,6 @@ function DirectionPad({
             scale.value = withTiming(modifiedScale, { duration: 150 })
         })
         .onStart(event => {
-            console.log('event', event)
             if (onTap) {
                 runOnJS(onTap)()
             }

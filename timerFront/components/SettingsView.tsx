@@ -88,13 +88,9 @@ const TimerSlider = function ({
 
     const onTextSubmit = () => {
         const timerValueNumber = Number(timerValue)
-        console.log(12)
         if (!isNaN(timerValueNumber) && timerValueNumber > 0) {
-            console.log(`is not nan, ${timerValueNumber}, ${timerValue}`)
             dispatch(updateSettings({ [settingsKey]: timerValueNumber }))
         } else {
-            console.log(`was nan`)
-            console.log(`progress.value: ${progress.value}`)
 
             setTimerValue(String(progress.value))
         }

@@ -38,11 +38,7 @@ export default function RootLayout() {
         }
         initialize()
     }, [])
-    console.log(
-        `(!isInitializing (${!isInitializing}) && (loaded (${loaded}) || error (${error}))): ${
-            !isInitializing && (loaded || error)
-        }`
-    )
+
     if (!isInitializing && (loaded || error)) {
         SplashScreen.hide()
     }

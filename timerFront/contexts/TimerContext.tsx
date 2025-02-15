@@ -1,20 +1,15 @@
 import { createContext, ReactNode, useRef } from 'react'
 import TimeLogger from '@/utils/logger'
 import Timer from '@/utils/timers'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { updateSettings } from '@/redux/settingsSlice'
 
 export const TimerContext = createContext<Timer | null>(null)
 
 export const TimerProvider = function ({ children }: { children: ReactNode }) {
-    // const dispatch = useDispatch()
-    // dispatch(updateSettings({ workTimeLength: 25 }))
-    // dispatch(updateSettings({ breakTimeLength: 25 }))
     const settings = useSelector((state: RootState) => state.settings)
 
     const { workTimeLength, breakTimeLength } = settings
-    console.log(settings)
 
     const logger = useRef(new TimeLogger(1))
     const timer = useRef(

@@ -15,13 +15,9 @@ export default async function initializeStorage() {
         await insertUser('test_user', 'password', 1)
     }
     if (isTest()) {
-        console.log("running in test mode")
         await clearSettings()
         const authStorage = new AuthStorage()
         await authStorage.removeUser()
-        console.log()
-        console.log('user before dispatch', store.getState().user)
         store.dispatch(clearUser())
-        console.log('user after dispatch', store.getState().user)
     }
 }
