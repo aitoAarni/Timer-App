@@ -16,6 +16,12 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
+            - name: Enable KVM group perms
+              run: |
+                  echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+                  sudo udevadm control --reload-rules
+                  sudo udevadm trigger --name-match=kvm
+
             - name: Set Up JDK (Required for Android SDK)
               uses: actions/setup-java@v3
               with:
@@ -50,21 +56,25 @@ jobs:
             - name: Set Up Android SDK
               uses: android-actions/setup-android@v3
 
-            - name: Create & Start Android Emulator
-              run: |
-                  echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-30;google_apis;x86_64"
-                  echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testAVD -k "system-images;android-30;google_apis;x86_64" --device "pixel_4"
-                  $ANDROID_HOME/emulator/emulator -avd testAVD -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
-                  adb wait-for-device
-                  adb shell input keyevent 82  # Unlock the emulator
+            - name: Start Android Emulator
+              uses: reactivecircus/android-emulator-runner@v2
+              with:
+                  api-level: 30
+                  target: google_apis
+                  arch: x86_64
+                  profile: pixel_4
+                  disable-animations: true
+                  script: |
+                      adb devices
+                      adb shell input keyevent 82 # Unlock screen
 
-            - name: Build and Start Expo Project
+            - name: Start Expo Server
+              run: NODE_ENV=test npx expo start --dev-client --non-interactive &
               working-directory: timerFront
-              run: |
-                  npx expo prebuild  # Generates native android files if needed
-                  npx expo start --no-dev --minify &  # Start the Expo dev server in the background
-                  sleep 20  # Give it time to start
+
+            - name: Wait for Expo to be ready
+              run: sleep 60
 
             - name: Run Maestro E2E Tests
+              run: npx maestro test maestro/
               working-directory: timerFront
-              run: maestro test maestro/
