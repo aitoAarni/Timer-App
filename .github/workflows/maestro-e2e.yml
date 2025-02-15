@@ -28,7 +28,7 @@ jobs:
                   node-version: 18
 
             - name: Install Dependencies
-              working-directory: timerFront # 👈 Fix: Run inside `timerFront`
+              working-directory: timerFront
               run: npm install
 
             - name: Install Expo CLI
@@ -50,11 +50,13 @@ jobs:
             - name: Set Up Android SDK
               uses: android-actions/setup-android@v3
 
-            - name: Start Android Emulator
+            - name: Create & Start Android Emulator
               run: |
-                  sudo $ANDROID_HOME/emulator/emulator -avd testAVD -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
+                  echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-30;google_apis;x86_64"
+                  echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testAVD -k "system-images;android-30;google_apis;x86_64" --device "pixel_4"
+                  $ANDROID_HOME/emulator/emulator -avd testAVD -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
                   adb wait-for-device
-                  adb shell input keyevent 82  # Unlocks the emulator
+                  adb shell input keyevent 82  # Unlock the emulator
 
             - name: Build and Start Expo Project
               working-directory: timerFront
