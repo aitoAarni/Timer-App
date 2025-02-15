@@ -45,6 +45,7 @@ jobs:
               run: |
                   curl -fsSL "https://get.maestro.mobile.dev" | bash
                   echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+                  export PATH="$PATH":"$HOME/.maestro/bin"
 
             - name: Cache Gradle Dependencies
               uses: actions/cache@v3
@@ -76,3 +77,4 @@ jobs:
 
             - name: Verify Emulator is Running
               run: adb shell getprop sys.boot_completed
+              
