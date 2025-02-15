@@ -136,7 +136,16 @@ export default class Timer {
 
     setNextWorkTime(time: Seconds) {
         checkPositiveNumber(time)
+        const oldWorkLength = this.workLength
         this.workLength = time
+
+        
+        if (
+            this.workTimer.paused &&
+            oldWorkLength - 1 === this.workTimer.getTime()
+        ) {
+            this.resetTimer()
+        }
     }
     setNextBreakTime(time: Seconds) {
         checkPositiveNumber(time)
