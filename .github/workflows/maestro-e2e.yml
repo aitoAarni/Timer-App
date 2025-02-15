@@ -70,12 +70,7 @@ jobs:
                   disable-animations: true
                   script: |
                       adb devices
-                      adb wait-for-device shell settings put global window_animation_scale 0
-                      adb wait-for-device shell settings put global transition_animation_scale 0
-                      adb wait-for-device shell settings put global animator_duration_scale 0
                       adb wait-for-device shell input keyevent 82 # Unlock screen
-                      adb wait-for-device shell wm dismiss-keyguard # Dismiss lock screen
-                      adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
                       cd timerFront
                       npx maestro test maestro/
 
