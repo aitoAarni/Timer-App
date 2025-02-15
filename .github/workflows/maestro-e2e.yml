@@ -58,8 +58,10 @@ jobs:
               uses: android-actions/setup-android@v3
 
             - name: Start Expo Server
-              run: NODE_ENV=test npx expo start --dev-client --non-interactive &
               working-directory: timerFront
+              run: |
+                NODE_ENV=test npx expo start --dev-client --non-interactive &
+                sleep 30 
 
             - name: Start Android Emulator and run maestro e2e tests
               uses: reactivecircus/android-emulator-runner@v2
@@ -71,10 +73,15 @@ jobs:
                   disable-animations: true
                   script: |
                       adb devices
+                      adb wait-for-device
+                      sleep 10
+                      until [[ "$(adb shell getprop sys.boot_completed)" == "1" ]]; do 
+                          echo "Waiting for emulator to fully boot..."; 
+                          sleep 5; 
+                      done
                       adb wait-for-device shell input keyevent 82 # Unlock screen
                       cd timerFront
                       npx maestro test maestro/
 
             - name: Verify Emulator is Running
               run: adb shell getprop sys.boot_completed
-              
