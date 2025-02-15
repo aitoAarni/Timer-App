@@ -1,0 +1,16 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- assertVisible: '24:59'
+- tapOn: 'Settings'
+- tapOn: '25'
+- inputText: '15'
+- tapOn: '5'
+- inputText: '1'
+- tapOn: 'Timer'
+- assertVisible: '14:59'
+- swipe:
+      start: '50%, 50%'
+      end: '90%, 50%'
+- assertVisible: '00:58'
+- tapOn: '00:57'

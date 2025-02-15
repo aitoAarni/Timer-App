@@ -18,6 +18,7 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import { useSharedValue } from 'react-native-reanimated'
 import { Slider } from 'react-native-awesome-slider'
+import { setSettings } from '@/services/settings'
 export default function SettingsView() {
     const navigateRight = useNavigateTo({
         pathname: '/',
@@ -76,6 +77,11 @@ const TimerSlider = function ({
         setTimerValue(String(roundedValue))
         if (settingsKey && settingsKey in settings) {
             dispatch(updateSettings({ [settingsKey]: roundedValue }))
+            const updatedSettings = {
+                ...settings,
+                [settingsKey]: String(roundedValue),
+            }
+            setSettings(updatedSettings)
         }
     }
 
@@ -87,11 +93,16 @@ const TimerSlider = function ({
     }
 
     const onTextSubmit = () => {
+        console.log('settings onblur', settingsKey)
         const timerValueNumber = Number(timerValue)
         if (!isNaN(timerValueNumber) && timerValueNumber > 0) {
             dispatch(updateSettings({ [settingsKey]: timerValueNumber }))
+            const updatedSettings = {
+                ...settings,
+                [settingsKey]: timerValue,
+            }
+            setSettings(updatedSettings)
         } else {
-
             setTimerValue(String(progress.value))
         }
     }

@@ -24,7 +24,7 @@ const settingsSlice = createSlice({
     reducers: {
         updateSettings: (state, action: PayloadAction<Partial<Settings>>) => {
             const updatedSettings = { ...state, ...action.payload }
-            setSettings(updatedSettings)
+            console.log('update settings clled')
             return updatedSettings
         },
     },

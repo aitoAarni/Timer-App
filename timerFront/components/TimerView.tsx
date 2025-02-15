@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
@@ -15,14 +15,18 @@ import { useFocusEffect } from 'expo-router'
 export default function TimerView() {
     const timer = useRef(useTimer())
     const settings = useSelector((state: RootState) => state.settings)
+    console.log('settings in timerview', settings)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
+    useEffect(() => {
+        console.log('settings updated in timer view')
+        timer.current.setNextWorkTime(settings.workTimeLength * 60)
+        timer.current.setNextBreakTime(settings.breakTimeLength * 60)
+    }, [settings])
     useFocusEffect(
         useCallback(() => {
-            timer.current.setNextWorkTime(settings.workTimeLength * 60)
-            timer.current.setNextBreakTime(settings.breakTimeLength * 60)
             let previousTime = -2
             const interval = setInterval(() => {
                 timer.current.updateTimer()

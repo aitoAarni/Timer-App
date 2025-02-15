@@ -4,18 +4,14 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
 import { useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '@/theme'
 import AppBar from '@/components/AppBar'
-import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
-import { createTables, initializeDatabase } from '@/storage/local/db'
-import { getUsers } from '@/storage/local/userQueries'
-import { insertUser } from '@/storage/local/userQueries'
 import initializeStorage from '@/storage/local/initializeStorage'
 
 SplashScreen.preventAutoHideAsync()
@@ -40,8 +36,11 @@ export default function RootLayout() {
     }, [])
 
     if (!isInitializing && (loaded || error)) {
+        console.log('hide spash')
         SplashScreen.hide()
     }
+    console.log("isinitializing: ")
+    if (isInitializing) return <View></View>
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={styles.container}>
