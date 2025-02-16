@@ -5,6 +5,7 @@
     "main": "index.ts",
     "scripts": {
         "tsc": "tsc",
+        "start": "node build/index.js",
         "dev": "ts-node-dev index.ts",
         "lint": "eslint ."
     },
