@@ -47,7 +47,9 @@ function SwipeNavigation({
 
     return (
         <GestureDetector gesture={composed}>
-            <View style={[styles.container, style]}>{children}</View>
+            <View testID="swipe-navigation" style={[styles.container, style]}>
+                {children}
+            </View>
         </GestureDetector>
     )
 }

@@ -1,0 +1,28 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- assertVisible: '24:59'
+- swipe:
+      id: 'swipe-navigation'
+      start: 80%, 80%
+      end: 20%, 80%
+      duration: 100
+
+- assertVisible: '.*get statistics'
+- swipe:
+      start: 20%, 80%
+      end: 80%, 80%
+      duration: 50
+- assertVisible: '24:59'
+- swipe:
+      start: 20%, 80%
+      end: 80%, 80%
+      duration: 50
+- assertVisible: 'Work duration'
+- tapOn: 'Statistics'
+- assertVisible: '.*get statistics'
+- tapOn: 'Settings'
+- assertVisible: 'Break duration'
+- tapOn: 'Timer'
+- assertVisible: '24:59'
+  
