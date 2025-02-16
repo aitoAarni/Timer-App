@@ -1,0 +1,15 @@
+appId: com.isovertti.timerFront
+---
+- launchApp
+- assertVisible:
+      text: '24:59'
+      optional: true
+- runFlow:
+      when:
+          visible: '.*Development Servers.*'
+      commands:
+          - tapOn: '.*http.*' 
+          - tapOn: 'Continue'
+          - tapOn:
+                point: 50%, 20%
+          - assertVisible: '24:59'

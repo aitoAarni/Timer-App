@@ -1,6 +1,6 @@
 appId: com.isovertti.timerFront
 ---
-- launchApp
+- runFlow: utility/setup.yaml
 - tapOn:
       text: '24:59'
       retryTapIfNoChange: false

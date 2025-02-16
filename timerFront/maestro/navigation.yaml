@@ -1,7 +1,6 @@
 appId: com.isovertti.timerFront
 ---
-- launchApp
-- assertVisible: '24:59'
+- runFlow: utility/setup.yaml
 - swipe:
       id: 'swipe-navigation'
       start: 80%, 80%
