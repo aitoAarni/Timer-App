@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/user/create
+Content-Type: application/json
+
+{
+    "password": "passwords123",
+    "username": "Lil brosef"
+}
+
+###
+
