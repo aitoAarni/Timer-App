@@ -10,13 +10,23 @@ const router = express.Router()
 router.post('/create', async (req, res) => {
     try {
         const { username, password } = toUserCredentials(req.body)
-        const saltRounds = 5
-        const passwordHash = await bcrypt.hash(password, saltRounds)
-        const user = new User({ username, passwordHash })
-        console.log(user.toJSON())
-        const savedUser = await user.save()
-        console.log(savedUser)
-        res.status(201).json({ username, password })
+        const usernameInUse = await User.findOne(
+            { username },
+            'username passowrdHash'
+        ).exec()
+        if (usernameInUse) {
+            console.log('username in use')
+            res.status(400).json({ error: 'Username already taken' })
+        } else {
+            const saltRounds = 5
+            const passwordHash = await bcrypt.hash(password, saltRounds)
+            const user = new User({ username, passwordHash })
+            console.log(user.toJSON())
+            const savedUser = await user.save()
+            console.log(savedUser)
+            const savedUserJSON = savedUser.toJSON()
+            res.status(201).json(savedUserJSON)
+        }
     } catch (error) {
         if (error instanceof z.ZodError) {
             res.status(400).send({ error: error.issues })
