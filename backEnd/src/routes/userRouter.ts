@@ -12,18 +12,17 @@ router.post('/create', async (req, res) => {
         const { username, password } = toUserCredentials(req.body)
         const usernameInUse = await User.findOne(
             { username },
-            'username passowrdHash'
+            'username'
         ).exec()
         if (usernameInUse) {
-            console.log('username in use')
-            res.status(400).json({ error: 'Username already taken' })
+            res.status(400).json({ error: 'username already taken' })
         } else {
-            const saltRounds = 5
-            const passwordHash = await bcrypt.hash(password, saltRounds)
+            const passwordHash = await bcrypt.hash(
+                password,
+                Number(process.env.SALT_ROUNDS) || 5
+            )
             const user = new User({ username, passwordHash })
-            console.log(user.toJSON())
             const savedUser = await user.save()
-            console.log(savedUser)
             const savedUserJSON = savedUser.toJSON()
             res.status(201).json(savedUserJSON)
         }
@@ -36,19 +35,27 @@ router.post('/create', async (req, res) => {
     }
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { username, password } = toUserCredentials(req.body)
-        console.log(password) // TODO: confirm that user exists
-        const id = 1
-        const userForToken = { id, username }
-        console.log('SECRET: ', process.env.SECRET)
-        const secret = process.env.SECRET
-        if (!secret) {
-            throw new Error('SECRET environment variable is not set')
+
+        const user = await User.findOne({ username }).exec()
+        const passwordCorrect =
+            typeof user?.passwordHash === 'string'
+                ? bcrypt.compare(password, user.passwordHash)
+                : false
+        if (!passwordCorrect || !user) {
+            res.status(400).send({ error: 'credentials are incorrect' })
+        } else {
+            const userForToken = { id: user._id, username }
+            const secret = process.env.SECRET
+            if (!secret) {
+                throw new Error('SECRET environment variable is not set')
+            }
+            const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
+            const response = { ...user.toJSON(), token }
+            res.status(201).send(response)
         }
-        const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
-        res.status(201).send({ token, username, id })
     } catch (error) {
         res.status(400).send({ error: 'unknown error' })
         throw error
