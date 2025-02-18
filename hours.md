@@ -39,3 +39,4 @@
 | 14.1.2025  | 3h    | fix app not rendering bug, refactor code, research and create e2e test                        |
 | 15.1.2025  | 4h    | Fix issue with launching app, add e2e test, try to integrate e2e to CI pipline, fix bugs      |
 | 16.1.2025  | 4h    | add e2e test, add safe launch to e2e tests, start back-end                                    |
+| 17.1.2025  | 2.5h  | create andpoints for user creation and logging in                                             |

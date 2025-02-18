@@ -1,4 +1,4 @@
-import express, { response } from 'express'
+import express from 'express'
 import bcrypt from 'bcrypt'
 import { toUserCredentials } from '../utils'
 import { z } from 'zod'
@@ -33,8 +33,8 @@ router.post('/login', (req, res) => {
         if (!secret) {
             throw new Error('SECRET environment variable is not set')
         }
-        const token = jwt.sign(userForToken, secret)
-        res.send({ token, username, id })
+        const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
+        res.status(201).send({ token, username, id })
     } catch (error) {
         res.status(400).send({ error: 'unknown error' })
         throw error
