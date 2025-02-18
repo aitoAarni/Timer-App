@@ -19,7 +19,7 @@ const userSchema = new Schema({
     times: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Time',
+            ref: 'TimeLog',
         },
     ],
 })
