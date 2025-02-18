@@ -13,12 +13,29 @@ const userSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: () => new Date().toUTCString(),
+        default: () => Date.now(),
         immutable: true,
     },
     times: [
-        {type}
-    ]
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Time',
+        },
+    ],
+})
+
+userSchema.set('toJSON', {
+    transform: (
+        document: mongoose.Document,
+        returnedObject: Record<string, unknown>
+    ) => {
+        returnedObject.id = (
+            returnedObject._id as mongoose.Types.ObjectId
+        ).toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+        delete returnedObject.passwordHash
+    },
 })
 
 const User = model('User', userSchema)
