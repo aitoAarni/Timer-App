@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { toUserCredentials } from '../utils'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
+import User from '../models/userModel'
 
 const router = express.Router()
 
@@ -10,8 +11,11 @@ router.post('/create', async (req, res) => {
     try {
         const { username, password } = toUserCredentials(req.body)
         const saltRounds = 5
-        const hashedPassword = await bcrypt.hash(password, saltRounds)
-        console.log(hashedPassword)
+        const passwordHash = await bcrypt.hash(password, saltRounds)
+        const user = new User({ username, passwordHash })
+        console.log(user.toJSON())
+        const savedUser = await user.save()
+        console.log(savedUser)
         res.status(201).json({ username, password })
     } catch (error) {
         if (error instanceof z.ZodError) {

@@ -1,6 +1,20 @@
 import mongoose from 'mongoose'
-
 const { Schema, model } = mongoose
+
+const url = process.env.MONGODB_URI
+if (!url) {
+    throw new Error('MONGODB_URI environmental variable is not set')
+}
+
+mongoose
+    .connect(url)
+    .then(() => console.log('connected to db'))
+    .catch(error => {
+        console.error(
+            'error connecting to db',
+            error instanceof Error ? error.message : String(error)
+        )
+    })
 
 const userSchema = new Schema({
     username: {
