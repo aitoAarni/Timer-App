@@ -1,18 +1,15 @@
-import dotenv from 'dotenv'
+import {DATABASE_URI} from './config'
 import express from 'express'
 import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
 
-dotenv.config()
-
-const url = process.env.MONGODB_URI
-if (!url) {
+if (!DATABASE_URI) {
     throw new Error('MONGODB_URI environmental variable is not set')
 }
 
 mongoose
-    .connect(url)
+    .connect(DATABASE_URI)
     .then(() => console.log('connected to db'))
     .catch(error => {
         console.error(

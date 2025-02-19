@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { toUserCredentials } from '../utils'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel'
+import { SECRET, SALT_ROUNDS } from '../config'
 
 const router = express.Router()
 
@@ -10,10 +11,7 @@ router.post('/create', async (req, res, next) => {
     try {
         const { username, password } = toUserCredentials(req.body)
 
-        const passwordHash = await bcrypt.hash(
-            password,
-            Number(process.env.SALT_ROUNDS) || 5
-        )
+        const passwordHash = await bcrypt.hash(password, Number(SALT_ROUNDS))
         const user = new User({ username, passwordHash })
         const savedUser = await user.save()
         const savedUserJSON = savedUser.toJSON()
@@ -36,11 +34,8 @@ router.post('/login', async (req, res, next) => {
             throw new Error('Credentials are incorrect')
         }
         const userForToken = { id: user._id, username }
-        const secret = process.env.SECRET
-        if (!secret) {
-            throw new Error('SECRET environment variable is not set')
-        }
-        const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
+
+        const token = jwt.sign(userForToken, SECRET, { expiresIn: '14d' })
         const response = { ...user.toJSON(), token }
         res.status(201).send(response)
     } catch (error) {
