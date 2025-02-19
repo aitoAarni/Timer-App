@@ -1,7 +1,6 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import { toUserCredentials } from '../utils'
-import { z } from 'zod'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel'
 
@@ -31,20 +30,19 @@ router.post('/login', async (req, res, next) => {
         const user = await User.findOne({ username }).exec()
         const passwordCorrect =
             typeof user?.passwordHash === 'string'
-                ? bcrypt.compare(password, user.passwordHash)
+                ? await bcrypt.compare(password, user.passwordHash)
                 : false
         if (!passwordCorrect || !user) {
-            res.status(400).send({ error: 'credentials are incorrect' })
-        } else {
-            const userForToken = { id: user._id, username }
-            const secret = process.env.SECRET
-            if (!secret) {
-                throw new Error('SECRET environment variable is not set')
-            }
-            const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
-            const response = { ...user.toJSON(), token }
-            res.status(201).send(response)
+            throw new Error('Credentials are incorrect')
         }
+        const userForToken = { id: user._id, username }
+        const secret = process.env.SECRET
+        if (!secret) {
+            throw new Error('SECRET environment variable is not set')
+        }
+        const token = jwt.sign(userForToken, secret, { expiresIn: '14d' })
+        const response = { ...user.toJSON(), token }
+        res.status(201).send(response)
     } catch (error) {
         next(error)
     }
