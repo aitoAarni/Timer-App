@@ -26,4 +26,22 @@ describe('test', () => {
         console.log('useinDB: ', userInDb)
         expect(response.body).toEqual(userInDb)
     })
+    it('should return 400 if username is missing', async () => {
+        const response = await api
+            .post('/api/user/create')
+            .send({ password: 'password123' })
+            .expect(400)
+        console.log('response.body.error: ', response.body.error)
+        expect(response.body.error[0].message).toEqual('Required')
+    })
+
+    it('should return 400 if password is missing', async () => {
+        const response = await api
+            .post('/api/user/create')
+            .send({ username: 'testuser' })
+            .expect(400)
+        console.log('response.body.error: ', response.body.error)
+
+        expect(response.body.error[0].message).toEqual('Required')
+    })
 })
