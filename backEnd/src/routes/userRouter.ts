@@ -7,35 +7,24 @@ import User from '../models/userModel'
 
 const router = express.Router()
 
-router.post('/create', async (req, res) => {
+router.post('/create', async (req, res, next) => {
     try {
         const { username, password } = toUserCredentials(req.body)
-        const usernameInUse = await User.findOne(
-            { username },
-            'username'
-        ).exec()
-        if (usernameInUse) {
-            res.status(400).json({ error: 'username already taken' })
-        } else {
-            const passwordHash = await bcrypt.hash(
-                password,
-                Number(process.env.SALT_ROUNDS) || 5
-            )
-            const user = new User({ username, passwordHash })
-            const savedUser = await user.save()
-            const savedUserJSON = savedUser.toJSON()
-            res.status(201).json(savedUserJSON)
-        }
+
+        const passwordHash = await bcrypt.hash(
+            password,
+            Number(process.env.SALT_ROUNDS) || 5
+        )
+        const user = new User({ username, passwordHash })
+        const savedUser = await user.save()
+        const savedUserJSON = savedUser.toJSON()
+        res.status(201).json(savedUserJSON)
     } catch (error) {
-        if (error instanceof z.ZodError) {
-            res.status(400).send({ error: error.issues })
-        }
-        res.status(400).send({ error: 'unknown error' })
-        throw error
+        next(error)
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = toUserCredentials(req.body)
 
@@ -57,8 +46,7 @@ router.post('/login', async (req, res) => {
             res.status(201).send(response)
         }
     } catch (error) {
-        res.status(400).send({ error: 'unknown error' })
-        throw error
+        next(error)
     }
 })
 
