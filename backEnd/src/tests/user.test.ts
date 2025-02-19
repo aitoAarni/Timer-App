@@ -2,6 +2,8 @@
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app'
+import User from '../models/userModel'
+import { getUserFromDb } from './test_helpers'
 
 describe('test', () => {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -10,15 +12,18 @@ describe('test', () => {
         await mongoose.connection.close()
         console.log('closing connection')
     })
+    beforeEach(async () => {
+        await User.deleteMany({})
+    })
     it('should create a new user', async () => {
-        const newUser = { username: 'testuser2', password: 'password123' }
-        console.log('run api request')
-        await api
+        const newUser = { username: 'testuser', password: 'password123' }
+        const response = await api
             .post('/api/user/create')
             .send(newUser)
-            .expect(res => {
-                console.log(res.body)
-            })
-        console.log('api request done')
+            .expect(201)
+        const userInDb = await getUserFromDb(newUser.username)
+        console.log('rsponse: ', response.body)
+        console.log('useinDB: ', userInDb)
+        expect(response.body).toEqual(userInDb)
     })
 })
