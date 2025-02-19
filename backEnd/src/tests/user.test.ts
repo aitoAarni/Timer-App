@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app'
 import User from '../models/userModel'
-import { getUserFromDb } from './test_helpers'
+import { getAllUsersFromDb, getUserFromDb } from './test_helpers'
 
 describe('test', () => {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -43,5 +43,20 @@ describe('test', () => {
         console.log('response.body.error: ', response.body.error)
 
         expect(response.body.error[0].message).toEqual('Required')
+    })
+    it('should not allow duplicate usernames', async () => {
+        const newUser = { username: 'testuser', password: 'password123' }
+
+        await api.post('/api/user/create').send(newUser).expect(201)
+        const response = await api
+            .post('/api/user/create')
+            .send(newUser)
+            .expect(400)
+        const usersInDb = await getAllUsersFromDb()
+        console.log('response body for last: ', response.body)
+        expect(response.body.errorResponse.errmsg).toContain(
+            'E11000 duplicate key error'
+        )
+        expect(usersInDb).toHaveLength(1)
     })
 })
