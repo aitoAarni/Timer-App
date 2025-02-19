@@ -42,3 +42,4 @@
 | 17.1.2025  | 2.5h   | create andpoints for user creation and logging in                                             |
 | 18.1.2025  | 3.5h   | integrate MongoDB to back-end                                                                 |
 | in total   | 131.5h |                                                                                               |
+| 19.1.2025  | 4h     | add middleware for errors and unknown endpoint, add config file, add unit tests               |

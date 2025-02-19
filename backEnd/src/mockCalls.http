@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "password": "password",
-    "username": "spede bro"
+    "username": "bro"
 }
 
 ###
@@ -22,5 +22,5 @@ Content-Type: application/json
 
 {
     "password": "password",
-    "username": "spede bro"
+    "username": "bro"
 }
