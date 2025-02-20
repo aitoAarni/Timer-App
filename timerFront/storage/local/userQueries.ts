@@ -4,8 +4,8 @@ import { openDatabase } from './db'
 
 const insertUser = async (
     username: string,
-    password: string,
-    server_id: number
+    password: string | undefined,
+    server_id: string | undefined
 ) => {
     let db: sqlite.SQLiteDatabase | null = null
     try {
@@ -13,8 +13,8 @@ const insertUser = async (
         await db.runAsync(
             `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`,
             username,
-            password,
-            server_id
+            password ? password : null,
+            server_id ? server_id : null
         )
     } catch (error) {
         console.error('errori in InsertUser', error)
