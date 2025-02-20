@@ -43,3 +43,5 @@
 | 18.1.2025  | 3.5h   | integrate MongoDB to back-end                                                                 |
 | in total   | 131.5h |                                                                                               |
 | 19.1.2025  | 4h     | add middleware for errors and unknown endpoint, add config file, add unit tests               |
+| 20.1.2025  | 1h     | get front end to communicate with back-end login endpoint                                     |
+| 21.1.2025  | 1.5h   | integrate back-end logging in with front end logging in                                       |
