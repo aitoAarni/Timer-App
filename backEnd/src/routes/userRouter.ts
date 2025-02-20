@@ -23,6 +23,7 @@ router.post('/create', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
     try {
+        console.log('req.body: ', req.body)
         const { username, password } = toUserCredentials(req.body)
 
         const user = await User.findOne({ username }).exec()
