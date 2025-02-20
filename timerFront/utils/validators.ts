@@ -10,3 +10,16 @@ export const RemoteUserSchema = z.object({
 export const toRemoteUser = (user: unknown) => {
     return RemoteUserSchema.parse(user)
 }
+
+export const LocalStorageUserSchema = z.object({
+    id: z.number(),
+    username: z.string(),
+    password: z.string(),
+    server_id: z.string(),
+    created_at: z.string(),
+    token: z.string().nullable(),
+})
+
+export const toStorageUser = (user: unknown) => {
+    return LocalStorageUserSchema.parse(user)
+}
