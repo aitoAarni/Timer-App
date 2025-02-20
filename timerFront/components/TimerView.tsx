@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from '../components/Text'
 import DirectionPad from './DirectionPad'
 import { formatTime } from '@/utils/format'
@@ -11,6 +11,7 @@ import ModalView from './modal/ModalView'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import { useFocusEffect } from 'expo-router'
+import login from '@/services/login'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
@@ -67,7 +68,16 @@ export default function TimerView() {
                 style={styles.fillerContainers}
                 leftSwipeCallback={navigateLeft}
                 rightSwipeCallback={navigateRight}
-            ></SwipeNavigation>
+            >
+                <TouchableOpacity
+                    style={{ marginTop: 50}}
+                    onPress={() => {
+                        login('bro', 'password2')
+                    }}
+                >
+                    <Text fontSize={20}>Login</Text>
+                </TouchableOpacity>
+            </SwipeNavigation>
             <View style={styles.timerContainer}>
                 <View style={styles.timerPressable}>
                     <DirectionPad
