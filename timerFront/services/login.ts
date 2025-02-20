@@ -1,5 +1,4 @@
-export default async function login(username: string, password: string) {
-    console.log('pressed')
+export default async function remoteLogin(username: string, password: string) {
     const body = JSON.stringify({ username, password })
     const response = await fetch('http://192.168.1.120:3000/api/user/login', {
         method: 'POST',
@@ -8,6 +7,11 @@ export default async function login(username: string, password: string) {
         },
         body,
     })
+    if (!response.ok) {
+        const errorText = await response.text()
+        console.error(`Http: ${response.status}, ${errorText}`)
+        throw new Error(`Http: ${response.status}, ${errorText}`)
+    }
     const json = await response.json()
-    console.log('json: ', json)
+    return json
 }
