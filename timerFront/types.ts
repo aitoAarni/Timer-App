@@ -1,3 +1,6 @@
+import { z } from 'zod'
+import { RemoteUserSchema } from './utils/validators'
+
 export type PositiveNumber = number & { __positive__: true }
 
 export function isPositiveNumber(value: number): value is PositiveNumber {
@@ -11,6 +14,8 @@ export interface User {
     server_id: string
     created_at: string
 }
+
+export type RemoteUser = z.infer<typeof RemoteUserSchema>
 
 export interface TimeLogged {
     id: number
