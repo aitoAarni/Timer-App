@@ -6,10 +6,10 @@ import ErrorBox from './ErrorBox'
 import { useState } from 'react'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import useCreateUser from '@/hooks/useCreateUser'
-import useLogIn from '@/useLogIn'
 import { useRouter } from 'expo-router'
 import AuthStorage from '@/utils/authStorage'
+import createLocalUser from '@/services/userServices'
+import useLogIn from '@/hooks/useLogIn'
 interface Inputs {
     username: string
     password: string
@@ -52,7 +52,6 @@ export default function SignInView({ setLogin }: SignInViewProps) {
             verifyPassword: '',
         },
     })
-    const createUser = useCreateUser()
     const login = useLogIn()
     const router = useRouter()
 
@@ -60,7 +59,7 @@ export default function SignInView({ setLogin }: SignInViewProps) {
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
         try {
-            await createUser(data.username, data.password)
+            await createLocalUser(data.username, data.password)
             const loggedUser = await login(data.username, data.password)
             if (loggedUser) {
                 if (router.canGoBack()) {
