@@ -18,17 +18,24 @@ const useLogIn = () => {
             }
 
             const localUser = (await getUserByUsername(username))[0]
-
             if (localUser && localUser.password === password) {
+                const storageUser = {
+                    ...localUser,
+                    token: remoteUser ? remoteUser.token : null,
+                }
                 const authStorage = new AuthStorage()
-                await authStorage.setUser(localUser)
-                dispatch(setLoggedInUser(localUser))
+                await authStorage.setUser(storageUser)
+                dispatch(setLoggedInUser(storageUser))
                 return true
             } else if (remoteUser) {
+                const storageUser = {
+                    ...localUser,
+                    token: remoteUser ? remoteUser.token : null,
+                }
                 await createLocalUser(username, undefined, remoteUser.id)
                 const authStorage = new AuthStorage()
-                await authStorage.setUser(localUser)
-                dispatch(setLoggedInUser(localUser))
+                await authStorage.setUser(storageUser)
+                dispatch(setLoggedInUser(storageUser))
                 return true
             }
             return false
@@ -39,7 +46,5 @@ const useLogIn = () => {
     }
     return logIn
 }
-
-const addUserToLocalDatabse = (user: RemoteUser) => {}
 
 export default useLogIn

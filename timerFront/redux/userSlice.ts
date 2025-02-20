@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from '@/types'
+import { StorageUser, User } from '@/types'
 import AuthStorage from '@/utils/authStorage'
 
 interface UserState {
-    loggedInUser: User | null
+    loggedInUser: StorageUser | null
     loading: boolean
 }
 
@@ -19,7 +19,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
     reducers: {
-        setLoggedInUser: (state, action: PayloadAction<User>) => {
+        setLoggedInUser: (state, action: PayloadAction<StorageUser>) => {
             state.loggedInUser = action.payload
         },
         clearUser: state => {
