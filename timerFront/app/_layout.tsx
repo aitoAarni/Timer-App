@@ -36,10 +36,8 @@ export default function RootLayout() {
     }, [])
 
     if (!isInitializing && (loaded || error)) {
-        console.log('hide spash')
         SplashScreen.hide()
     }
-    console.log("isinitializing: ")
     if (isInitializing) return <View></View>
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>

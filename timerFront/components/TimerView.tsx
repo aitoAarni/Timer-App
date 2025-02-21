@@ -11,18 +11,16 @@ import ModalView from './modal/ModalView'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import { useFocusEffect } from 'expo-router'
-import login from '@/services/login'
+import login from '@/services/loginServices'
 
 export default function TimerView() {
     const timer = useRef(useTimer())
     const settings = useSelector((state: RootState) => state.settings)
-    console.log('settings in timerview', settings)
     const [time, setTime] = useState(timer.current.getSecondsRemaining())
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const navigateRight = useNavigateTo('/statistics')
     const navigateLeft = useNavigateTo('/settings')
     useEffect(() => {
-        console.log('settings updated in timer view')
         timer.current.setNextWorkTime(settings.workTimeLength * 60)
         timer.current.setNextBreakTime(settings.breakTimeLength * 60)
     }, [settings])
