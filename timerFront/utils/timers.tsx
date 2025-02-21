@@ -146,7 +146,6 @@ export default class Timer {
         }
     }
     setNextBreakTime(time: Seconds) {
-        console.log('in setNextBreakTime time: ', time)
         checkPositiveNumber(time)
         const oldBreakLength = this.breakLength
         this.breakLength = time
