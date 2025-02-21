@@ -13,6 +13,7 @@ import { useState } from 'react'
 
 export default function ProfileView() {
     const user = useSelector((state: RootState) => state.user.loggedInUser)
+    console.log('user: ', user)
     if (!user) {
         return (
             <Text color={theme.colors.text} fontSize={25}>
@@ -73,6 +74,6 @@ const styles = StyleSheet.create({
     },
     fieldValue: { fontSize: 20, color: theme.colors.text },
     field: {
-        margin: 20
+        margin: 20,
     },
 })

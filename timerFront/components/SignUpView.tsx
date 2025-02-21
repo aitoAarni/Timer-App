@@ -8,7 +8,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'expo-router'
 import AuthStorage from '@/utils/authStorage'
-import createLocalUser from '@/services/userServices'
+import { createLocalUser } from '@/services/userServices'
 import useLogIn from '@/hooks/useLogIn'
 interface Inputs {
     username: string
