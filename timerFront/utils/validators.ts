@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const RemoteUserSchema = z.object({
     id: z.string(),
-    username: z.string().min(3).max(3),
+    username: z.string().min(3).max(20),
     token: z.string(),
     times: z.array(z.string()),
 })
