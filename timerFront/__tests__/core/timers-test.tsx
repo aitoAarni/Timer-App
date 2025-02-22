@@ -1,6 +1,6 @@
 // @ts-nocheck
 import TimeLogger from '@/utils/logger'
-import Timer, { CountdownTimer } from '@/utils/timers'
+import Timer, { CountdownTimer } from '@/core/timers'
 import { toHaveStyle } from '@testing-library/react-native/build/matchers/to-have-style'
 import { SQLiteDatabase } from 'expo-sqlite'
 

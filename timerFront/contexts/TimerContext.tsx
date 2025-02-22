@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useRef } from 'react'
 import TimeLogger from '@/utils/logger'
-import Timer from '@/utils/timers'
+import Timer from '@/core/timers'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 
