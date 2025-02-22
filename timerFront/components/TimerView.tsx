@@ -66,16 +66,7 @@ export default function TimerView() {
                 style={styles.fillerContainers}
                 leftSwipeCallback={navigateLeft}
                 rightSwipeCallback={navigateRight}
-            >
-                <TouchableOpacity
-                    style={{ marginTop: 50}}
-                    onPress={() => {
-                        login('bro', 'password2')
-                    }}
-                >
-                    <Text fontSize={20}>Login</Text>
-                </TouchableOpacity>
-            </SwipeNavigation>
+            ></SwipeNavigation>
             <View style={styles.timerContainer}>
                 <View style={styles.timerPressable}>
                     <DirectionPad
