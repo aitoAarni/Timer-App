@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
 import TimerView from '@/components/TimerView'
@@ -35,7 +36,6 @@ jest.mock('react-redux', () => ({
         }
     }),
 }))
-
 
 jest.mock('@/hooks/useTimer', () => {
     return {
