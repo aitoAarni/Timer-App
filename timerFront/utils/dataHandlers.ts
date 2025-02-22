@@ -96,3 +96,4 @@ export const getPlaceholderDataForChart = (daysOfData: number = 5) => {
     transformedData.reverse()
     return { transformedData, maxValue }
 }
+
