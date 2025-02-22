@@ -1,10 +1,8 @@
-// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react-native'
-import TimerView from '../components/TimerView'
-import { useFocusEffect } from 'expo-router'
+import TimerView from '@/components/TimerView'
 
-jest.mock('@/utils/timers', () => {
+jest.mock('@/core/timers', () => {
     const mockTimer = jest.fn().mockImplementation(() => {
         return {
             pauseToggle: jest.fn(),
