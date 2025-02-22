@@ -18,23 +18,12 @@ const useLogIn = () => {
             console.error(error)
             requestNotPossible = true
         }
-        console.log(
-            'remoteUser: ',
-            remoteUser,
-            '  requestNotPossible',
-            requestNotPossible
-        )
         try {
             let localUser = (await getUserByUsername(username))[0]
             if (localUser && localUser.password === password) {
-                console.log('localUser && localUser.password === password')
                 if (!requestNotPossible && !remoteUser) {
-                    console.log('!requestNotPossible && !remoteUser')
-                    const newUser = await createRemoteUser(username, password)
-                    console.log('new user: ', newUser)
-                    console.log('trying to log in again')
+                    await createRemoteUser(username, password)
                     remoteUser = await login(username, password)
-                    console.log('remoteUser now: ', remoteUser)
                 }
                 const storageUser = {
                     ...localUser,
@@ -45,7 +34,6 @@ const useLogIn = () => {
                 dispatch(setLoggedInUser(storageUser))
                 return true
             } else if (remoteUser) {
-                console.log('else if (remoteUser)')
                 await createLocalUser(username, password, remoteUser.id)
                 localUser = (await getUserByUsername(username))[0]
                 const storageUser = {
