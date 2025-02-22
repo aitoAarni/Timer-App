@@ -33,15 +33,16 @@
 | 29.1.2025  | 5.5h   | refactor file structure, use redux storage fix unit testing, create modal & more              |
 | 30.1.2025  | 4.5h   | create swipe navigation, change navigation to align with swipe navigation, performane improv. |
 | 31.1.2025  | 5.5h   | cretea profile view, change swipe navigation, refactor db api, debug bad performance          |
-| 11.1.2025  | 3.5h   | fix bugs, refactor PauseToggle activation on timer and add style, refactor settings slider    |
-| 12.1.2025  | 3h     | refactor settings to use diffferent slider and inputs, battle with emulator, fix unit tests   |
-| 13.1.2025  | 1h     | debugging e2e tests not rendering app and app not rendering also always                       |
-| 14.1.2025  | 3h     | fix app not rendering bug, refactor code, research and create e2e test                        |
-| 15.1.2025  | 4h     | Fix issue with launching app, add e2e test, try to integrate e2e to CI pipline, fix bugs      |
-| 16.1.2025  | 4h     | add e2e test, add safe launch to e2e tests, start back-end                                    |
-| 17.1.2025  | 2.5h   | create andpoints for user creation and logging in                                             |
-| 18.1.2025  | 3.5h   | integrate MongoDB to back-end                                                                 |
+| 11.2.2025  | 3.5h   | fix bugs, refactor PauseToggle activation on timer and add style, refactor settings slider    |
+| 12.2.2025  | 3h     | refactor settings to use diffferent slider and inputs, battle with emulator, fix unit tests   |
+| 13.2.2025  | 1h     | debugging e2e tests not rendering app and app not rendering also always                       |
+| 14.2.2025  | 3h     | fix app not rendering bug, refactor code, research and create e2e test                        |
+| 15.2.2025  | 4h     | Fix issue with launching app, add e2e test, try to integrate e2e to CI pipline, fix bugs      |
+| 16.2.2025  | 4h     | add e2e test, add safe launch to e2e tests, start back-end                                    |
+| 17.2.2025  | 2.5h   | create andpoints for user creation and logging in                                             |
+| 18.2.2025  | 3.5h   | integrate MongoDB to back-end                                                                 |
 | in total   | 131.5h |                                                                                               |
-| 19.1.2025  | 4h     | add middleware for errors and unknown endpoint, add config file, add unit tests               |
-| 20.1.2025  | 1h     | get front end to communicate with back-end login endpoint                                     |
-| 21.1.2025  | 3h     | integrate back-end logging in with front-end logging in and user creation                     |
+| 19.2.2025  | 4h     | add middleware for errors and unknown endpoint, add config file, add unit tests               |
+| 20.2.2025  | 1h     | get front end to communicate with back-end login endpoint                                     |
+| 21.2.2025  | 3h     | integrate back-end logging in with front-end logging in and user creation                     |
+| 22.2.2025  | 5h     | clean repo and do unit tests                                                                  |
