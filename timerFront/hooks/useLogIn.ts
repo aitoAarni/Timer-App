@@ -14,6 +14,7 @@ const useLogIn = () => {
         try {
             console.log(1)
             remoteUser = await login(username, password)
+            console.log("remote userrrrssssrrs:", remoteUser)
             requestNotPossible = false
             console.log(2)
         } catch (error) {
@@ -24,7 +25,7 @@ const useLogIn = () => {
         try {
             console.log(4)
             let localUser = (await getUserByUsername(username))[0]
-            console.log('localUser: ', localUser)
+            console.log('remoteUser: ', remoteUser)
             console.log(5)
             if (localUser && localUser.password === password) {
                 console.log(6)
@@ -46,11 +47,13 @@ const useLogIn = () => {
             } else if (remoteUser) {
                 console.log(9)
                 await createLocalUser(username, password, remoteUser.id)
+                console.log('abudabi')
                 localUser = (await getUserByUsername(username))[0]
                 const storageUser = {
                     ...localUser,
                     token: remoteUser ? remoteUser.token : null,
                 }
+                console.log("storageUser: ", storageUser)
                 console.log(10)
                 const authStorage = new AuthStorage()
                 await authStorage.setUser(storageUser)
