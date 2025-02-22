@@ -5,7 +5,7 @@ import { openDatabase } from './db'
 const insertUser = async (
     username: string,
     password: string | undefined,
-    server_id: string | undefined
+    server_id: string | null
 ) => {
     let db: sqlite.SQLiteDatabase | null = null
     try {

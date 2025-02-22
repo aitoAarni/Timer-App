@@ -3,7 +3,7 @@ import { insertUser } from '@/storage/local/userQueries'
 export async function createLocalUser(
     username: string,
     password: string | undefined,
-    server_id: string | undefined = undefined
+    server_id: string | null = null
 ) {
     try {
         await insertUser(username, password, server_id)

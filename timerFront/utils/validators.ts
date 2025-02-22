@@ -13,9 +13,9 @@ export const toRemoteUser = (user: unknown) => {
 
 export const LocalStorageUserSchema = z.object({
     id: z.number(),
-    username: z.string(),
-    password: z.string(),
-    server_id: z.string(),
+    username: z.string().min(3).max(20),
+    password: z.string().min(8),
+    server_id: z.string().nullable(),
     created_at: z.string(),
     token: z.string().nullable(),
 })
