@@ -55,6 +55,7 @@ const getUserByUsername = async (username: string) => {
             'SELECT * FROM users WHERE username = ?',
             username
         )) as User[]
+        console.log('user query', query)
         return query
     } catch (error) {
         console.error(error)

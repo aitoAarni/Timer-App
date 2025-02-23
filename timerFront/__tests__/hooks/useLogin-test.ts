@@ -1,15 +1,10 @@
-import AuthStorage from '@/utils/authStorage'
-import { setLoggedInUser } from '@/redux/userSlice'
 import useLogIn from '@/hooks/useLogIn'
-import { useInteropClassName } from 'expo-router/build/link/useLinkHooks'
 
+let mockGetUserByUsername: typeof jest.fn
 jest.mock('@/storage/local/userQueries', () => ({
-    getUserByUsername: jest.fn().mockImplementation(() => {
-        console.log('täällääääää')
-        return Promise.resolve([
-            { username: 'testUser', password: 'password123' },
-        ])
-    }),
+    getUserByUsername: () => {
+        return mockGetUserByUsername()
+    },
 }))
 
 let mockSetUser = jest.fn()
@@ -38,8 +33,8 @@ jest.mock('@/services/userServices', () => ({
     createLocalUser: (...args) => {
         return mockCreateLocalUser(...args)
     },
-    createRemoteUser: () => {
-        return mockCreateRemoteUser()
+    createRemoteUser: (...args) => {
+        return mockCreateRemoteUser(...args)
     },
 }))
 
@@ -71,7 +66,30 @@ describe('useLogIn hook', () => {
                 times: [],
             })
         })
-        // ;(useDispatch as jest.Mock).mockReturnValue(dispatchMock)
+        mockGetUserByUsername = jest.fn().mockImplementation(() => {
+            console.log('täällääääää')
+            return Promise.resolve([
+                { username: 'testUser', password: 'password123' },
+            ])
+        })
+    })
+
+    it('logs in with local and remote user', async () => {
+        const logIn = useLogIn()
+        const success = await logIn('testUser', 'password123')
+        expect(success).toBeTruthy()
+        expect(mockSetUser).toHaveBeenCalledWith({
+            password: 'password123',
+            token: 'token',
+            username: 'testUser',
+        })
+        expect(mockDispatch).toHaveBeenCalledWith(
+            mockSetLoggedInUser({
+                username: 'testUser',
+                password: 'password123',
+                token: 'token',
+            })
+        )
     })
 
     it('logs in an existing local user with the correct password', async () => {
@@ -123,56 +141,48 @@ describe('useLogIn hook', () => {
         )
     })
 
-    //     it.only('creates a remote user if login fails initially', async () => {
-    //         // ;(getUserByUsername as jest.Mock).mockResolvedValue([
-    //         //     { username: 'testUser', password: 'password123' },
-    //         // ])
-    //         mockLogin = jest
-    //             .fn()
-    //             .mockRejectedValueOnce(new Error('Network Error')) // First attempt fails
-    //             .mockResolvedValueOnce({ id: 'remote123', token: 'abc123' }) // Second attempt succeeds
+    it('creates a remote user if remote login fails initially', async () => {
+        mockLogin = jest
+            .fn()
+            .mockResolvedValueOnce(null) // First attempt fails
+            .mockResolvedValueOnce({ id: 'remote123', token: 'abc123' }) // Second attempt succeeds
 
-    //         const authStorageInstance = new AuthStorage()
-    //         const logIn = useLogIn()
+        const logIn = useLogIn()
 
-    //         const success = await logIn('testUser', 'password123')
+        const success = await logIn('testUser', 'password123')
 
-    //         expect(success).toBe(true)
-    //         expect(mockCreateRemoteUser).toHaveBeenCalledWith('testUser', 'password123')
-    //         expect(authStorageInstance.setUser).toHaveBeenCalledWith(
-    //             expect.objectContaining({
-    //                 username: 'testUser',
-    //                 token: 'abc123',
-    //             })
-    //         )
-    //         expect(dispatchMock).toHaveBeenCalledWith(
-    //             setLoggedInUser(expect.any(Object))
-    //         )
-    //     })
+        expect(success).toBe(true)
+        expect(mockCreateRemoteUser).toHaveBeenCalledWith(
+            'testUser',
+            'password123'
+        )
+        expect(mockSetUser).toHaveBeenCalledWith(
+            expect.objectContaining({
+                username: 'testUser',
+                password: 'password123',
+                token: 'abc123',
+            })
+        )
+        expect(mockDispatch).toHaveBeenCalledWith(
+            mockSetLoggedInUser({
+                password: 'password123',
+                token: 'abc123',
+                username: 'testUser',
+            })
+        )
+    })
 
-    //     it('fails login when credentials are incorrect', async () => {
-    //         // ;(getUserByUsername as jest.Mock).mockResolvedValue([
-    //         //     { username: 'testUser', password: 'wrongPassword' },
-    //         // ])
-    //         const logIn = useLogIn()
+    it('fails login when credentials are incorrect', async () => {
+        // ;(getUserByUsername as jest.Mock).mockResolvedValue([
+        //     { username: 'testUser', password: 'wrongPassword' },
+        // ])
+        mockLogin = jest.fn().mockResolvedValue(null)
+        mockGetUserByUsername = jest.fn().mockResolvedValue([])
+        const logIn = useLogIn()
 
-    //         const success = await logIn('testUser', 'password123')
+        const success = await logIn('testUser', 'password123')
 
-    //         expect(success).toBe(false)
-    //         expect(dispatchMock).not.toHaveBeenCalled()
-    //     })
-
-    //     it('handles network errors gracefully', async () => {
-    //         // ;(getUserByUsername as jest.Mock).mockResolvedValue([])
-    //         ;(login as jest.Mock).mockRejectedValue(new Error('Network Error'))
-
-    //         console.error = jest.fn() // Suppress console error logs for test clarity
-
-    //         const logIn = useLogIn()
-
-    //         const success = await logIn('testUser', 'password123')
-
-    //         expect(success).toBe(false)
-    //         expect(console.error).toHaveBeenCalledWith('Network Error')
-    //     })
+        expect(success).toBe(false)
+        expect(mockDispatch).not.toHaveBeenCalled()
+    })
 })

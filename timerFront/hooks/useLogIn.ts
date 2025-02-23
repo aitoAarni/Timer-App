@@ -24,13 +24,20 @@ const useLogIn = () => {
         }
         try {
             console.log(4)
-            let localUser = (await getUserByUsername(username))[0]
+            const users = await getUserByUsername(username)
+            if (users.length === 0) {
+                return false
+            }
+            let localUser = users[0]
             console.log('remoteUser: ', remoteUser)
             console.log(5)
             if (localUser && localUser.password === password) {
                 console.log(6)
+                console.log(`!requestNotPossible: ${!requestNotPossible}`)
+                console.log(`!remoteUser: ${!remoteUser}`)
                 if (!requestNotPossible && !remoteUser) {
                     console.log('creating remote useeererr')
+
                     await createRemoteUser(username, password)
                     console.log(7)
                     remoteUser = await login(username, password)
@@ -40,6 +47,7 @@ const useLogIn = () => {
                     token: remoteUser ? remoteUser.token : null,
                 }
                 const authStorage = new AuthStorage()
+
                 await authStorage.setUser(storageUser)
                 console.log('storage user: ', storageUser)
                 dispatch(setLoggedInUser(storageUser))
