@@ -128,14 +128,14 @@ describe('useLogIn hook', () => {
         expect(mockSetUser).toHaveBeenCalledWith(
             expect.objectContaining({
                 password: 'password123',
-                token: 'token',
+                token: 'Bearer token',
                 username: 'testUser',
             })
         )
         expect(mockDispatch).toHaveBeenCalledWith(
             mockSetLoggedInUser({
                 password: 'password123',
-                token: 'token',
+                token: 'Bearer token',
                 username: 'testUser',
             })
         )
