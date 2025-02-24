@@ -1,7 +1,7 @@
 import { toTimeLog } from '../utils'
 
 describe('toTimeLog function', () => {
-    it('✅ Converts valid input correctly', () => {
+    it('Converts valid input correctly', () => {
         const input = {
             created_at: '2025-02-24 14:30:45',
             duration: 3600,
@@ -12,7 +12,7 @@ describe('toTimeLog function', () => {
         expect(result).toEqual(input) // Should return the same valid input
     })
 
-    it('❌ Throws error for invalid date', () => {
+    it('Throws error for invalid date', () => {
         expect(() => {
             toTimeLog({
                 created_at: '2025-13-24 14:30:45',
@@ -22,7 +22,7 @@ describe('toTimeLog function', () => {
         }).toThrow(/Invalid date! Must be a real date/)
     })
 
-    it('❌ Throws error if duration is missing', () => {
+    it('Throws error if duration is missing', () => {
         expect(() => {
             toTimeLog({
                 created_at: '2025-02-24 14:30:45',
