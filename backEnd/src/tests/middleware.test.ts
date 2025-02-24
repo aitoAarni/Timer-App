@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import { AuthRequest, errorHandler, authMiddleware } from '../middleware'
 import { ZodError } from 'zod'
 
-// Mock dependencies
 let mockVerify: typeof jest.fn
 
 jest.mock('jsonwebtoken', () => ({
@@ -29,7 +28,7 @@ describe('authMiddleware', () => {
     }
 
     beforeEach(() => {
-        token = 'valid.jwt.token'
+        token = 'Bearer valid.jwt.token'
         decodedUser = {
             id: '123',
             username: 'testuser',
@@ -41,13 +40,12 @@ describe('authMiddleware', () => {
                 username: 'testuser',
             }),
         })
-        mockReq = { header: jest.fn() }
+        mockReq = { header: jest.fn().mockReturnValue(`Bearer ${token}`) }
         mockRes = {}
         mockNext = jest.fn()
     })
 
-    it.only('Should allow request with a valid token', async () => {
-        mockReq.header = jest.fn().mockReturnValue(`Bearer ${token}`)
+    it('Should allow request with a valid token', async () => {
         await authMiddleware(
             mockReq as AuthRequest,
             mockRes as Response,
@@ -57,88 +55,66 @@ describe('authMiddleware', () => {
         expect(mockNext).toHaveBeenCalledWith()
     })
 
-    //     it('Should reject request when Authorization header is missing', async () => {
-    //         mockReq.header = jest.fn().mockReturnValue(null)
+    it('Should reject request when Authorization header is missing', async () => {
+        mockReq.header = jest.fn().mockReturnValue(null)
 
-    //         await authMiddleware(
-    //             mockReq as AuthRequest,
-    //             mockRes as Response,
-    //             mockNext
-    //         )
+        await authMiddleware(
+            mockReq as AuthRequest,
+            mockRes as Response,
+            mockNext
+        )
 
-    //         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
-    //         expect(mockNext.mock.calls[0][0].message).toBe(
-    //             'Token missing or invalid'
-    //         )
-    //     })
+        expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
+        expect(mockNext.mock.calls[0][0].message).toBe(
+            'Token missing or invalid'
+        )
+    })
 
-    //     it('Should reject request when Authorization header is malformed', async () => {
-    //         mockReq.header = jest.fn().mockReturnValue('InvalidToken')
+    it('Should reject request when Authorization header is malformed', async () => {
+        mockReq.header = jest.fn().mockReturnValue('InvalidToken')
 
-    //         await authMiddleware(
-    //             mockReq as AuthRequest,
-    //             mockRes as Response,
-    //             mockNext
-    //         )
+        await authMiddleware(
+            mockReq as AuthRequest,
+            mockRes as Response,
+            mockNext
+        )
 
-    //         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
-    //         expect(mockNext.mock.calls[0][0].message).toBe(
-    //             'Token missing or invalid'
-    //         )
-    //     })
+        expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
+        expect(mockNext.mock.calls[0][0].message).toBe(
+            'Token missing or invalid'
+        )
+    })
 
-    //     it('Should reject request when token is invalid', async () => {
-    //         ;(jwt.verify as jest.Mock).mockImplementation(() => {
-    //             throw new Error('Invalid token')
-    //         })
+    it('Should reject request when token is invalid', async () => {
+        mockVerify = jest.fn().mockImplementation(() => {
+            throw new Error('invalid token')
+        })
 
-    //         mockReq.header = jest.fn().mockReturnValue('Bearer invalid.token')
 
-    //         await authMiddleware(
-    //             mockReq as AuthRequest,
-    //             mockRes as Response,
-    //             mockNext
-    //         )
+        await authMiddleware(
+            mockReq as AuthRequest,
+            mockRes as Response,
+            mockNext
+        )
 
-    //         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
-    //         expect(mockNext.mock.calls[0][0].message).toBe('Invalid token')
-    //     })
+        expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
+        expect(mockNext.mock.calls[0][0].message).toBe('invalid token')
+    })
 
-    //     it('Should reject request when token payload is invalid', async () => {
-    //         ;(jwt.verify as jest.Mock).mockReturnValue('invalidPayload')
+    it('Should reject request when user is not found', async () => {
+        mockFinById = jest.fn().mockReturnValue({
+            exec: jest.fn().mockResolvedValue(null),
+        })
 
-    //         mockReq.header = jest.fn().mockReturnValue('Bearer some.token')
+        await authMiddleware(
+            mockReq as AuthRequest,
+            mockRes as Response,
+            mockNext
+        )
 
-    //         await authMiddleware(
-    //             mockReq as AuthRequest,
-    //             mockRes as Response,
-    //             mockNext
-    //         )
-
-    //         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
-    //         expect(mockNext.mock.calls[0][0].message).toBe('Invalid token')
-    //     })
-
-    //     it('Should reject request when user is not found', async () => {
-    //         const token = 'valid.jwt.token'
-    //         const decodedUser = { id: 'nonexistentId', username: 'testuser' }(
-    //             jwt.verify as jest.Mock
-    //         )
-    //             .mockReturnValue(decodedUser)(User.findById as jest.Mock)
-    //             .mockResolvedValue(null)
-
-    //         mockReq.header = jest.fn().mockReturnValue(`Bearer ${token}`)
-
-    //         await authMiddleware(
-    //             mockReq as AuthRequest,
-    //             mockRes as Response,
-    //             mockNext
-    //         )
-
-    //         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
-    //         expect(mockNext.mock.calls[0][0].message).toBe('User not found')
-    //     })
-    // })
+        expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
+        expect(mockNext.mock.calls[0][0].message).toBe('User not found')
+    })
 
     // describe('errorHandler', () => {
     //     let mockReq: Partial<Request>

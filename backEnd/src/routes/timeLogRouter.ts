@@ -1,7 +1,7 @@
 import express from 'express'
 import { toTimeLog } from '../utils'
 import TimeLog from '../models/timeLogModel'
-import authMiddleware, { AuthRequest } from '../middleware'
+import { AuthRequest, authMiddleware } from '../middleware'
 
 const timerRouter = express.Router()
 
