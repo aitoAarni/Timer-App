@@ -90,7 +90,6 @@ describe('authMiddleware', () => {
             throw new Error('invalid token')
         })
 
-
         await authMiddleware(
             mockReq as AuthRequest,
             mockRes as Response,
@@ -115,91 +114,91 @@ describe('authMiddleware', () => {
         expect(mockNext).toHaveBeenCalledWith(expect.any(Error))
         expect(mockNext.mock.calls[0][0].message).toBe('User not found')
     })
+})
+describe('errorHandler', () => {
+    let mockReq: Partial<Request>
+    let mockRes: Partial<Response>
+    let mockNext: jest.Mock
 
-    // describe('errorHandler', () => {
-    //     let mockReq: Partial<Request>
-    //     let mockRes: Partial<Response>
-    //     let mockNext: jest.Mock
+    beforeEach(() => {
+        mockReq = {}
+        mockRes = {
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn(),
+        }
+        mockNext = jest.fn()
+    })
 
-    //     beforeEach(() => {
-    //         mockReq = {}
-    //         mockRes = {
-    //             status: jest.fn().mockReturnThis(),
-    //             send: jest.fn(),
-    //         }
-    //         mockNext = jest.fn()
-    //     })
+    it('Handles MongoDB duplicate key error', () => {
+        const error = new Error('E11000 duplicate key error') as any
+        error.name = 'MongoServerError'
 
-    //     it('Handles MongoDB duplicate key error', () => {
-    //         const error = new Error('E11000 duplicate key error') as any
-    //         error.name = 'MongoServerError'
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith(error)
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith(error)
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+    it('Handles Zod validation error', () => {
+        const error = new ZodError([])
 
-    //     it('Handles Zod validation error', () => {
-    //         const error = new ZodError([])
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith({
+            error: "Request body isn't valid",
+        })
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith({
-    //             error: "Request body isn't valid",
-    //         })
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+    it('Handles incorrect credentials error', () => {
+        const error = new Error('Credentials are incorrect')
 
-    //     it('Handles incorrect credentials error', () => {
-    //         const error = new Error('Credentials are incorrect')
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith({
+            error: 'Credentials are incorrect',
+        })
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith({
-    //             error: 'Credentials are incorrect',
-    //         })
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+    it('Handles time log user authentication error', () => {
+        const error = new Error(
+            'Time log must be created by authenticated user'
+        )
 
-    //     it('Handles time log user authentication error', () => {
-    //         const error = new Error(
-    //             'Time log must be created by authenticated user'
-    //         )
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith({
+            error: 'Time log must be created by authenticated user',
+        })
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith({
-    //             error: 'Time log must be created by authenticated user',
-    //         })
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+    it('Handles validation error', () => {
+        const error = new Error('TimeLog validation failed')
 
-    //     it('Handles validation error', () => {
-    //         const error = new Error('TimeLog validation failed')
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith({
+            error: 'TimeLog validation failed',
+        })
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith({
-    //             error: 'TimeLog validation failed',
-    //         })
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+    it('Handles unknown errors', () => {
+        const error = new Error('Some unexpected error')
 
-    //     it('Handles unknown errors', () => {
-    //         const error = new Error('Some unexpected error')
+        errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
 
-    //         errorHandler(error, mockReq as Request, mockRes as Response, mockNext)
-
-    //         expect(mockRes.status).toHaveBeenCalledWith(400)
-    //         expect(mockRes.send).toHaveBeenCalledWith({
-    //             error: 'unknown error on the server',
-    //         })
-    //         expect(mockNext).toHaveBeenCalledWith(error)
-    //     })
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.send).toHaveBeenCalledWith({
+            error: 'unknown error on the server',
+        })
+        expect(mockNext).toHaveBeenCalledWith(error)
+    })
 })
