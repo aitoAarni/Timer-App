@@ -3,7 +3,7 @@ import express from 'express'
 import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
-import timeRouter from './routes/timeLogRoutes'
+import timeRouter from './routes/timeLogRouter'
 
 if (!DATABASE_URI) {
     throw new Error('MONGODB_URI environmental variable is not set')
@@ -30,7 +30,7 @@ app.get('/ping', (_req, res) => {
 })
 
 app.use('/api/user', userRouter)
-app.use("/api/times", timeRouter)
+app.use("/api/timelog", timeRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
