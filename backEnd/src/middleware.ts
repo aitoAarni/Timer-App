@@ -25,7 +25,7 @@ const authMiddleware = async (
             username: string
         } */
 
-        if (typeof decodedToken === "string" || !decodedToken.id) {
+        if (typeof decodedToken === 'string' || !decodedToken.id) {
             throw new Error('Invalid token')
         }
 
@@ -52,14 +52,21 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log('error: ', error)
     if (
         error.name === 'MongoServerError' &&
         error.message.includes('E11000 duplicate key error')
     ) {
         res.status(400).send(error)
     } else if (error instanceof z.ZodError) {
-        res.status(400).send({ error: error.issues })
+        res.status(400).send({ error: "Request body isn't valid" })
     } else if (error.message === 'Credentials are incorrect') {
+        res.status(400).send({ error: error.message })
+    } else if (
+        error.message === 'Time log must be created by authenticated user'
+    ) {
+        res.status(400).send({ error: error.message })
+    } else if (error.message.includes('TimeLog validation failed')) {
         res.status(400).send({ error: error.message })
     } else {
         res.status(400).send({ error: 'unknown error on the server' })
