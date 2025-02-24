@@ -5,7 +5,6 @@ const { Schema, model } = mongoose
 const timeLogSchema = new Schema({
     created_at: { type: String, required: true },
     duration: { type: Number, required: true },
-    category_id: Number,
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 })
 
