@@ -9,9 +9,19 @@ export const toUserCredentials = (object: unknown): UserCredentials => {
     return UserCredentialsSchema.parse(object)
 }
 
+const dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/
+
 export const TimeLogSchema = z.object({
-    created_at: z.string(),
-    duration: z.number(),
+    created_at: z
+        .string()
+        .regex(
+            dateTimeRegex,
+            'Invalid date format! Must be YYYY-MM-DD HH:MM:SS'
+        )
+        .refine(date => !isNaN(new Date(date.replace(' ', 'T')).getTime()), {
+            message: 'Invalid date! Must be a real date',
+        }),
+    duration: z.number().min(1, 'Duration must be a positive number'),
     user_id: z.string(),
 })
 
