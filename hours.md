@@ -47,4 +47,4 @@
 | 21.2.2025  | 3h     | integrate back-end logging in with front-end logging in and user creation                     |
 | 22.2.2025  | 5h     | clean repo and do unit tests                                                                  |
 | 23.2.2025  | 2h     | add unit tests and battle with eslint and typescript to work                                  |
-| 24.2.2025  | 4.5    | create back-end functionality for adding time logs, create unit tests                         |
+| 24.2.2025  | 5      | create back-end functionality for adding time logs, create unit tests                         |
