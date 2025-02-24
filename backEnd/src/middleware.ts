@@ -1,5 +1,46 @@
 import { Request, Response, NextFunction } from 'express'
 import { z } from 'zod'
+import jwt from 'jsonwebtoken'
+import User from './models/userModel'
+import { SECRET } from './config'
+
+export interface AuthRequest extends Request {
+    user?: { id: string; username: string }
+}
+
+const authMiddleware = async (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const authHeader = req.header('Authorization')
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            throw new Error('Token missing or invalid')
+        }
+
+        const token = authHeader.replace('Bearer ', '')
+        const decodedToken = jwt.verify(token, SECRET) /* as {
+            id: string
+            username: string
+        } */
+
+        if (typeof decodedToken === "string" || !decodedToken.id) {
+            throw new Error('Invalid token')
+        }
+
+        const user = await User.findById(decodedToken.id).exec()
+        if (!user) {
+            throw new Error('User not found')
+        }
+        req.user = { id: user._id.toString(), username: user.username }
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+export default authMiddleware
 
 export const unknownEndpoint = (req: Request, res: Response) => {
     res.status(404).send({ error: 'unknown endpoint' })
