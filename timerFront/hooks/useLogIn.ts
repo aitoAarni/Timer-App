@@ -60,7 +60,7 @@ const useLogIn = () => {
                 localUser = (await getUserByUsername(username))[0]
                 const storageUser = {
                     ...localUser,
-                    token: remoteUser ? remoteUser.token : null,
+                    token: remoteUser ? 'Bearer ' + remoteUser.token : null,
                 }
                 console.log('storageUser: ', storageUser)
                 console.log(10)
