@@ -32,7 +32,7 @@ describe('test user creation and login', () => {
                 .post('/api/user/create')
                 .send({ password: 'password123' })
                 .expect(400)
-            expect(response.body.error[0].message).toEqual('Required')
+            expect(response.body.error).toEqual("Request body isn't valid")
         })
 
         it('should return 400 if password is missing', async () => {
@@ -41,7 +41,7 @@ describe('test user creation and login', () => {
                 .send({ username: 'testuser' })
                 .expect(400)
 
-            expect(response.body.error[0].message).toEqual('Required')
+            expect(response.body.error).toEqual("Request body isn't valid")
         })
         it('should not allow duplicate usernames', async () => {
             const newUser = { username: 'testuser', password: 'password123' }

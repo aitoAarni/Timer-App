@@ -48,7 +48,7 @@ afterAll(async () => {
 })
 
 describe('POST /api/timelog', () => {
-    test('✅ Successfully creates a new time log with valid data and token', async () => {
+    it('Successfully creates a new time log with valid data and token', async () => {
         const response = await request(app)
             .post('/api/timelog')
             .set('Authorization', userToken)
@@ -64,7 +64,7 @@ describe('POST /api/timelog', () => {
         expect(response.body.duration).toBe(3600)
     })
 
-    test('❌ Fails without authentication token', async () => {
+    it('Fails without authentication token', async () => {
         const response = await request(app).post('/api/timelog').send({
             created_at: '2025-02-24 14:30:45',
             duration: 3600,
@@ -75,7 +75,7 @@ describe('POST /api/timelog', () => {
         expect(response.body.error).toBeDefined()
     })
 
-    test('❌ Fails when user tries to create a log for another user', async () => {
+    it('Fails when user tries to create a log for another user', async () => {
         const response = await request(app)
             .post('/api/timelog')
             .set('Authorization', otherUserToken) // Wrong user
@@ -91,7 +91,7 @@ describe('POST /api/timelog', () => {
         )
     })
 
-    test('❌ Fails if `created_at` is not a valid date format', async () => {
+    it('Fails if `created_at` is not a valid date format', async () => {
         const response = await request(app)
             .post('/api/timelog')
             .set('Authorization', userToken)
@@ -107,7 +107,7 @@ describe('POST /api/timelog', () => {
         )
     })
 
-    test('❌ Fails if `duration` is missing', async () => {
+    it('Fails if `duration` is missing', async () => {
         const response = await request(app)
             .post('/api/timelog')
             .set('Authorization', userToken)
@@ -120,7 +120,7 @@ describe('POST /api/timelog', () => {
         expect(response.body.error).toMatch("Request body isn't valid")
     })
 
-    test('❌ Fails if `user_id` is missing', async () => {
+    it(' Fails if `user_id` is missing', async () => {
         const response = await request(app)
             .post('/api/timelog')
             .set('Authorization', userToken)
