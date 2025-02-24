@@ -1,7 +1,36 @@
-import { toTimeLog } from '../utils'
+import { toTimeLog, toUserCredentials } from '../utils'
+
+describe('toUserCrednetials function', () => {
+    it('converts valid user correctly', () => {
+        const user = {
+            username: 'test User',
+            password: 'validPassword',
+        }
+        const result = toUserCredentials(user)
+        expect(result).toEqual(user)
+    })
+    it.only('Throws error when password invalid', () => {
+        const user = {
+            username: 'validUsername',
+            password: 'invalid',
+        }
+        expect(() => {
+            toUserCredentials(user)
+        }).toThrow(/String must contain at least 8 character\(s\)/)
+    })
+    it('Throws error when username invalid', () => {
+        const user = {
+            username: 'te',
+            password: 'validPassword',
+        }
+        expect(() => {
+            toUserCredentials(user)
+        }).toThrow(/String must contain at least 3 character\(s\)/)
+    })
+})
 
 describe('toTimeLog function', () => {
-    it('Converts valid input correctly', () => {
+    it('Converts valid time log correctly', () => {
         const input = {
             created_at: '2025-02-24 14:30:45',
             duration: 3600,
