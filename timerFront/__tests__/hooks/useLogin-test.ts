@@ -20,7 +20,7 @@ let mockSetLoggedInUser = jest.fn((...args) => {
     return { ...args }
 })
 jest.mock('@/redux/userSlice', () => ({
-    setLoggedInUser: (...args) => {
+    setLoggedInUser: (...args: any) => {
         return mockSetLoggedInUser(...args)
     },
 }))
@@ -30,10 +30,10 @@ let mockCreateLocalUser = jest.fn(() => {
 })
 let mockCreateRemoteUser = jest.fn()
 jest.mock('@/services/userServices', () => ({
-    createLocalUser: (...args) => {
+    createLocalUser: (...args: any) => {
         return mockCreateLocalUser(...args)
     },
-    createRemoteUser: (...args) => {
+    createRemoteUser: (...args: any) => {
         return mockCreateRemoteUser(...args)
     },
 }))
@@ -49,7 +49,7 @@ jest.mock('react-redux', () => ({
 let mockLogin: jest.Mock
 
 jest.mock('@/services/loginServices', () => {
-    return (...args) => {
+    return (...args: any) => {
         return mockLogin(...args)
     }
 })
