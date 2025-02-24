@@ -30,10 +30,10 @@ let mockCreateLocalUser = jest.fn(() => {
 })
 let mockCreateRemoteUser = jest.fn()
 jest.mock('@/services/userServices', () => ({
-    createLocalUser: (...args: any) => {
+    createLocalUser: (...args: []) => {
         return mockCreateLocalUser(...args)
     },
-    createRemoteUser: (...args: any) => {
+    createRemoteUser: (...args: []) => {
         return mockCreateRemoteUser(...args)
     },
 }))
@@ -80,14 +80,14 @@ describe('useLogIn hook', () => {
         expect(success).toBeTruthy()
         expect(mockSetUser).toHaveBeenCalledWith({
             password: 'password123',
-            token: 'token',
+            token: 'Bearer token',
             username: 'testUser',
         })
         expect(mockDispatch).toHaveBeenCalledWith(
             mockSetLoggedInUser({
                 username: 'testUser',
                 password: 'password123',
-                token: 'token',
+                token: 'Bearer token',
             })
         )
     })
@@ -160,22 +160,20 @@ describe('useLogIn hook', () => {
             expect.objectContaining({
                 username: 'testUser',
                 password: 'password123',
-                token: 'abc123',
+                token: 'Bearer abc123',
             })
         )
         expect(mockDispatch).toHaveBeenCalledWith(
             mockSetLoggedInUser({
-                password: 'password123',
-                token: 'abc123',
                 username: 'testUser',
+                password: 'password123',
+                token: 'Bearer abc123',
             })
         )
     })
 
     it('fails login when credentials are incorrect', async () => {
-        // ;(getUserByUsername as jest.Mock).mockResolvedValue([
-        //     { username: 'testUser', password: 'wrongPassword' },
-        // ])
+   
         mockLogin = jest.fn().mockResolvedValue(null)
         mockGetUserByUsername = jest.fn().mockResolvedValue([])
         const logIn = useLogIn()
