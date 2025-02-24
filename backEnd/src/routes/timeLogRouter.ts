@@ -11,8 +11,8 @@ timerRouter.post('/', authMiddleware, async (req: AuthRequest, res, next) => {
         console.log('in timeLogRouter req.body: ', req.body)
         console.log('req.user: ', req.user)
         const { created_at, duration, user_id } = toTimeLog(req.body)
-
-        if (!(req.user.id !== user_id)) {
+        console.log("req.user.id !== user_id: ", req.user.id !== user_id)
+        if (req.user.id !== user_id) {
             throw new Error('Time log must be created by authenticated user')
         }
         const time = new TimeLog({ created_at, duration, user_id })
