@@ -1,4 +1,5 @@
 import { z } from 'zod'
-import { UserCredentialsSchema } from './utils'
+import { TimeLogSchema, UserCredentialsSchema } from './utils'
 
 export type UserCredentials = z.infer<typeof UserCredentialsSchema>
+export type TimeLog = z.infer<typeof TimeLogSchema>
