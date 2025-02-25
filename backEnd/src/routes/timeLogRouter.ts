@@ -12,9 +12,12 @@ timerRouter.post('/', authMiddleware, async (req: AuthRequest, res, next) => {
         if (req.user.id !== user_id) {
             throw new Error('Time log must be created by authenticated user')
         }
-        const time = new TimeLog({ created_at, duration, user_id })
-        const savedTimeLog = await time.save()
-        const savedTimeLogJson = savedTimeLog.toJSON()
+        const updatedTimeLog = await TimeLog.findOneAndUpdate(
+            { created_at, user_id },
+            { $inc: { duration } },
+            { new: true, upsert: true }
+        )
+        const savedTimeLogJson = updatedTimeLog.toJSON()
         res.status(200).send(savedTimeLogJson)
     } catch (error) {
         next(error)
