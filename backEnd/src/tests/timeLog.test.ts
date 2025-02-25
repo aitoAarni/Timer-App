@@ -53,20 +53,20 @@ describe('POST /api/timelog', () => {
             .post('/api/timelog')
             .set('Authorization', userToken)
             .send({
-                created_at: '2025-02-24 14:30:45',
+                created_at: '2025-02-24',
                 duration: 3600,
                 user_id: userId,
             })
 
         expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('id')
-        expect(response.body.created_at).toBe('2025-02-24 14:30:45')
+        expect(response.body.created_at).toBe('2025-02-24')
         expect(response.body.duration).toBe(3600)
     })
 
     it('Fails without authentication token', async () => {
         const response = await request(app).post('/api/timelog').send({
-            created_at: '2025-02-24 14:30:45',
+            created_at: '2025-02-24',
             duration: 3600,
             user_id: userId,
         })
@@ -80,7 +80,7 @@ describe('POST /api/timelog', () => {
             .post('/api/timelog')
             .set('Authorization', otherUserToken) // Wrong user
             .send({
-                created_at: '2025-02-24 14:30:45',
+                created_at: '2025-02-24',
                 duration: 3600,
                 user_id: userId, // Trying to log for the first user
             })
@@ -96,14 +96,14 @@ describe('POST /api/timelog', () => {
             .post('/api/timelog')
             .set('Authorization', userToken)
             .send({
-                created_at: '2025-02-31 14:30:45',
+                created_at: '2025-02-31',
                 duration: 3600,
                 user_id: userId,
             })
 
         expect(response.status).toBe(400)
         expect(response.body.error).toMatch(
-            '2025-02-31 14:30:45 is not a valid timestamp! Must be in format YYYY-MM-DD HH:MM:SS'
+            '2025-02-31 is not a valid timestamp! Must be in format YYYY-MM-DD'
         )
     })
 
@@ -112,7 +112,7 @@ describe('POST /api/timelog', () => {
             .post('/api/timelog')
             .set('Authorization', userToken)
             .send({
-                created_at: '2025-02-24 14:30:45',
+                created_at: '2025-02-24',
                 user_id: userId,
             })
 
@@ -125,7 +125,7 @@ describe('POST /api/timelog', () => {
             .post('/api/timelog')
             .set('Authorization', userToken)
             .send({
-                created_at: '2025-02-24 14:30:45',
+                created_at: '2025-02-24',
                 duration: 3600,
             })
 
