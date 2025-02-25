@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux'
 import { setLoggedInUser } from '@/redux/userSlice'
 import login from '@/services/loginServices'
 import { RemoteUser } from '@/types'
-import { createLocalUser, createRemoteUser } from '@/services/userServices'
+import {
+    createLocalUser,
+    createRemoteUser,
+    removeLocalUser,
+} from '@/services/userServices'
 
 const useLogIn = () => {
     const dispatch = useDispatch()
@@ -24,9 +28,8 @@ const useLogIn = () => {
                 return false
             }
             let localUser = users[0]
-            if (localUser && localUser.password === password) {
+            if (localUser && localUser?.password === password) {
                 if (!requestNotPossible && !remoteUser) {
-
                     await createRemoteUser(username, password)
                     remoteUser = await login(username, password)
                 }
@@ -40,6 +43,7 @@ const useLogIn = () => {
                 dispatch(setLoggedInUser(storageUser))
                 return true
             } else if (remoteUser) {
+                await removeLocalUser(username)
                 await createLocalUser(username, password, remoteUser.id)
                 localUser = (await getUserByUsername(username))[0]
                 const storageUser = {
