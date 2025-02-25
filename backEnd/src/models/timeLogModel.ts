@@ -1,24 +1,20 @@
 import mongoose from 'mongoose'
 const isValidDateTime = (value: string): boolean => {
-    const dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/
 
-    if (!dateTimeRegex.test(value)) {
+    if (!dateRegex.test(value)) {
+        console.log('regex failed')
         return false
     }
 
-    const [datePart, timePart] = value.split(' ')
-    const [year, month, day] = datePart.split('-').map(Number)
-    const [hour, minute, second] = timePart.split(':').map(Number)
-
-    const date = new Date(year, month - 1, day, hour, minute, second)
+    const [year, month, day] = value.split('-').map(Number)
+    console.log(year, month, day)
+    const date = new Date(year, month - 1, day)
 
     return (
         date.getFullYear() === year &&
         date.getMonth() === month - 1 &&
-        date.getDate() === day &&
-        date.getHours() === hour &&
-        date.getMinutes() === minute &&
-        date.getSeconds() === second
+        date.getDate() === day
     )
 }
 const { Schema, model } = mongoose
@@ -30,7 +26,7 @@ const timeLogSchema = new Schema({
         validate: {
             validator: isValidDateTime,
             message: (props: { value: string }) =>
-                `${props.value} is not a valid timestamp! Must be in format YYYY-MM-DD HH:MM:SS`,
+                `${props.value} is not a valid timestamp! Must be in format YYYY-MM-DD`,
         },
     },
     duration: { type: Number, required: true },
