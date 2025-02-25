@@ -1,5 +1,5 @@
 import { isPositiveNumber } from '@/types'
-import TimeLogger from './logger'
+import TimeLogger from '@/utils/logger'
 
 type Seconds = number
 type Milliseconds = number
