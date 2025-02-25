@@ -20,10 +20,11 @@ class TimeLogger {
             )
             if (user.server_id && user.token) {
                 const timeLog = await getTimeById(success.lastInsertRowId)
-
+                const correctFormatCreatedAt = timeLog.created_at.split(" ")[0]
+                console.log("correctCreatedAt: ", correctFormatCreatedAt)
                 await addRemoteTimeLog(
                     {
-                        created_at: timeLog.created_at,
+                        created_at: correctFormatCreatedAt,
                         duration: timeMs,
                         user_id: user.server_id,
                     },
