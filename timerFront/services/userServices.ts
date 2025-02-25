@@ -1,4 +1,4 @@
-import { insertUser } from '@/storage/local/userQueries'
+import { insertUser, removeUserByUsername } from '@/storage/local/userQueries'
 
 export async function createLocalUser(
     username: string,
@@ -7,6 +7,15 @@ export async function createLocalUser(
 ) {
     try {
         await insertUser(username, password, server_id)
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
+export async function removeLocalUser(username: string) {
+    try {
+        await removeUserByUsername(username)
     } catch (error) {
         console.error(error)
         throw error
