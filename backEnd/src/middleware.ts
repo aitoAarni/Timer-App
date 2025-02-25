@@ -46,6 +46,7 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.error(error)
     if (
         error.name === 'MongoServerError' &&
         error.message.includes('E11000 duplicate key error')

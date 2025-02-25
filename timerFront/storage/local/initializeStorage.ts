@@ -13,7 +13,7 @@ export default async function initializeStorage() {
     const users = await getUsers()
 
     if (users.length === 0) {
-        await insertUser('test_user', 'password', 1)
+        await insertUser('test_user', 'password', null)
     }
     if (isTest()) {
         await clearSettings()

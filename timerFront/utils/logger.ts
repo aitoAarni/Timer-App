@@ -18,10 +18,11 @@ class TimeLogger {
                 this.categoryId,
                 user.id
             )
+            console.log("user: ", user)
             if (user.server_id && user.token) {
                 const timeLog = await getTimeById(success.lastInsertRowId)
-                const correctFormatCreatedAt = timeLog.created_at.split(" ")[0]
-                console.log("correctCreatedAt: ", correctFormatCreatedAt)
+                const correctFormatCreatedAt = timeLog.created_at.split(' ')[0]
+                console.log('sending log')
                 await addRemoteTimeLog(
                     {
                         created_at: correctFormatCreatedAt,
@@ -30,6 +31,7 @@ class TimeLogger {
                     },
                     user
                 )
+                console.log('log sent')
             }
         } catch (error) {
             console.error(error)
