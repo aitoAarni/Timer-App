@@ -14,31 +14,18 @@ export const authMiddleware = async (
     next: NextFunction
 ) => {
     try {
-        console.log('113')
         const authHeader = req.header('Authorization')
-        console.log('114')
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            console.log(
-                `!authHeader: ${!authHeader} || !authHeader.startsWith('Bearer '): ${!authHeader?.startsWith(
-                    'Bearer '
-                )}`
-            )
             throw new Error('Token missing or invalid')
         }
-        console.log('115')
 
         const token = authHeader.replace('Bearer ', '')
-        console.log('token: ', token)
         const decodedToken = jwt.verify(token, SECRET)
-    
-        console.log('decodedToken: ', decodedToken)
+
         if (typeof decodedToken === 'string' || !decodedToken.id) {
             throw new Error('Invalid token')
         }
-        console.log(116)
-
         const user = await User.findById(decodedToken.id).exec()
-        console.log('user: ', user)
         if (!user) {
             throw new Error('User not found')
         }
