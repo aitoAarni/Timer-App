@@ -1,5 +1,6 @@
 import store from '@/redux/store'
-import { insertTimeToDb } from '@/storage/local/timerQueries'
+import addRemoteTimeLog from '@/services/timeLogServices'
+import { getTimeById, insertTimeToDb } from '@/storage/local/timerQueries'
 
 class TimeLogger {
     categoryId: number
@@ -8,16 +9,30 @@ class TimeLogger {
     }
     async addTimeLog(timeMs: number) {
         const state = store.getState()
-        const userId = state.user.loggedInUser?.id
+        const user = state.user.loggedInUser
 
-        if (!userId) return false
+        if (!user) return
         try {
             const success = await insertTimeToDb(
                 timeMs,
                 this.categoryId,
-                userId
+                user.id
             )
-            return success
+            console.log('query: ', success.lastInsertRowId)
+            if (user.server_id && user.token) {
+                const timeLog = await getTimeById(success.lastInsertRowId)
+
+                console.log('row: ', timeLog)
+                const result = await addRemoteTimeLog(
+                    {
+                        created_at: timeLog.created_at,
+                        duration: timeMs,
+                        user_id: user.server_id,
+                    },
+                    user
+                )
+                console.log('web result: ', result)
+            }
         } catch (error) {
             console.error(error)
             throw new Error(
