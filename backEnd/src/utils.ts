@@ -16,9 +16,15 @@ export const TimeLogSchema = z.object({
         .string()
         .regex(dateTimeRegex, 'Invalid date format! Must be YYYY-MM-DD')
         .refine(
-            date => {
-                console.log('validating date: ', date)
-                return !isNaN(new Date(date).getTime())
+            value => {
+                const [year, month, day] = value.split('-').map(Number)
+                const date = new Date(year, month - 1, day)
+
+                return (
+                    date.getFullYear() === year &&
+                    date.getMonth() + 1 === month &&
+                    date.getDate() === day
+                )
             },
             {
                 message: 'Invalid date! Must be a real date',
