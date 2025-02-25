@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
 import timeRouter from './routes/timeLogRouter'
 import { toTimeLog } from './utils'
+import rankingRouter from './routes/rankingRouter'
 
 if (!DATABASE_URI) {
     throw new Error('MONGODB_URI environmental variable is not set')
@@ -52,6 +53,7 @@ app.post(
 
 app.use('/api/user', userRouter)
 app.use('/api/timelog', timeRouter)
+app.use('/api/ranking', rankingRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
