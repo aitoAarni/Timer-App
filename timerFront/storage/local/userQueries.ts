@@ -52,7 +52,7 @@ const getUserByUsername = async (username: string) => {
     try {
         db = await openDatabase()
         const query = (await db.getAllAsync(
-            'SELECT * FROM users WHERE username = ?',
+            'SELECT * FROM users WHERE username = ?;',
             username
         )) as User[]
         console.log('user query', query)
@@ -67,4 +67,20 @@ const getUserByUsername = async (username: string) => {
     }
 }
 
-export { insertUser, getUsers, getUserByUsername }
+const removeUserByUsername = async (username: string) => {
+    let db: sqlite.SQLiteDatabase | null = null
+    try {
+        db = await openDatabase()
+        const query = 'DELETE FROM users WHERE username = ?;'
+        await db.getFirstAsync(query, [username])
+    } catch (error) {
+        console.error(error)
+        throw error
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
+    }
+}
+
+export { insertUser, getUsers, getUserByUsername , removeUserByUsername}

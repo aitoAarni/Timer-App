@@ -11,11 +11,11 @@ const insertTimeToDb = async (
 
     try {
         db = await openDatabase()
-        await db.runAsync(
+        const response = await db.runAsync(
             `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`,
             [duration, category_id, user_id]
         )
-        return true
+        return response
     } catch (error) {
         console.error('insertTimeToDb', error)
         throw new Error(`Error inserting data: ${error}`)
@@ -105,4 +105,31 @@ const getTimesGroupedByDate = async (userId: number) => {
     }
 }
 
-export { insertTimeToDb, getAllTimeData, getAllTimes, getTimesGroupedByDate }
+const getTimeById = async (rowId: number) => {
+    const query = 'SELECT * FROM timer WHERE id = ?;'
+    let db: sqlite.SQLiteDatabase | null = null
+    try {
+        db = await openDatabase()
+        const result = (await db.getFirstAsync(query, [rowId])) as TimeLogged
+        return result
+    } catch (error) {
+        console.error('getTimesGroupedByData', error)
+        throw new Error(
+            `Error fetching times: ${
+                error instanceof Error ? error.message : String(error)
+            }`
+        )
+    } finally {
+        if (db) {
+            db.closeAsync()
+        }
+    }
+}
+
+export {
+    insertTimeToDb,
+    getAllTimeData,
+    getAllTimes,
+    getTimesGroupedByDate,
+    getTimeById,
+}
