@@ -102,9 +102,7 @@ describe('POST /api/timelog', () => {
             })
 
         expect(response.status).toBe(400)
-        expect(response.body.error).toMatch(
-            '2025-02-31 is not a valid timestamp! Must be in format YYYY-MM-DD'
-        )
+        expect(response.body.error).toMatch("Request body isn't valid")
     })
 
     it('Fails if `duration` is missing', async () => {

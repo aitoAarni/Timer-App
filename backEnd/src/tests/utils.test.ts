@@ -9,7 +9,7 @@ describe('toUserCrednetials function', () => {
         const result = toUserCredentials(user)
         expect(result).toEqual(user)
     })
-    it.only('Throws error when password invalid', () => {
+    it('Throws error when password invalid', () => {
         const user = {
             username: 'validUsername',
             password: 'invalid',
@@ -32,7 +32,7 @@ describe('toUserCrednetials function', () => {
 describe('toTimeLog function', () => {
     it('Converts valid time log correctly', () => {
         const input = {
-            created_at: '2025-02-24 14:30:45',
+            created_at: '2025-02-24',
             duration: 3600,
             user_id: '67b628d7c22cdf7238ba76aa',
         }
@@ -44,7 +44,7 @@ describe('toTimeLog function', () => {
     it('Throws error for invalid date', () => {
         expect(() => {
             toTimeLog({
-                created_at: '2025-13-24 14:30:45',
+                created_at: '2025-13-24',
                 duration: 3600,
                 user_id: '67b628d7c22cdf7238ba76aa',
             })
@@ -54,7 +54,7 @@ describe('toTimeLog function', () => {
     it('Throws error if duration is missing', () => {
         expect(() => {
             toTimeLog({
-                created_at: '2025-02-24 14:30:45',
+                created_at: '2025-02-24',
                 user_id: '67b628d7c22cdf7238ba76aa',
             })
         }).toThrow(/Required/)
