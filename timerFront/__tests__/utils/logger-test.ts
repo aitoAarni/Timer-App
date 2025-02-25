@@ -1,27 +1,31 @@
 // @ts-nocheck
 import TimeLogger from '@/utils/logger'
+import { AppRegistry } from 'react-native'
 
-const mockInsertTimeToDb = jest.fn().mockReturnValue(true)
-const mockGetTimeById = jest
-    .fn()
-    .mockResolvedValue({ created_at: '2025-02-02 10:03:34' })
+const mockInsertTimeToDb = jest.fn().mockResolvedValue({ lastInsertRowId: 123 })
+const mockGetTimeById = jest.fn().mockResolvedValue({
+    created_at: '2025-02-02 10:03:34',
+})
 jest.mock('@/storage/local/timerQueries', () => ({
-    insertTimeToDb: (timeMs, categoryId, userId) => {
-        return mockInsertTimeToDb(timeMs, categoryId, userId)
-    },
-    getTimeById: (...args) => {
-        return mockGetTimeById(...args)
-    },
+    insertTimeToDb: (...args) => mockInsertTimeToDb(...args),
+    getTimeById: (...args) => mockGetTimeById(...args),
 }))
 
+const mockAddRemoteTimeLog = jest.fn().mockResolvedValue()
+jest.mock('@/services/timeLogServices', () => {
+    return (...args) => {
+        return mockAddRemoteTimeLog(...args)
+    }
+})
+let mockLoggedInUser = {
+    id: 1,
+    token: 'Bearer 34242',
+    server_id: 'serverId',
+}
 jest.mock('@/redux/store', () => ({
     getState: jest.fn(() => ({
         user: {
-            loggedInUser: {
-                id: 1,
-                token: 'Bearer 34242',
-                server_id: 'serverId',
-            },
+            loggedInUser: mockLoggedInUser,
         },
     })),
 }))
@@ -29,24 +33,23 @@ jest.mock('@/redux/store', () => ({
 jest.mock('@/storage/local/db', () => ({
     openDatabase: jest.fn(),
 }))
-const mockAddRemoteTimeLog = jest.fn().mockResolvedValue()
 
-jest.mock('@/services/timeLogServices', () => {
-    return (...args) => {
-        return mockAddRemoteTimeLog(...args)
-    }
-})
-
-describe('logger', () => {
-    afterEach(() => {
+describe('TimeLogger', () => {
+    beforeEach(() => {
         jest.clearAllMocks()
+        mockLoggedInUser = {
+            id: 1,
+            token: 'Bearer 34242',
+            server_id: 'serverId',
+        }
     })
 
-    it('logs when validt data and uesr is provided', async () => {
-        const mockDb = jest.fn()
+    it('logs time successfully when user is logged in and has a server_id', async () => {
         const logger = new TimeLogger(1)
         await logger.addTimeLog(10_000)
+
         expect(mockInsertTimeToDb).toHaveBeenCalledWith(10_000, 1, 1)
+        expect(mockGetTimeById).toHaveBeenCalledWith(123)
         expect(mockAddRemoteTimeLog).toHaveBeenCalledWith(
             {
                 created_at: '2025-02-02 10:03:34',
@@ -56,5 +59,49 @@ describe('logger', () => {
             { id: 1, token: 'Bearer 34242', server_id: 'serverId' }
         )
     })
-    
+
+    it('should not log time if user is missing', async () => {
+        mockLoggedInUser = null
+
+        const logger = new TimeLogger(1)
+        await logger.addTimeLog(10_000)
+
+        expect(mockInsertTimeToDb).not.toHaveBeenCalled()
+        expect(mockAddRemoteTimeLog).not.toHaveBeenCalled()
+    })
+
+    it('should not send time to remote server if user has no server_id', async () => {
+        delete mockLoggedInUser.server_id
+        const logger = new TimeLogger(1)
+        await logger.addTimeLog(10_000)
+
+        expect(mockInsertTimeToDb).toHaveBeenCalled()
+        expect(mockAddRemoteTimeLog).not.toHaveBeenCalled()
+    })
+
+    it('should handle database insert errors gracefully', async () => {
+        mockInsertTimeToDb.mockRejectedValue(new Error('DB insert failed'))
+
+        const logger = new TimeLogger(1)
+
+        await expect(logger.addTimeLog(10_000)).rejects.toThrow(
+            'DB insert failed'
+        )
+
+        expect(mockGetTimeById).not.toHaveBeenCalled()
+        expect(mockAddRemoteTimeLog).not.toHaveBeenCalled()
+    })
+
+    it('should handle API call errors gracefully', async () => {
+        mockAddRemoteTimeLog.mockRejectedValue(new Error('API call failed'))
+
+        const logger = new TimeLogger(1)
+
+        await expect(logger.addTimeLog(10_000)).rejects.toThrow(
+            'DB insert failed'
+        )
+
+        expect(mockInsertTimeToDb).toHaveBeenCalled()
+        expect(mockGetTimeById).not.toHaveBeenCalled()
+    })
 })
