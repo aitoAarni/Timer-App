@@ -18,12 +18,10 @@ class TimeLogger {
                 this.categoryId,
                 user.id
             )
-            console.log('query: ', success.lastInsertRowId)
             if (user.server_id && user.token) {
                 const timeLog = await getTimeById(success.lastInsertRowId)
 
-                console.log('row: ', timeLog)
-                const result = await addRemoteTimeLog(
+                await addRemoteTimeLog(
                     {
                         created_at: timeLog.created_at,
                         duration: timeMs,
@@ -31,7 +29,6 @@ class TimeLogger {
                     },
                     user
                 )
-                console.log('web result: ', result)
             }
         } catch (error) {
             console.error(error)
