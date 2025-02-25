@@ -1,9 +1,4 @@
-import {
-    FlatList,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-} from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from './Text'
 import * as yup from 'yup'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
@@ -71,7 +66,8 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     useEffect(() => {
         const getUsersFromDb = async () => {
             const usrs = await getUsers()
-            setUsers(usrs)
+            const usrsWithPassword = usrs.filter(user => user.password)
+            setUsers(usrsWithPassword)
         }
         getUsersFromDb()
     }, [])
