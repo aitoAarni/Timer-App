@@ -13,8 +13,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3YzIyY2RmNzIzOGJhNzZhYSIsInVzZXJuYW1lIjoiYnJvIiwiaWF0IjoxNzQwNDAzOTAwLCJleHAiOjE3NDE2MTM1MDB9.3qpHkuTRmgkhEB02JOxpnGH_MbP4aS5l6S1PDBHaYDM
 
 {
-    "created_at": "2025-02-24 14:30:45",
-    "duration": 2000,
+    "created_at": "2025-03-03",
+    "duration": 10000,
     "user_id": "67b628d7c22cdf7238ba76aa"
 }
 ###
@@ -26,3 +26,10 @@ Content-Type: application/json
     "password": "password",
     "username": "bro"
 }
+###
+
+POST http://localhost:3000/ping
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3YzIyY2RmNzIzOGJhNzZhYSIsInVzZXJuYW1lIjoiYnJvIiwiaWF0IjoxNzQwNDAzOTAwLCJleHAiOjE3NDE2MTM1MDB9.3qpHkuTRmgkhEB02JOxpnGH_MbP4aS5l6S1PDBHaYDM
+
+###

@@ -1,9 +1,10 @@
-import {DATABASE_URI} from './config'
+import { DATABASE_URI } from './config'
 import express from 'express'
 import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
 import timeRouter from './routes/timeLogRouter'
+import { toTimeLog } from './utils'
 
 if (!DATABASE_URI) {
     throw new Error('MONGODB_URI environmental variable is not set')
@@ -23,14 +24,34 @@ const app = express()
 
 app.use(express.json())
 
-
-app.get('/ping', (_req, res) => {
-    console.log('someone pinged here')
-    res.send('pong')
-})
+app.post(
+    '/ping',
+    /* async */ (_req, res, next) => {
+        console.log('someone pinged here')
+        const t = {
+            created_at: '2025-03-02',
+            duration: 10000,
+            user_id: '67b628d7c22cdf7238ba76aa',
+        }
+        console.log(toTimeLog(t))
+        res.send('pong')
+        try {
+            // const timelog = new TimeLog({
+            //     created_at: '2025-03-02',
+            //     duration: 10000,
+            //     user_id: '67b628d7c22cdf7238ba76aa',
+            // })
+            // const saved = await timelog.save()
+            // console.log(saved)
+            // res.status(201).send(saved.toJSON())
+        } catch (error) {
+            next(error)
+        }
+    }
+)
 
 app.use('/api/user', userRouter)
-app.use("/api/timelog", timeRouter)
+app.use('/api/timelog', timeRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
