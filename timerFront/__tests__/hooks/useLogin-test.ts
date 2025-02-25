@@ -1,4 +1,5 @@
 import useLogIn from '@/hooks/useLogIn'
+import { removeLocalUser } from '@/services/userServices'
 
 let mockGetUserByUsername: typeof jest.fn
 jest.mock('@/storage/local/userQueries', () => ({
@@ -35,6 +36,9 @@ jest.mock('@/services/userServices', () => ({
     },
     createRemoteUser: (...args: []) => {
         return mockCreateRemoteUser(...args)
+    },
+    removeLocalUser: () => {
+        jest.fn()
     },
 }))
 
@@ -173,7 +177,6 @@ describe('useLogIn hook', () => {
     })
 
     it('fails login when credentials are incorrect', async () => {
-   
         mockLogin = jest.fn().mockResolvedValue(null)
         mockGetUserByUsername = jest.fn().mockResolvedValue([])
         const logIn = useLogIn()
