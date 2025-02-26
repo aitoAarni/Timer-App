@@ -17,6 +17,7 @@ const useLogIn = () => {
         let requestNotPossible: boolean
         try {
             remoteUser = await login(username, password)
+            console.log("remote user: ", remoteUser)
             requestNotPossible = false
         } catch (error) {
             console.error(error)
@@ -24,10 +25,8 @@ const useLogIn = () => {
         }
         try {
             const users = await getUserByUsername(username)
-            if (users.length === 0) {
-                return false
-            }
-            let localUser = users[0]
+            
+            let localUser = users.length > 0 ?  users[0] : null
             if (localUser && localUser?.password === password) {
                 if (!requestNotPossible && !remoteUser) {
                     await createRemoteUser(username, password)

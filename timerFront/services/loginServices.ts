@@ -1,4 +1,4 @@
-import { toRemoteUser } from '@/utils/validators'
+import { toRemoteLoggedInUser } from '@/utils/validators'
 
 export default async function remoteLogin(username: string, password: string) {
     const body = JSON.stringify({ username, password })
@@ -19,7 +19,7 @@ export default async function remoteLogin(username: string, password: string) {
             console.error(`Http: ${response.status}, ${errorText}`)
             return null
         }
-        const json = toRemoteUser(await response.json())
+        const json = toRemoteLoggedInUser(await response.json())
         return json
     } catch (error) {
         console.error(error instanceof Error ? error.message : String(error))
