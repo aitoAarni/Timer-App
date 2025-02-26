@@ -2,6 +2,7 @@ import {
     ActivityIndicator,
     FlatList,
     StyleSheet,
+    TextInput,
     TouchableOpacity,
     View,
 } from 'react-native'
@@ -9,7 +10,8 @@ import Text from './Text'
 import { formatTime } from '@/utils/format'
 import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 interface LeaderBoardProps {
     userId: string | null
@@ -18,14 +20,16 @@ interface LeaderBoardProps {
 export default function LeaderBoard({ userId }: LeaderBoardProps) {
     if (!userId) return
     const [rankings, setRankings] = useState<Rankings | null>(null)
-
-    const rankPercentage = rankings && Math.round(
-        (rankings.userRank / rankings.totalParticipants) * 100
-    )
+    const today = new Date()
+    const [year, setYear] = useState(String(today.getFullYear()))
+    const [month, setMonth] = useState(String(today.getMonth() + 1))
+    const [day, setDay] = useState(String(today.getDate()))
+    const rankPercentage =
+        rankings &&
+        Math.round((rankings.userRank / rankings.totalParticipants) * 100)
     useEffect(() => {
-            console.log('fetching rankings')
-            refreshData()
-        
+        console.log('fetching rankings')
+        refreshData()
     }, [])
     const refreshData = async () => {
         const fetchedRankings = await getRankings(userId, '2025-02-26')
@@ -39,9 +43,48 @@ export default function LeaderBoard({ userId }: LeaderBoardProps) {
                 Your rank ({rankings.userRank}/{rankings.totalParticipants}) top{' '}
                 {rankPercentage}%
             </Text>
-            <TouchableOpacity onPress={refreshData}>
-                <Text fontSize={29}>refresh</Text>
-            </TouchableOpacity>
+
+            <View style={styles.inputRow}>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.inputLabel}>Year</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="YYYY"
+                        keyboardType="numeric"
+                        maxLength={4}
+                        value={year}
+                        onChangeText={setYear}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.inputLabel}>Month</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="MM"
+                        keyboardType="numeric"
+                        maxLength={2}
+                        value={month}
+                        onChangeText={setMonth}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.inputLabel}>Day</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="DD"
+                        keyboardType="numeric"
+                        maxLength={2}
+                        value={day}
+                        onChangeText={setDay}
+                    />
+                </View>
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={refreshData}>
+                    <AntDesign name="check" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
             {rankings && (
                 <FlatList
                     data={rankings.nearbyUsers}
@@ -123,8 +166,38 @@ const Item = ({
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, marginTop: 30 },
-    headerText: { fontSize: 24, marginBottom: 15 },
+    container: { flexGrow: 1, marginTop: 30 },
+
+    headerText: { fontSize: 24, marginBottom: 1 },
+    inputRow: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBlock: 10,
+    },
+    inputGroup: { alignItems: 'center' },
+    buttonContainer: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgb(58, 58, 58)',
+        width: 60,
+        height: 30,
+        borderRadius: 16,
+        marginBottom: 10,
+    },
+
+    inputLabel: { fontSize: 14, marginBottom: 5, fontWeight: 'bold' },
+    textInput: {
+        color: theme.colors.text,
+        borderWidth: 1,
+        borderColor: theme.colors.grayLight,
+        borderRadius: 8,
+        padding: 8,
+        textAlign: 'center',
+        fontSize: 18,
+        width: 80,
+        height: 40,
+    },
     itemContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -147,4 +220,3 @@ interface Rankings {
     totalParticipants: number
     nearbyUsers: NearbyUser[]
 }
-
