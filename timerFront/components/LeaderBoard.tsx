@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from './Text'
 import { formatTime } from '@/utils/format'
 import theme from '@/theme'
@@ -8,8 +8,19 @@ interface LeaderBoardProps {
 }
 
 export default function LeaderBoard({ userId }: LeaderBoardProps) {
+    const rankPercentage = Math.round(
+        (data.userRank / data.totalParticipants) * 100
+    )
+    const refreshData = () => {}
     return (
         <View style={styles.container}>
+            <Text style={styles.headerText}>
+                Your rank ({data.userRank}/{data.totalParticipants}) top{' '}
+                {rankPercentage}%
+            </Text>
+            <TouchableOpacity onPress={refreshData}>
+                <Text fontSize={29}>refresh</Text>
+            </TouchableOpacity>
             <FlatList
                 data={data.nearbyUsers}
                 renderItem={({ item }) => (
@@ -88,6 +99,7 @@ const Item = ({
 
 const styles = StyleSheet.create({
     container: { flex: 1, marginTop: 30 },
+    headerText: { fontSize: 24, marginBottom: 15 },
     itemContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -98,7 +110,7 @@ const styles = StyleSheet.create({
 })
 
 const data = {
-    userRank: 3,
+    userRank: 4,
     userDuration: 5632,
     nearbyUsers: [
         {
@@ -144,5 +156,5 @@ const data = {
             duration: 32,
         },
     ],
-    totalParticipants: 4,
+    totalParticipants: 7,
 }
