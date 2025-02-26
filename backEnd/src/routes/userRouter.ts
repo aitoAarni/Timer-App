@@ -9,8 +9,9 @@ const router = express.Router()
 
 router.post('/create', async (req, res, next) => {
     try {
+        console.log('req.body', req.body)
         const { username, password } = toUserCredentials(req.body)
-
+        console.log('ayooo')
         const passwordHash = await bcrypt.hash(password, Number(SALT_ROUNDS))
         const user = new User({ username, passwordHash })
         const savedUser = await user.save()

@@ -2,8 +2,8 @@ POST http://localhost:3000/api/user/create
 Content-Type: application/json
 
 {
-    "password": "password",
-    "username": "bro1"
+    "username": "bruh boi",
+    "password": "password"
 }
 
 ###
@@ -34,5 +34,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3Y
 
 ###
 
-GET http://localhost:3000/api/ranking/2025-02-25/67b628d7c22cdf7238ba76aa
+GET http://localhost:3000/api/ranking/2025-02-26/67b628d7c22cdf7238ba76aa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3YzIyY2RmNzIzOGJhNzZhYSIsInVzZXJuYW1lIjoiYnJvIiwiaWF0IjoxNzQwNDAzOTAwLCJleHAiOjE3NDE2MTM1MDB9.3qpHkuTRmgkhEB02JOxpnGH_MbP4aS5l6S1PDBHaYDM
