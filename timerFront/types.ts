@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { LocalStorageUserSchema, RemoteUserSchema } from './utils/validators'
+import { LocalStorageUserSchema, RemoteLoggedInUserSchema } from './utils/validators'
 
 export type PositiveNumber = number & { __positive__: true }
 
@@ -16,7 +16,7 @@ export interface User {
 }
 export type StorageUser = z.infer<typeof LocalStorageUserSchema>
 
-export type RemoteUser = z.infer<typeof RemoteUserSchema>
+export type RemoteUser = z.infer<typeof RemoteLoggedInUserSchema>
 
 export interface TimeLogged {
     id: number
