@@ -10,6 +10,7 @@ import { RootState } from '@/redux/store'
 import theme from '@/theme'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
+import LeaderBoard from './LeaderBoard'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
@@ -60,25 +61,21 @@ export default function StatisticsView() {
     return (
         <View style={styles.container}>
             {data ? (
-                <AreaChartView
-                    data={data}
-                    maxValue={maxValue}
-                />
+                <AreaChartView data={data} maxValue={maxValue} />
             ) : (
                 <ActivityIndicator
                     style={styles.acitivityIndicator}
                     size="large"
                 />
             )}
-            <SwipeNavigation
-                leftSwipeCallback={navigateLeft}
-            ></SwipeNavigation>
+            <LeaderBoard userId={user.server_id} />
+            <SwipeNavigation leftSwipeCallback={navigateLeft}></SwipeNavigation>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1},
+    container: { flex: 1 },
     notLoggedIn: { fontSize: 30, marginTop: 20, color: theme.colors.text },
 
     acitivityIndicator: { top: '30%' },
