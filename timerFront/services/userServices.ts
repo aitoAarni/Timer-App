@@ -1,8 +1,9 @@
 import { insertUser, removeUserByUsername } from '@/storage/local/userQueries'
+import { toRemoteUser } from '@/utils/validators'
 
 export async function createLocalUser(
     username: string,
-    password: string | undefined,
+    password: string,
     server_id: string | null = null
 ) {
     try {
@@ -24,7 +25,9 @@ export async function removeLocalUser(username: string) {
 
 export async function createRemoteUser(username: String, password: string) {
     const body = JSON.stringify({ username, password })
+    console.log('create a remote uesr')
     try {
+        console.log('request body: ', body)
         const response = await fetch(
             'http://192.168.1.120:3000/api/user/create',
             {
@@ -35,15 +38,33 @@ export async function createRemoteUser(username: String, password: string) {
                 body,
             }
         )
+        console.log('request död, response: ', response.ok)
         if (!response.ok) {
             const errorText = await response.text()
             console.error(`Http: ${response.status}, ${errorText}`)
             return null
         }
-        const api = await response.json()
-        return api
+        const responseJson = await response.json()
+        console.log(responseJson)
+        return responseJson
     } catch (error) {
         console.error(error instanceof Error ? error.message : String(error))
         throw error
     }
 }
+
+const createUser = async (username: string, password: string) => {
+    let user_id: null | string = null
+    try {
+        const data = await createRemoteUser(username, password)
+        const user = toRemoteUser(data)
+        user_id = user.id
+    } catch (error) {
+        console.error(error)
+        throw new Error(error instanceof Error ? error.message : String(error))
+    } finally {
+        await createLocalUser(username, password, user_id)
+    }
+}
+
+export default createUser

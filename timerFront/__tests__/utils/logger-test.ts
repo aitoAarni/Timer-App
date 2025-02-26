@@ -52,7 +52,7 @@ describe('TimeLogger', () => {
         expect(mockGetTimeById).toHaveBeenCalledWith(123)
         expect(mockAddRemoteTimeLog).toHaveBeenCalledWith(
             {
-                created_at: '2025-02-02 10:03:34',
+                created_at: '2025-02-02',
                 duration: 10_000,
                 user_id: 'serverId',
             },

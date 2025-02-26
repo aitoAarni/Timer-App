@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { toRemoteUser, toStorageUser } from '@/utils/validators'
+import { toRemoteLoggedInUser, toStorageUser } from '@/utils/validators'
 
 describe('validators', () => {
-    describe('toRemoteUser', () => {
+    describe('toRemoteLoggedInUser', () => {
         let user
         beforeEach(() => {
             user = {
@@ -13,24 +13,24 @@ describe('validators', () => {
             }
         })
         it('should parse correct user', () => {
-            const validatedUser = toRemoteUser(user)
+            const validatedUser = toRemoteLoggedInUser(user)
             expect(validatedUser).toEqual(user)
         })
         it('should throw an error for invalid id', () => {
             user.id = 2
-            expect(() => toRemoteUser(user)).toThrow()
+            expect(() => toRemoteLoggedInUser(user)).toThrow()
         })
         it('should throw an error for too short username', () => {
             user.username = 'Sh'
-            expect(() => toRemoteUser(user)).toThrow()
+            expect(() => toRemoteLoggedInUser(user)).toThrow()
         })
         it('should throw an error for invalid token', () => {
             user.token = 234
-            expect(() => toRemoteUser(user)).toThrow()
+            expect(() => toRemoteLoggedInUser(user)).toThrow()
         })
         it('should throw an error for invalid times', () => {
             user.times = 'times'
-            expect(() => toRemoteUser(user)).toThrow()
+            expect(() => toRemoteLoggedInUser(user)).toThrow()
         })
     })
     describe('toStorageUser', () => {

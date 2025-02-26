@@ -1,10 +1,10 @@
 import remoteLogin from '@/services/loginServices'; // Adjust path if needed
-import { toRemoteUser } from '@/utils/validators';
+import { toRemoteLoggedInUser } from '@/utils/validators';
 
 global.fetch = jest.fn();
 
 jest.mock('@/utils/validators', () => ({
-    toRemoteUser: jest.fn(),
+    toRemoteLoggedInUser: jest.fn(),
 }));
 
 describe('remoteLogin', () => {
@@ -30,7 +30,7 @@ describe('remoteLogin', () => {
             ok: true,
             json: jest.fn().mockResolvedValue(mockUser),
         });
-        (toRemoteUser as jest.Mock).mockReturnValue(mockUser);
+        (toRemoteLoggedInUser as jest.Mock).mockReturnValue(mockUser);
 
         const result = await remoteLogin('testUser', 'password123');
 
@@ -42,7 +42,7 @@ describe('remoteLogin', () => {
                 body: JSON.stringify({ username: 'testUser', password: 'password123' }),
             })
         );
-        expect(toRemoteUser).toHaveBeenCalledWith(mockUser);
+        expect(toRemoteLoggedInUser).toHaveBeenCalledWith(mockUser);
         expect(result).toEqual(mockUser);
     });
 
@@ -71,7 +71,7 @@ describe('remoteLogin', () => {
             ok: true,
             json: jest.fn().mockResolvedValue({ invalid: 'data' }),
         });
-        (toRemoteUser as jest.Mock).mockImplementation(() => {
+        (toRemoteLoggedInUser as jest.Mock).mockImplementation(() => {
             throw new Error('Validation Error');
         });
 

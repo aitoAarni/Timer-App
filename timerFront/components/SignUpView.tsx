@@ -7,7 +7,7 @@ import { useState } from 'react'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'expo-router'
-import { createLocalUser, createRemoteUser } from '@/services/userServices'
+import createUser from '@/services/userServices'
 import useLogIn from '@/hooks/useLogIn'
 interface Inputs {
     username: string
@@ -58,8 +58,7 @@ export default function SignInView({ setLogin }: SignInViewProps) {
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
         try {
-            await createLocalUser(data.username, data.password)
-            await createRemoteUser(data.username, data.password)
+            await createUser(data.username, data.password)
             const loggedUser = await login(data.username, data.password)
             if (loggedUser) {
                 if (router.canGoBack()) {
