@@ -103,5 +103,6 @@ export const formStringDate = (year: string, month: string, day: string) => {
     if (givenDate > today || isNaN(givenDate.getTime())) {
         return null
     }
-    return `${year}-${month}-${day}`
+
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
