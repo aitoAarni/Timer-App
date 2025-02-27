@@ -11,10 +11,13 @@ import theme from '@/theme'
 import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import LeaderBoard from './LeaderBoard'
+import ErrorBox from './ErrorBox'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
     const [maxValue, setMaxValue] = useState(0)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
     const user = useSelector((state: RootState) => state.user.loggedInUser)
     const navigateLeft = useNavigateTo({
         pathname: '/',
@@ -60,6 +63,10 @@ export default function StatisticsView() {
 
     return (
         <View style={styles.container}>
+            <ErrorBox
+                setErrorMessage={setErrorMessage}
+                errorMessage={errorMessage}
+            />
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (
@@ -68,7 +75,10 @@ export default function StatisticsView() {
                     size="large"
                 />
             )}
-            <LeaderBoard userId={user.server_id} />
+            <LeaderBoard
+                userId={user.server_id}
+                setErrorMessage={setErrorMessage}
+            />
             <SwipeNavigation leftSwipeCallback={navigateLeft}></SwipeNavigation>
         </View>
     )

@@ -12,12 +12,18 @@ import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
 import React, { useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
+import { formStringDate } from '@/utils/dataHandlers'
+import ErrorBox from './ErrorBox'
 
 interface LeaderBoardProps {
     userId: string | null
+    setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-export default function LeaderBoard({ userId }: LeaderBoardProps) {
+export default function LeaderBoard({
+    userId,
+    setErrorMessage,
+}: LeaderBoardProps) {
     if (!userId) return
     const [rankings, setRankings] = useState<Rankings | null>(null)
     const today = new Date()
@@ -32,6 +38,12 @@ export default function LeaderBoard({ userId }: LeaderBoardProps) {
         refreshData()
     }, [])
     const refreshData = async () => {
+        const rankingDate = formStringDate(year, month, day)
+        if (!rankingDate) {
+            setErrorMessage('You set an invalid date')
+            return
+        }
+        console.log('fetching data')
         const fetchedRankings = await getRankings(userId, '2025-02-26')
         setRankings(fetchedRankings)
         console.log(rankings)
