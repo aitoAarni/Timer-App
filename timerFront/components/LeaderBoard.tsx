@@ -7,13 +7,12 @@ import {
     View,
 } from 'react-native'
 import Text from './Text'
-import { formatTime } from '@/utils/format'
+import { formatTime, formatTotalTime } from '@/utils/format'
 import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
 import React, { useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { formStringDate } from '@/utils/dataHandlers'
-import ErrorBox from './ErrorBox'
 
 interface LeaderBoardProps {
     userId: string | null
@@ -175,7 +174,7 @@ const Item = ({
                         : null,
                 ]}
             >
-                {formatTime(item.duration)}
+                {formatTotalTime(item.duration)}
             </Text>
             <Text
                 style={[

@@ -9,8 +9,10 @@ const formatTotalTime = function (millisedonds: number) {
     const hours = Math.floor(totalSeconds / 3600)
     totalSeconds -= hours * 3600
     const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds - (minutes * 60)
     let formattedTime = String(hours).padStart(2, '0') + ':'
-    formattedTime += String(minutes).padStart(2, '0')
+    formattedTime += String(minutes).padStart(2, '0') + ':'
+    formattedTime += String(seconds).padStart(2, '0')
     return formattedTime
 }
 
