@@ -46,7 +46,6 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
-    console.error(error)
     if (
         error.name === 'MongoServerError' &&
         error.message.includes('E11000 duplicate key error')
@@ -62,6 +61,12 @@ export const errorHandler = (
         res.status(400).send({ error: error.message })
     } else if (error.message.includes('TimeLog validation failed')) {
         res.status(400).send({ error: error.message })
+    } else if (
+        error.message === 'No logs found for this date' ||
+        error.message === 'User not found in ranking for this date'
+    ) {
+        console.log('oikee errori: ', error)
+        res.status(400).send({ error: 'No ranking information for user' })
     } else {
         res.status(400).send({ error: 'unknown error on the server' })
     }
