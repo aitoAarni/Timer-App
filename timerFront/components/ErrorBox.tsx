@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import theme from '@/theme'
 
-const screenWidth = Dimensions.get('window').width
 
 interface ErrorBoxProps {
     errorMessage: string | null
