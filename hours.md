@@ -50,3 +50,4 @@
 | 24.2.2025  | 5h     | create back-end functionality for adding time logs, create unit tests                         |
 | 25.2.2025  | 5.5h   | update mongo db time log storage,add front-end request for time log storage,+unit test & more |
 | 26.2.2025  | 4h     | fix bugs with user creation, add a leaderboard to front-end                                   |
+| 27.2.2025  | 4.5h   | add form to leaderboard to search by date, fix gus, add unit tests, format leaderboard time   |

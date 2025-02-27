@@ -35,7 +35,7 @@ describe('ErrorBox', () => {
 
         expect(screen.getByText('Timeout Error')).toBeTruthy()
 
-        jest.advanceTimersByTime(5000) // Simulate 5 seconds passing
+        jest.advanceTimersByTime(5000)
 
         await waitFor(() => {
             expect(setErrorMessage).toHaveBeenCalledWith(null)
