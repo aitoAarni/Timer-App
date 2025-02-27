@@ -1,4 +1,7 @@
-import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
+import {
+    formStringDate,
+    transformDatesAndDurationDataForChart,
+} from '@/utils/dataHandlers'
 
 const testData = [
     {
@@ -57,7 +60,10 @@ const correctlyTransformedData = [
     },
 ]
 
-describe('dataHandlers', () => {
+describe('transformDatesAndDurationDataForChart', () => {
+    afterAll(() => {
+        jest.restoreAllMocks()
+    })
     it('transforms chart data to correct form', () => {
         const mockDate = new Date('2025-02-03T06:00:00Z')
         jest.spyOn(global, 'Date').mockImplementation(() => mockDate)
@@ -72,5 +78,31 @@ describe('dataHandlers', () => {
         })
         expect(maxValue).toBe(20)
         jest.resetAllMocks()
+    })
+})
+describe('formStringDate', () => {
+    beforeAll(() => {
+        jest.restoreAllMocks()
+    })
+    it('should format a valid date correctly', () => {
+        expect(formStringDate('2025', '2', '5')).toBe('2025-02-05')
+        expect(formStringDate('2023', '12', '31')).toBe('2023-12-31')
+    })
+
+    it('should pad single-digit months and days', () => {
+        expect(formStringDate('2024', '3', '7')).toBe('2024-03-07')
+        expect(formStringDate('2024', '9', '1')).toBe('2024-09-01')
+    })
+
+    it('should return null for an invalid date', () => {
+        expect(formStringDate('2024', '13', '1')).toBeNull() // Invalid month
+        expect(formStringDate('2024', '2', '30')).toBeNull() // Invalid day
+        expect(formStringDate('abc', '10', '10')).toBeNull() // Non-numeric year
+        expect(formStringDate('2024', '10', 'xyz')).toBeNull() // Non-numeric day
+    })
+
+    it('should return null for future dates', () => {
+        const futureYear = new Date().getFullYear() + 1
+        expect(formStringDate(String(futureYear), '1', '1')).toBeNull()
     })
 })
