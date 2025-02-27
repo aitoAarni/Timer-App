@@ -11,7 +11,7 @@ export const toRemoteLoggedInUser = (user: unknown) => {
     return RemoteLoggedInUserSchema.parse(user)
 }
 
-export const RemoteUserSchema = RemoteLoggedInUserSchema.omit({token: true})
+export const RemoteUserSchema = RemoteLoggedInUserSchema.omit({ token: true })
 
 export const toRemoteUser = (user: unknown) => {
     return RemoteUserSchema.parse(user)
@@ -28,4 +28,22 @@ export const LocalStorageUserSchema = z.object({
 
 export const toStorageUser = (user: unknown) => {
     return LocalStorageUserSchema.parse(user)
+}
+
+export const NearbyUserSchema = z.object({
+    rank: z.number().int().positive(),
+    user_id: z.string().min(1),
+    username: z.string().min(1).max(50),
+    duration: z.number().int().nonnegative(),
+})
+
+export const RankingsSchema = z.object({
+    userRank: z.number().int().positive(),
+    userDuration: z.number().int().nonnegative(),
+    totalParticipants: z.number().int().positive(),
+    nearbyUsers: z.array(NearbyUserSchema),
+})
+
+export const toRankings = (data: unknown) => {
+    return RankingsSchema.parse(data)
 }

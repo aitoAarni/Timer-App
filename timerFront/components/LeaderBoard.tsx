@@ -7,12 +7,14 @@ import {
     View,
 } from 'react-native'
 import Text from './Text'
-import { formatTime, formatTotalTime } from '@/utils/format'
+import { formatTotalTime } from '@/utils/format'
 import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
 import React, { useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { formStringDate } from '@/utils/dataHandlers'
+import { NearbyUser, Rankings } from '@/types'
+import { toRankings } from '@/utils/validators'
 
 interface LeaderBoardProps {
     userId: string | null
@@ -47,7 +49,8 @@ export default function LeaderBoard({
             const fetchedRankings = await getRankings(userId, rankingDate)
             setDataLoading(false)
             if (fetchedRankings) {
-                setRankings(fetchedRankings)
+                const validatedRankings = toRankings(fetchedRankings)
+                setRankings(validatedRankings)
             } else {
                 setRankings(null)
             }
@@ -71,6 +74,7 @@ export default function LeaderBoard({
                     <TextInput
                         style={styles.textInput}
                         placeholder="YYYY"
+                        placeholderTextColor={'white'}
                         keyboardType="numeric"
                         maxLength={4}
                         value={year}
@@ -82,6 +86,7 @@ export default function LeaderBoard({
                     <TextInput
                         style={styles.textInput}
                         placeholder="MM"
+                        placeholderTextColor={'white'}
                         keyboardType="numeric"
                         maxLength={2}
                         value={month}
@@ -93,6 +98,7 @@ export default function LeaderBoard({
                     <TextInput
                         style={styles.textInput}
                         placeholder="DD"
+                        placeholderTextColor={'white'}
                         keyboardType="numeric"
                         maxLength={2}
                         value={day}
@@ -102,7 +108,7 @@ export default function LeaderBoard({
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={refreshData}>
+                <TouchableOpacity onPress={refreshData} testID='submit-button'>
                     <AntDesign name="check" size={24} color="white" />
                 </TouchableOpacity>
             </View>
@@ -117,7 +123,7 @@ export default function LeaderBoard({
                     />
                 ) : (
                     <Text fontSize={20}>
-                        You don't have a ranking for thisdate
+                        You don't have a ranking for this date
                     </Text>
                 )
             ) : (
@@ -127,18 +133,11 @@ export default function LeaderBoard({
     )
 }
 
-interface ItemProps {
-    rank: number
-    user_id: string
-    username: string
-    duration: number
-}
-
 const Item = ({
     item,
     currentUserId,
 }: {
-    item: ItemProps
+    item: NearbyUser
     currentUserId: string | null
 }) => {
     return (
@@ -233,17 +232,3 @@ const styles = StyleSheet.create({
     },
     itemText: { fontSize: 20, flex: 1, color: theme.colors.text },
 })
-
-interface NearbyUser {
-    rank: number
-    user_id: string
-    username: string
-    duration: number
-}
-
-interface Rankings {
-    userRank: number
-    userDuration: number
-    totalParticipants: number
-    nearbyUsers: NearbyUser[]
-}

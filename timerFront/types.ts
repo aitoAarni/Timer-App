@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { LocalStorageUserSchema, RemoteLoggedInUserSchema } from './utils/validators'
+import {
+    LocalStorageUserSchema,
+    NearbyUserSchema,
+    RankingsSchema,
+    RemoteLoggedInUserSchema,
+} from './utils/validators'
 
 export type PositiveNumber = number & { __positive__: true }
 
@@ -25,6 +30,10 @@ export interface TimeLogged {
     created_at: string
     user_id: number
 }
+
+export type NearbyUser = z.infer<typeof NearbyUserSchema>
+
+export type Rankings = z.infer<typeof RankingsSchema>
 
 export interface TimeDuratio {
     duration: number
