@@ -97,3 +97,11 @@ export const getPlaceholderDataForChart = (daysOfData: number = 5) => {
     return { transformedData, maxValue }
 }
 
+export const formStringDate = (year: string, month: string, day: string) => {
+    const today = new Date()
+    const givenDate = new Date(Number(year), Number(month) - 1, Number(day))
+    if (givenDate > today || isNaN(givenDate.getTime())) {
+        return null
+    }
+    return `${year}-${month}-${day}`
+}
