@@ -33,7 +33,7 @@ export const toStorageUser = (user: unknown) => {
 export const NearbyUserSchema = z.object({
     rank: z.number().int().positive(),
     user_id: z.string().min(1),
-    username: z.string().min(1).max(50),
+    username: z.string().min(1).max(20),
     duration: z.number().int().nonnegative(),
 })
 
