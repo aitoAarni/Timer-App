@@ -26,6 +26,7 @@ export default function LeaderBoard({
 }: LeaderBoardProps) {
     if (!userId) return
     const [rankings, setRankings] = useState<Rankings | null>(null)
+    const [dataLoading, setDataLoading] = useState(true)
     const today = new Date()
     const [year, setYear] = useState(String(today.getFullYear()))
     const [month, setMonth] = useState(String(today.getMonth() + 1))
@@ -43,17 +44,26 @@ export default function LeaderBoard({
             setErrorMessage('You set an invalid date')
             return
         }
-        console.log('fetching data')
-        const fetchedRankings = await getRankings(userId, '2025-02-26')
-        setRankings(fetchedRankings)
+        try {
+            const fetchedRankings = await getRankings(userId, rankingDate)
+            setDataLoading(false)
+            if (fetchedRankings) {
+                setRankings(fetchedRankings)
+            } else {
+                setRankings(null)
+            }
+        } catch (error) {
+            setDataLoading(false)
+            setRankings(null)
+        }
         console.log(rankings)
     }
 
-    return rankings ? (
+    return (
         <View style={styles.container}>
             <Text style={styles.headerText}>
-                Your rank ({rankings.userRank}/{rankings.totalParticipants}) top{' '}
-                {rankPercentage}%
+                {rankings &&
+                    `Your rank (${rankings.userRank}/${rankings.totalParticipants}) top ${rankPercentage}%`}
             </Text>
 
             <View style={styles.inputRow}>
@@ -97,18 +107,24 @@ export default function LeaderBoard({
                     <AntDesign name="check" size={24} color="white" />
                 </TouchableOpacity>
             </View>
-            {rankings && (
-                <FlatList
-                    data={rankings.nearbyUsers}
-                    renderItem={({ item }) => (
-                        <Item item={item} currentUserId={userId} />
-                    )}
-                    keyExtractor={item => item.user_id}
-                />
+            {!dataLoading ? (
+                rankings ? (
+                    <FlatList
+                        data={rankings.nearbyUsers}
+                        renderItem={({ item }) => (
+                            <Item item={item} currentUserId={userId} />
+                        )}
+                        keyExtractor={item => item.user_id}
+                    />
+                ) : (
+                    <Text fontSize={20}>
+                        You don't have a ranking for thisdate
+                    </Text>
+                )
+            ) : (
+                <ActivityIndicator style={styles.container} />
             )}
         </View>
-    ) : (
-        <ActivityIndicator style={styles.container} />
     )
 }
 
