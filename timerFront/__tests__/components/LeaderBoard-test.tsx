@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import LeaderBoard from '@/components/LeaderBoard'
@@ -95,12 +96,13 @@ describe('LeaderBoard Component', () => {
                 },
             ],
         }
-        const { getByText, getByTestId, getByPlaceholderText, queryByText } = render(
-            <LeaderBoard
-                userId="testId"
-                setErrorMessage={mockSetErrorMessage}
-            />
-        )
+        const { getByText, getByTestId, getByPlaceholderText, queryByText } =
+            render(
+                <LeaderBoard
+                    userId="testId"
+                    setErrorMessage={mockSetErrorMessage}
+                />
+            )
         mockGetRankings = jest.fn().mockResolvedValue(mockRankingData2)
         mockToRankings = jest.fn().mockReturnValue(mockRankingData2)
         fireEvent.changeText(getByPlaceholderText('YYYY'), '2025')
@@ -109,8 +111,8 @@ describe('LeaderBoard Component', () => {
         fireEvent.press(getByTestId('submit-button'))
         await waitFor(() => {
             expect(getByText('00:00:15')).toBeTruthy()
-            expect(queryByText("Bob")).toBeNull()
-            expect(queryByText("Alice")).toBeNull()
+            expect(queryByText('Bob')).toBeNull()
+            expect(queryByText('Alice')).toBeNull()
         })
     })
 
