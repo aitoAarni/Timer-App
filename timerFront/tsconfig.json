@@ -13,5 +13,5 @@
         "expo-env.d.ts",
         "types/**/*.ts"
     ],
-    "exclude": ["__tests__"]
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }
