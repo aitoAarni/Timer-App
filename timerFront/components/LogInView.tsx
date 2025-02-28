@@ -1,10 +1,15 @@
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    TextInput,
+} from 'react-native'
 import Text from './Text'
 import * as yup from 'yup'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import theme from '@/theme'
-import { TextInput } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
 import ErrorBox from './ErrorBox'
 import useLogIn from '@/hooks/useLogIn'
@@ -30,6 +35,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [users, setUsers] = useState<User[] | null>(null)
     const login = useLogIn()
+
     const router = useRouter()
     const {
         handleSubmit,
