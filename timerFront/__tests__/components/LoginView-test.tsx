@@ -134,4 +134,12 @@ describe('LogInView', () => {
             expect(mockRouter.push).toHaveBeenCalledWith('/')
         })
     })
+
+    it('calls setLogin(false) when "Create an account" is pressed', () => {
+        render(<LogInView setLogin={mockSetLogin} />)
+
+        fireEvent.press(screen.getByText('Create an account'))
+
+        expect(mockSetLogin).toHaveBeenCalledWith(false)
+    })
 })
