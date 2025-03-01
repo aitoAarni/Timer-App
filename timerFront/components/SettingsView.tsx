@@ -144,6 +144,7 @@ const TimerSlider = function ({
                 />
 
                 <TextInput
+                    testID={`text-input-${settingsKey}`}
                     style={styles.sliderTextInput}
                     value={String(timerValue)}
                     keyboardType="numeric"

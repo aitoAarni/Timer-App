@@ -18,13 +18,6 @@ jest.mock('@/redux/settingsSlice', () => ({
     },
 }))
 
-// jest.mock('@/components/SwipeNavigation', () => {
-//     const { View } = require('react-native')
-//     return (...props) => {
-//         return <View testId="swipe-navigation" {...props}></View>
-//     }
-// })
-
 let mockNavigateTo = jest.fn()
 jest.mock('@/hooks/useNavigateTo', () => {
     return () => {
@@ -56,14 +49,14 @@ describe('SettingsView', () => {
         jest.clearAllMocks()
 
         mockUseSelector.mockReturnValue({
-                    workTimeLength: 25,
-                    breakTimeLength: 5
-            })
+            workTimeLength: 25,
+            breakTimeLength: 5,
+        })
 
         mockUseDispatch.mockReturnValue(mockDispatch)
     })
 
-    it.only('renders correctly', () => {
+    it('renders correctly', () => {
         render(<SettingsView />)
         expect(screen.getByText('Work duration')).toBeTruthy()
         expect(screen.getByText('Break duration')).toBeTruthy()
@@ -87,7 +80,7 @@ describe('TimerSlider', () => {
         expect(screen.getByText('Work duration')).toBeTruthy()
     })
 
-    it.only('updates state on slider change', () => {
+    it('updates state on slider change', () => {
         render(<SettingsView />)
 
         const slider = screen.getAllByTestId('slider')[0]
@@ -103,29 +96,27 @@ describe('TimerSlider', () => {
         })
     })
 
-    // it('updates text input and dispatches on submit', () => {
-    //     render(<SettingsView />)
+    it('updates text input and dispatches on submit', () => {
+        render(<SettingsView />)
 
-    //     const input = screen.getByRole('textbox')
-    //     fireEvent.changeText(input, '40')
-    //     fireEvent(input, 'blur')
+        const input = screen.getByTestId('text-input-workTimeLength')
+        fireEvent.changeText(input, '40')
+        fireEvent(input, 'blur')
+        expect(mockUpdateSettings).toHaveBeenCalledWith({ workTimeLength: 40 })
+        expect(mockDispatch).toHaveBeenCalledWith(mockUpdateSettings())
+        expect(mockSetSettings).toHaveBeenCalledWith({
+            workTimeLength: '40',
+            breakTimeLength: 5,
+        })
+    })
 
-    //     expect(store.dispatch).toHaveBeenCalledWith(
-    //         updateSettings({ workTimeLength: 40 })
-    //     )
-    //     expect(setSettings).toHaveBeenCalledWith({
-    //         workTimeLength: '40',
-    //         breakTimeLength: 5,
-    //     })
-    // })
+    it('resets invalid input on blur', () => {
+        render(<SettingsView />)
 
-    // it('resets invalid input on blur', () => {
-    //     render(<SettingsView />)
+        const input = screen.getByTestId('text-input-workTimeLength')
+        fireEvent.changeText(input, 'invalid')
+        fireEvent(input, 'blur')
 
-    //     const input = screen.getByRole('textbox')
-    //     fireEvent.changeText(input, 'invalid')
-    //     fireEvent(input, 'blur')
-
-    //     expect(input.props.value).toBe('25')
-    // })
+        expect(input.props.value).toBe('25')
+    })
 })
