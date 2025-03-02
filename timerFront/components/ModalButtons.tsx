@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
 import { ReactNode } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import Text from '../Text'
+import Text from './Text'
 import theme from '@/theme'
 import logout from '@/utils/logout'
 
