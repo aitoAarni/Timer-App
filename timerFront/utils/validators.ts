@@ -47,3 +47,15 @@ export const RankingsSchema = z.object({
 export const toRankings = (data: unknown) => {
     return RankingsSchema.parse(data)
 }
+
+export const localTimeLogSchema = z.object({
+    id: z.number().int().positive().optional(), // Autoincremented, so it's optional
+    category_id: z.number().int().min(1, "Category ID is required"), // Required integer, must be at least 1
+    duration: z.number().int().min(0).nullable().optional(), // Optional, non-negative integer
+    created_at: z.string().datetime().default(() => new Date().toISOString()), // Defaults to ISO timestamp
+    user_id: z.number().int().min(1, "User ID is required"), // Required integer, must be at least 1
+});
+
+export const toLocalTimeLog = (data: unknown) => {
+    return localTimeLogSchema.parse(data)
+}
