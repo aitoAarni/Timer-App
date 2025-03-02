@@ -15,6 +15,7 @@ export default function ModalView() {
         setShowModal(true)
     }
     const closeModal = () => {
+        console.log('close modal calledi')
         setShowModal(false)
     }
     return (
@@ -34,6 +35,7 @@ export default function ModalView() {
             >
                 <View style={sytles.transparentContainer}>
                     <TouchableOpacity
+                        testID="outside-modal"
                         style={sytles.transparentPressable}
                         onPress={closeModal}
                     ></TouchableOpacity>
