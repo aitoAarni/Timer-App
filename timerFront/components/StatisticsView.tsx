@@ -28,13 +28,6 @@ export default function StatisticsView() {
         const getData = async () => {
             if (!user) return
             try {
-                // TODO: increase perfomance
-                // const {
-                //     transformedData: placeholderData,
-                //     maxValue: placeholderMaxValue,
-                // } = getPlaceholderDataForChart()
-                // setData(placeholderData)
-                // setMaxValue(placeholderMaxValue)
                 const datesData = await getTimesGroupedByDate(user.id)
                 const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
