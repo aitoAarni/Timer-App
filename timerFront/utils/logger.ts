@@ -1,6 +1,6 @@
 import store from '@/redux/store'
-import addRemoteTimeLog from '@/services/timeLogServices'
-import { getTimeById, insertTimeToDb } from '@/storage/local/timerQueries'
+import {addLocalTimeLog, addRemoteTimeLog} from '@/services/timeLogServices'
+import { getTimeById } from '@/storage/local/timerQueries'
 
 class TimeLogger {
     categoryId: number
@@ -13,7 +13,7 @@ class TimeLogger {
 
         if (!user) return
         try {
-            const success = await insertTimeToDb(
+            const success = await addLocalTimeLog(
                 timeMs,
                 this.categoryId,
                 user.id

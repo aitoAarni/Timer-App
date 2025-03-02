@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { addLocalTimeLog } from '@/services/timeLogServices'
 import TimeLogger from '@/utils/logger'
 import { AppRegistry } from 'react-native'
 
@@ -7,16 +8,19 @@ const mockGetTimeById = jest.fn().mockResolvedValue({
     created_at: '2025-02-02 10:03:34',
 })
 jest.mock('@/storage/local/timerQueries', () => ({
-    insertTimeToDb: (...args) => mockInsertTimeToDb(...args),
     getTimeById: (...args) => mockGetTimeById(...args),
 }))
 
 const mockAddRemoteTimeLog = jest.fn().mockResolvedValue()
-jest.mock('@/services/timeLogServices', () => {
-    return (...args) => {
+jest.mock('@/services/timeLogServices', () => ({
+
+    addRemoteTimeLog: (...args) => {
         return mockAddRemoteTimeLog(...args)
+    },
+    addLocalTimeLog: (...args) => {
+        return mockInsertTimeToDb(...args)
     }
-})
+}))
 let mockLoggedInUser = {
     id: 1,
     token: 'Bearer 34242',

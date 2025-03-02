@@ -1,4 +1,4 @@
-import addRemoteTimeLog from '@/services/timeLogServices'
+import {addRemoteTimeLog} from '@/services/timeLogServices'
 import { StorageUser } from '@/types'
 
 global.fetch = jest.fn()

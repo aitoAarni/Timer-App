@@ -2,6 +2,8 @@ import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 import { openDatabase } from './db'
 
+export const insertTimeToDbQuery = `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`
+
 const insertTimeToDb = async (
     duration: number,
     category_id: number,
