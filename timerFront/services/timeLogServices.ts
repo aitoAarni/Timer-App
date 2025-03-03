@@ -1,10 +1,6 @@
 import queryDatabase from '@/storage/local/queryDatabase'
-import {
-    insertTimeToDb,
-    insertTimeToDbQuery,
-} from '@/storage/local/timerQueries'
+import { insertTimeToDbQuery } from '@/storage/local/timerQueries'
 import { StorageUser } from '@/types'
-import { toLocalTimeLog } from '@/utils/validators'
 
 interface TimeLog {
     created_at: string
