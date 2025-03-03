@@ -5,27 +5,7 @@ import { openDatabase } from './db'
 export const insertTimeToDbQuery = `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`
 
 
-const getAllTimes = async () => {
-    const query = `SELECT duration FROM timer`
-    let db: sqlite.SQLiteDatabase | null = null
 
-    try {
-        db = await openDatabase()
-        const times = (await db.getAllAsync(query)) as TimeDuratio[]
-        return times
-    } catch (error) {
-        console.error('getAllTimes', error)
-        throw new Error(
-            `Error fetching times: ${
-                error instanceof Error ? error.message : String(error)
-            }`
-        )
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
 
 const getTimesGroupedByDate = async (userId: number) => {
     const query = ` SELECT 
@@ -82,4 +62,4 @@ const getTimeById = async (rowId: number) => {
     }
 }
 
-export {  getAllTimes, getTimesGroupedByDate, getTimeById }
+export {   getTimesGroupedByDate, getTimeById }
