@@ -1,6 +1,10 @@
 import queryDatabase from '@/storage/local/queryDatabase'
-import { insertTimeToDbQuery } from '@/storage/local/timerQueries'
+import {
+    getTimeLogsGroupedByDateQuery,
+    insertTimeLogToDbQuery,
+} from '@/storage/local/timerQueries'
 import { StorageUser } from '@/types'
+import { toTDisplayimeLog } from '@/utils/validators'
 
 interface TimeLog {
     created_at: string
@@ -34,7 +38,7 @@ export const addLocalTimeLog = async (
     user_id: number
 ) => {
     try {
-        const response = await queryDatabase(insertTimeToDbQuery, [
+        const response = await queryDatabase(insertTimeLogToDbQuery, [
             duration,
             category_id,
             user_id,
@@ -43,5 +47,18 @@ export const addLocalTimeLog = async (
     } catch (error) {
         console.error(error)
         throw Error(error instanceof Error ? error.message : String(error))
+    }
+}
+
+export const getLocalTimeLogs = async (localUserId: number) => {
+    try {
+        const response = await queryDatabase(getTimeLogsGroupedByDateQuery, [
+            localUserId,
+        ], true)
+        const displayTimeLogs = toTDisplayimeLog(response)
+        return displayTimeLogs
+    } catch (error) {
+        console.error(error)
+        throw new Error(error instanceof Error ? error.message : String(error))
     }
 }

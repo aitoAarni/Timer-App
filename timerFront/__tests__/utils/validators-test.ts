@@ -3,6 +3,7 @@ import {
     toRemoteLoggedInUser,
     toStorageUser,
     toRankings,
+    toDisplayTimeLog,
 } from '@/utils/validators'
 import { z} from 'zod'
 
@@ -144,4 +145,41 @@ describe('validators', () => {
             expect(() => toRankings(invalidData)).toThrow(z.ZodError)
         })
     })
+
+describe("toDisplayTimeLog Validation", () => {
+    test("Valid time log array should pass", () => {
+        const validData = [
+            { total_duration: 120, date: "2025-03-04T12:00:00.000Z" },
+            { total_duration: 45, date: "2025-03-04T13:30:00.000Z" },
+        ];
+
+        expect(() => toDisplayTimeLog(validData)).not.toThrow();
+    });
+
+    test("Invalid time log (negative duration) should throw", () => {
+        const invalidData = [
+            { total_duration: -5, date: "2025-03-04T12:00:00.000Z" },
+        ];
+
+        expect(() => toDisplayTimeLog(invalidData)).toThrow(z.ZodError);
+    });
+
+    test("Invalid time log (missing date) should throw", () => {
+        const invalidData = [{ total_duration: 120 }];
+
+        expect(() => toDisplayTimeLog(invalidData)).toThrow(z.ZodError);
+    });
+
+    test("Invalid time log (empty array) should pass", () => {
+        const emptyData: unknown = [];
+        expect(() => toDisplayTimeLog(emptyData)).not.toThrow();
+    });
+
+    test("Completely invalid data type (string instead of array) should throw", () => {
+        const invalidData: unknown = "invalid data";
+
+        expect(() => toDisplayTimeLog(invalidData)).toThrow(z.ZodError);
+    });
+});
+
 })

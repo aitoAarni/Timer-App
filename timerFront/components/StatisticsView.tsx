@@ -1,7 +1,6 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useEffect, useState } from 'react'
-import { getTimesGroupedByDate } from '@/storage/local/timerQueries'
 import AreaChartView from './AreaChartView'
 import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
@@ -12,6 +11,7 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import LeaderBoard from './LeaderBoard'
 import ErrorBox from './ErrorBox'
+import { getLocalTimeLogs } from '@/services/timeLogServices'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
@@ -28,7 +28,7 @@ export default function StatisticsView() {
         const getData = async () => {
             if (!user) return
             try {
-                const datesData = await getTimesGroupedByDate(user.id)
+                const datesData = await getLocalTimeLogs(user.id)
                 const { transformedData, maxValue: maxVal } =
                     transformDatesAndDurationDataForChart(datesData)
                 setData(transformedData)

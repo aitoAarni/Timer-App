@@ -1,4 +1,4 @@
-import { AreaChartData, DatesWithDuration } from '@/types'
+import { AreaChartData,  DisplayTimeLogs } from '@/types'
 import { DataPointLabel } from './Stylers'
 import theme from '@/theme'
 
@@ -8,7 +8,7 @@ const msToHours = (ms: number) => {
 }
 
 export const transformDatesAndDurationDataForChart = (
-    data: DatesWithDuration[],
+    data: DisplayTimeLogs,
     daysOfData: number = 30
 ) => {
     const months = [

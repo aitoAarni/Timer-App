@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import {
+    DisplayTimeLogSchema,
     LocalStorageUserSchema,
     NearbyUserSchema,
     RankingsSchema,
@@ -39,10 +40,8 @@ export interface TimeDuratio {
     duration: number
 }
 
-export interface DatesWithDuration {
-    date: string
-    total_duration: number
-}
+
+export type DisplayTimeLogs = z.infer<typeof DisplayTimeLogSchema>
 
 export interface AreaChartData {
     value: number

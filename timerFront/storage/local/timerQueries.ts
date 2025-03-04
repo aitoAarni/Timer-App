@@ -1,14 +1,10 @@
-import { DatesWithDuration, TimeDuratio, TimeLogged } from '@/types'
+import { TimeDuratio, TimeLogged } from '@/types'
 import * as sqlite from 'expo-sqlite'
 import { openDatabase } from './db'
 
-export const insertTimeToDbQuery = `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`
+export const insertTimeLogToDbQuery = `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`
 
-
-
-
-const getTimesGroupedByDate = async (userId: number) => {
-    const query = ` SELECT 
+export const getTimeLogsGroupedByDateQuery = `SELECT 
         DATE(created_at) AS date, 
         SUM(duration) AS total_duration
     FROM 
@@ -19,27 +15,6 @@ const getTimesGroupedByDate = async (userId: number) => {
         DATE(created_at)
     ORDER BY 
         DATE(created_at) DESC;`
-    let db: sqlite.SQLiteDatabase | null = null
-
-    try {
-        db = await openDatabase()
-        const data = (await db.getAllAsync(query, [
-            userId,
-        ])) as DatesWithDuration[]
-        return data
-    } catch (error) {
-        console.error('getTimesGroupedByData', error)
-        throw new Error(
-            `Error fetching times: ${
-                error instanceof Error ? error.message : String(error)
-            }`
-        )
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
 
 const getTimeById = async (rowId: number) => {
     const query = 'SELECT * FROM timer WHERE id = ?;'
@@ -62,4 +37,4 @@ const getTimeById = async (rowId: number) => {
     }
 }
 
-export {   getTimesGroupedByDate, getTimeById }
+export { getTimeById }
