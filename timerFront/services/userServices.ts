@@ -1,4 +1,8 @@
-import { insertUser, removeUserByUsername } from '@/storage/local/userQueries'
+import { insert } from '@/storage/local/queryDatabase'
+import {
+    insertUserQuery,
+    removeUserByUsername,
+} from '@/storage/local/userQueries'
 import { toRemoteUser } from '@/utils/validators'
 
 export async function createLocalUser(
@@ -7,10 +11,10 @@ export async function createLocalUser(
     server_id: string | null = null
 ) {
     try {
-        await insertUser(username, password, server_id)
+        await insert(insertUserQuery, [username, password, server_id])
     } catch (error) {
         console.error(error)
-        throw error
+        throw new Error(error instanceof Error ? error.message : String(error))
     }
 }
 

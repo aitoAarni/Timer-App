@@ -2,33 +2,9 @@ import { User } from '@/types'
 import * as sqlite from 'expo-sqlite'
 import { openDatabase } from './db'
 
-const insertUser = async (
-    username: string,
-    password: string,
-    server_id: string | null
-) => {
-    let db: sqlite.SQLiteDatabase | null = null
-    try {
-        db = await openDatabase()
-        await db.runAsync(
-            `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`,
-            username,
-            password,
-            server_id ? server_id : null
-        )
-    } catch (error) {
-        console.error('errori in InsertUser', error)
-        throw new Error(
-            `Database insert failed: ${
-                error instanceof Error ? error.message : String(error)
-            } `
-        )
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
+export const insertUserQuery = `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`
+
+
 
 const getUsers = async () => {
     let db: sqlite.SQLiteDatabase | null = null
@@ -83,4 +59,4 @@ const removeUserByUsername = async (username: string) => {
     }
 }
 
-export { insertUser, getUsers, getUserByUsername , removeUserByUsername}
+export {  getUsers, getUserByUsername, removeUserByUsername }

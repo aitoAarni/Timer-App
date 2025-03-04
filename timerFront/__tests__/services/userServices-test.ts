@@ -1,17 +1,17 @@
 // @ts-nocheck
 import { createLocalUser, createRemoteUser } from '@/services/userServices'
 
-let mockInsertUser = jest.fn(async (...args) => {})
+let mockInsert = jest.fn(async (...args) => {})
 
-jest.mock('@/storage/local/userQueries', () => {
-    const actual = jest.requireActual('@/storage/local/userQueries')
-    return {
-        ...actual,
-        insertUser: (...args) => {
-            mockInsertUser(...args)
-        },
-    }
-})
+jest.mock('@/storage/local/userQueries', () => ({
+    insertUserQuery: 'mock query',
+}))
+
+jest.mock('@/storage/local/queryDatabase', () => ({
+    insert: (...args) => {
+        return mockInsert(...args)
+    },
+}))
 
 global.fetch = jest.fn()
 
@@ -29,19 +29,19 @@ describe('User Creation Functions', () => {
     })
     describe('createLocalUser', () => {
         beforeEach(() => {
-            mockInsertUser = jest.fn((...args) => {})
+            mockInsert = jest.fn((...args) => {})
         })
-        it('should call insertUser with correct parameters', async () => {
+        it('should call insert with correct parameters', async () => {
             await createLocalUser('testUser', 'password123', 'server123')
-            expect(mockInsertUser).toHaveBeenCalledWith(
-                'testUser',
+            expect(mockInsert).toHaveBeenCalledWith("mock query",
+                ['testUser',
                 'password123',
-                'server123'
+                'server123']
             )
         })
 
-        it('should throw an error if insertUser fails', async () => {
-            mockInsertUser = jest.fn((...args) => {
+        it('should throw an error if insert fails', async () => {
+            mockInsert = jest.fn((...args) => {
                 throw new Error('Database Error')
             })
 
@@ -49,7 +49,7 @@ describe('User Creation Functions', () => {
                 createLocalUser('testUser', 'password123')
             ).rejects.toThrow('Database Error')
 
-            expect(mockInsertUser).toHaveBeenCalled()
+            expect(mockInsert).toHaveBeenCalled()
         })
     })
 
