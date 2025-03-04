@@ -21,6 +21,8 @@ interface LeaderBoardProps {
     setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>
 }
 
+// TODO: round a top 0% to top 1% maybe
+
 export default function LeaderBoard({
     userId,
     setErrorMessage,
@@ -36,7 +38,6 @@ export default function LeaderBoard({
         rankings &&
         Math.round((rankings.userRank / rankings.totalParticipants) * 100)
     useEffect(() => {
-        console.log('fetching rankings')
         refreshData()
     }, [])
     const refreshData = async () => {
@@ -58,7 +59,6 @@ export default function LeaderBoard({
             setDataLoading(false)
             setRankings(null)
         }
-        console.log(rankings)
     }
 
     return (
@@ -108,7 +108,7 @@ export default function LeaderBoard({
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={refreshData} testID='submit-button'>
+                <TouchableOpacity onPress={refreshData} testID="submit-button">
                     <AntDesign name="check" size={24} color="white" />
                 </TouchableOpacity>
             </View>

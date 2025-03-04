@@ -13,7 +13,6 @@ import { useState } from 'react'
 
 export default function ProfileView() {
     const user = useSelector((state: RootState) => state.user.loggedInUser)
-    console.log('user: ', user)
     if (!user) {
         return (
             <Text color={theme.colors.text} fontSize={25}>

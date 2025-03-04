@@ -25,7 +25,6 @@ jest.mock('@/redux/userSlice', () => ({
 }))
 
 let mockCreateLocalUser = jest.fn(() => {
-    console.log('mockCreateLocalUser has been calld yo')
 })
 let mockCreateRemoteUser = jest.fn()
 jest.mock('@/services/userServices', () => ({
@@ -63,7 +62,6 @@ describe('useLogIn hook', () => {
     beforeEach(() => {
         jest.clearAllMocks()
         mockLogin = jest.fn((username, passowrd) => {
-            console.log('login called with, ', username, passowrd)
             return Promise.resolve({
                 id: 'id123',
                 username,
@@ -72,7 +70,6 @@ describe('useLogIn hook', () => {
             })
         })
         mockGetUserByUsername = jest.fn().mockImplementation(() => {
-            console.log('täällääääää')
             return Promise.resolve({
                 username: 'testUser',
                 password: 'password123',

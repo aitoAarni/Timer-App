@@ -23,7 +23,6 @@ export default function SettingsView() {
         pathname: '/',
         params: { from: 'settings' },
     })
-    console.log('halooo')
     return (
         <SwipeNavigation
             style={styles.container}
@@ -61,28 +60,20 @@ const TimerSlider = function ({
     minimumValue = 1,
     maximumValue = 100,
 }: TimerSliderProps) {
-    console.log("23")
     const settings = useSelector((state: RootState) => state.settings)
-    console.log('settggins: ', settings)
     const dispatch = useDispatch()
     const initialValue = settings[settingsKey] ?? 20
     const [timerValue, setTimerValue] = useState(String(initialValue))
     const onValueChange = (value: number) => {
-        console.log('onValuechange called')
         const roundedValue = Math.round(value)
         setTimerValue(String(roundedValue))
         progress.value = roundedValue
     }
     const onRelease = (value: number) => {
-        console.log('onRelease calledi ')
         const roundedValue = Math.round(value)
 
         setTimerValue(String(roundedValue))
-        console.log(
-            `settingsKey: ${settingsKey},  settingsKey in settings: ${
-                settingsKey in settings
-            }`
-        )
+
         if (settingsKey && settingsKey in settings) {
             dispatch(updateSettings({ [settingsKey]: roundedValue }))
             const updatedSettings = {

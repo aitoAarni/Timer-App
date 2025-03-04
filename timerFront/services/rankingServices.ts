@@ -13,7 +13,6 @@ export const getRankings = async (userId: string, date: string) => {
         })
         const data = await response.json()
         if (!response.ok) {
-            console.log('data', data.error)
             return null
             
         }

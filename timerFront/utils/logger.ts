@@ -20,7 +20,6 @@ class TimeLogger {
             ) ) as SQLiteRunResult
             if (user.server_id && user.token) {
                 const timeLog = await getLocalTimeLogById(success.lastInsertRowId)
-                console.log("timeLog: ", timeLog)
                 const correctFormatCreatedAt = timeLog.created_at.split(' ')[0]
                 await addRemoteTimeLog(
                     {

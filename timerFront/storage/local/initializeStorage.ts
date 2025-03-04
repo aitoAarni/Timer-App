@@ -6,22 +6,19 @@ import AuthStorage from '@/utils/authStorage'
 import store from '@/redux/store'
 import { updateSettings } from '@/redux/settingsSlice'
 import { createLocalUser } from '@/services/userServices'
-import { getLocalUsers } from '@/services/userServices'
 
 export default async function initializeStorage() {
     await initializeDatabase()
-    await createTables()
-    const users = await getLocalUsers()
 
-    if (users.length === 0) {
-        await createLocalUser('test_user', 'password', null)
-    }
+    await createTables()
+
     if (isTest()) {
+        await createLocalUser('test_user', 'password', null)
+
         await clearSettings()
         const updatedSettings = await getSettings()
         store.dispatch(updateSettings(updatedSettings))
         const settings = await getSettings()
-        console.log('settings: ', settings)
         const authStorage = new AuthStorage()
         await authStorage.removeUser()
         store.dispatch(clearUser())

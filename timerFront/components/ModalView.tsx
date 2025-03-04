@@ -15,7 +15,6 @@ export default function ModalView() {
         setShowModal(true)
     }
     const closeModal = () => {
-        console.log('close modal calledi')
         setShowModal(false)
     }
     return (

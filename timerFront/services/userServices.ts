@@ -27,6 +27,7 @@ export async function createLocalUser(
 export const getLocalUsers = async () => {
     try {
         const response = await fetchAll(getUsersQuery)
+
         return toLocalDatabaseUsers(response)
     } catch (error) {
         console.error(error)
@@ -36,7 +37,7 @@ export const getLocalUsers = async () => {
 
 export const getLocalUserByUsername = async (username: string) => {
     try {
-        const response = fetchOne(getUserByUsernameQuery, [username])
+        const response = await fetchOne(getUserByUsernameQuery, [username])
         return toLocalDatabaseUser(response)
     } catch (error) {
         console.error(error instanceof Error ? error.message : String(error))
@@ -55,9 +56,7 @@ export async function removeLocalUser(username: string) {
 
 export async function createRemoteUser(username: String, password: string) {
     const body = JSON.stringify({ username, password })
-    console.log('create a remote uesr')
     try {
-        console.log('request body: ', body)
         const response = await fetch(
             'http://192.168.1.120:3000/api/user/create',
             {
@@ -68,14 +67,12 @@ export async function createRemoteUser(username: String, password: string) {
                 body,
             }
         )
-        console.log('request död, response: ', response.ok)
         if (!response.ok) {
             const errorText = await response.text()
             console.error(`Http: ${response.status}, ${errorText}`)
             return null
         }
         const responseJson = await response.json()
-        console.log(responseJson)
         return responseJson
     } catch (error) {
         console.error(error instanceof Error ? error.message : String(error))

@@ -3,7 +3,6 @@ import { toRemoteLoggedInUser } from '@/utils/validators'
 export default async function remoteLogin(username: string, password: string) {
     const body = JSON.stringify({ username, password })
     try {
-        console.log('body of request: ', body)
         const response = await fetch(
             'http://192.168.1.120:3000/api/user/login',
             {

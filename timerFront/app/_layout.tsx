@@ -15,7 +15,6 @@ import { store } from '@/redux/store'
 import initializeStorage from '@/storage/local/initializeStorage'
 
 SplashScreen.preventAutoHideAsync()
-console.log('NODE_ENV:', process.env.NODE_ENV)
 
 export default function RootLayout() {
     const [isInitializing, setIsInitializing] = useState(true)
@@ -28,7 +27,9 @@ export default function RootLayout() {
     })
     useEffect(() => {
         const initialize = async () => {
+
             initializeStorage().then(() => {
+
                 setIsInitializing(false)
             })
         }

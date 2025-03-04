@@ -60,8 +60,6 @@ export const transformDatesAndDurationDataForChart = (
 
 export const formStringDate = (year: string, month: string, day: string) => {
     const today = new Date()
-    console.log('today: ', today)
-    console.log('year, month, day: ', year, month, day)
     const givenDate = new Date(Number(year), Number(month) - 1, Number(day))
     if (
         givenDate > today ||
