@@ -52,5 +52,6 @@
 | 26.2.2025  | 4h     | fix bugs with user creation, add a leaderboard to front-end                                   |
 | 27.2.2025  | 4.5h   | add form to leaderboard to search by date, fix gus, add unit tests, format leaderboard time   |
 | 28.2.2025  | 2h     | creating unit tests                                                                           |
-| 1.1.2025   | 2.5h   | creating unit tests                                                                           |
-| 1.2.2025   | 2.5h   | create unit tests and refctor code                                                            |
+| 1.3.2025   | 2.5h   | creating unit tests                                                                           |
+| 2.3.2025   | 2.5h   | create unit tests and refctor code                                                            |
+| 4.3.2025   | 4h     | refactor local database calls and fix tests / bugs                                            |
