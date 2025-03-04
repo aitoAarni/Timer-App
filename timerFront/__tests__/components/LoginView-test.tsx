@@ -6,6 +6,7 @@ import {
     screen,
 } from '@testing-library/react-native'
 import LogInView from '@/components/LogInView'
+import { getLocalUsers } from '@/services/userServices'
 
 let mockLogin: jest.Mock
 let mockUseLogIn = jest.fn()
@@ -15,10 +16,14 @@ jest.mock('@/hooks/useLogIn', () => {
     }
 })
 
-let mockGetUsers: jest.Mock
+let mockGetLocalUsers: jest.Mock
 jest.mock('@/storage/local/userQueries', () => ({
-    getUsers: () => {
-        return mockGetUsers()
+    getUsersQuery: 'mock users query',
+}))
+
+jest.mock('@/services/userServices', () => ({
+    getLocalUsers: () => {
+        return mockGetLocalUsers()
     },
 }))
 
@@ -43,7 +48,7 @@ describe('LogInView', () => {
     beforeEach(() => {
         mockLogin = jest.fn().mockResolvedValue(true)
         mockUseLogIn.mockReturnValue(mockLogin)
-        mockGetUsers = jest
+        mockGetLocalUsers = jest
             .fn()
             .mockResolvedValue([
                 { id: 1, username: 'testuser', password: 'password' },
@@ -67,7 +72,7 @@ describe('LogInView', () => {
         expect(screen.getByText('Login')).toBeTruthy()
         expect(screen.getByText('Create an account')).toBeTruthy()
 
-        await waitFor(() => expect(mockGetUsers).toHaveBeenCalledTimes(1))
+        await waitFor(() => expect(mockGetLocalUsers).toHaveBeenCalledTimes(1))
     })
 
     it('shows validation errors when fields are empty', async () => {

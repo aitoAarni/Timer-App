@@ -4,23 +4,8 @@ import { openDatabase } from './db'
 
 export const insertUserQuery = `INSERT INTO users (username, password, server_id) VALUES (?, ?, ?)`
 
+export const getUsersQuery = 'SELECT * FROM users'
 
-
-const getUsers = async () => {
-    let db: sqlite.SQLiteDatabase | null = null
-    try {
-        db = await openDatabase()
-        const query = (await db.getAllAsync('SELECT * FROM users')) as User[]
-        return query
-    } catch (error) {
-        console.error(error)
-        throw error
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
 
 const getUserByUsername = async (username: string) => {
     let db: sqlite.SQLiteDatabase | null = null
@@ -59,4 +44,4 @@ const removeUserByUsername = async (username: string) => {
     }
 }
 
-export {  getUsers, getUserByUsername, removeUserByUsername }
+export { getUserByUsername, removeUserByUsername }

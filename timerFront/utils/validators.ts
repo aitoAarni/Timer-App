@@ -30,6 +30,16 @@ export const toStorageUser = (user: unknown) => {
     return LocalStorageUserSchema.parse(user)
 }
 
+export const LocalDatabaseUsersSchema = z.array(
+    LocalStorageUserSchema.omit({
+        token: true,
+    })
+)
+
+export const toLocalDatabaseUsers = (data: unknown) => {
+    return LocalDatabaseUsersSchema.parse(data)
+}
+
 export const NearbyUserSchema = z.object({
     rank: z.number().int().positive(),
     user_id: z.string().min(1),

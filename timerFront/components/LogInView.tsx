@@ -15,8 +15,7 @@ import ErrorBox from './ErrorBox'
 import useLogIn from '@/hooks/useLogIn'
 import { useRouter } from 'expo-router'
 import { User } from '@/types'
-import { getUsers } from '@/storage/local/userQueries'
-
+import { getLocalUsers } from '@/services/userServices'
 const validationSchema = yup.object().shape({
     username: yup.string().required('Required field'),
     password: yup.string().required('Required field'),
@@ -71,7 +70,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
 
     useEffect(() => {
         const getUsersFromDb = async () => {
-            const usrs = await getUsers()
+            const usrs = await getLocalUsers()
             const usrsWithPassword = usrs.filter(user => user.password)
             setUsers(usrsWithPassword)
         }

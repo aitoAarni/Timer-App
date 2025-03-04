@@ -17,7 +17,7 @@ export interface User {
     id: number
     username: string
     password: string
-    server_id: string
+    server_id: string | null
     created_at: string
 }
 export type StorageUser = z.infer<typeof LocalStorageUserSchema>

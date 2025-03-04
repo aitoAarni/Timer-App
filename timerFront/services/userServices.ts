@@ -1,9 +1,10 @@
-import { insert } from '@/storage/local/queryDatabase'
+import { fetchAll, insert } from '@/storage/local/queryDatabase'
 import {
+    getUsersQuery,
     insertUserQuery,
     removeUserByUsername,
 } from '@/storage/local/userQueries'
-import { toRemoteUser } from '@/utils/validators'
+import { toLocalDatabaseUsers, toRemoteUser } from '@/utils/validators'
 
 export async function createLocalUser(
     username: string,
@@ -15,6 +16,16 @@ export async function createLocalUser(
     } catch (error) {
         console.error(error)
         throw new Error(error instanceof Error ? error.message : String(error))
+    }
+}
+
+export const getLocalUsers = async () => {
+    try {
+        const response = await fetchAll(getUsersQuery)
+        return toLocalDatabaseUsers(response)
+    } catch (error) {
+        console.error(error)
+        throw new Error(error instanceof Error ? error.message : String(Error))
     }
 }
 
