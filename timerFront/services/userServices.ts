@@ -3,7 +3,7 @@ import {
     getUserByUsernameQuery,
     getUsersQuery,
     insertUserQuery,
-    removeUserByUsername,
+    removeUserByUsernameQuery,
 } from '@/storage/local/userQueries'
 import {
     toLocalDatabaseUser,
@@ -47,7 +47,7 @@ export const getLocalUserByUsername = async (username: string) => {
 
 export async function removeLocalUser(username: string) {
     try {
-        await removeUserByUsername(username)
+        await fetchOne(removeUserByUsernameQuery, [username])
     } catch (error) {
         console.error(error)
         throw error

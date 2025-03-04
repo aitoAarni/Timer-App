@@ -1,3 +1,4 @@
+// @ts-nocheck
 import useLogIn from '@/hooks/useLogIn'
 import { removeLocalUser } from '@/services/userServices'
 import { getUserByUsernameQuery } from '@/storage/local/userQueries'
@@ -24,8 +25,7 @@ jest.mock('@/redux/userSlice', () => ({
     },
 }))
 
-let mockCreateLocalUser = jest.fn(() => {
-})
+let mockCreateLocalUser = jest.fn(() => {})
 let mockCreateRemoteUser = jest.fn()
 jest.mock('@/services/userServices', () => ({
     createLocalUser: (...args: []) => {
