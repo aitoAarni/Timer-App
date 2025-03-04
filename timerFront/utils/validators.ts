@@ -58,3 +58,15 @@ export const DisplayTimeLogSchema = z.array(
 export const toDisplayTimeLog = (data: unknown) => {
     return DisplayTimeLogSchema.parse(data)
 }
+
+export const localTimeLogSchema = z.object({
+    id: z.number().int().positive(),
+    category_id: z.number().int().min(1, 'Category ID is required'),
+    duration: z.number().int().min(0),
+    created_at: z.string(),
+    user_id: z.number().int().min(1, 'User ID is required'),
+})
+
+export const toLocalTimeLogSchema = (data: unknown) => {
+    return localTimeLogSchema.parse(data)
+}

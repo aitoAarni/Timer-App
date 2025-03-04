@@ -1,6 +1,6 @@
 import store from '@/redux/store'
-import {addLocalTimeLog, addRemoteTimeLog} from '@/services/timeLogServices'
-import { getTimeById } from '@/storage/local/timerQueries'
+import {addLocalTimeLog, addRemoteTimeLog, getLocalTimeLogById} from '@/services/timeLogServices'
+import { SQLiteRunResult } from 'expo-sqlite'
 
 class TimeLogger {
     categoryId: number
@@ -13,13 +13,14 @@ class TimeLogger {
 
         if (!user) return
         try {
-            const success = await addLocalTimeLog(
+            const success = (await addLocalTimeLog(
                 timeMs,
                 this.categoryId,
                 user.id
-            )
+            ) ) as SQLiteRunResult
             if (user.server_id && user.token) {
-                const timeLog = await getTimeById(success.lastInsertRowId)
+                const timeLog = await getLocalTimeLogById(success.lastInsertRowId)
+                console.log("timeLog: ", timeLog)
                 const correctFormatCreatedAt = timeLog.created_at.split(' ')[0]
                 await addRemoteTimeLog(
                     {

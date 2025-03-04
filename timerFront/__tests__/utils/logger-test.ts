@@ -4,22 +4,21 @@ import TimeLogger from '@/utils/logger'
 import { AppRegistry } from 'react-native'
 
 const mockInsertTimeToDb = jest.fn().mockResolvedValue({ lastInsertRowId: 123 })
-const mockGetTimeById = jest.fn().mockResolvedValue({
+const mockGetLocalTimeLogById = jest.fn().mockResolvedValue({
     created_at: '2025-02-02 10:03:34',
 })
-jest.mock('@/storage/local/timerQueries', () => ({
-    getTimeById: (...args) => mockGetTimeById(...args),
-}))
 
 const mockAddRemoteTimeLog = jest.fn().mockResolvedValue()
 jest.mock('@/services/timeLogServices', () => ({
-
     addRemoteTimeLog: (...args) => {
         return mockAddRemoteTimeLog(...args)
     },
     addLocalTimeLog: (...args) => {
         return mockInsertTimeToDb(...args)
-    }
+    },
+    getLocalTimeLogById: (...args) => {
+        return mockGetLocalTimeLogById(...args)
+    },
 }))
 let mockLoggedInUser = {
     id: 1,
@@ -53,7 +52,7 @@ describe('TimeLogger', () => {
         await logger.addTimeLog(10_000)
 
         expect(mockInsertTimeToDb).toHaveBeenCalledWith(10_000, 1, 1)
-        expect(mockGetTimeById).toHaveBeenCalledWith(123)
+        expect(mockGetLocalTimeLogById).toHaveBeenCalledWith(123)
         expect(mockAddRemoteTimeLog).toHaveBeenCalledWith(
             {
                 created_at: '2025-02-02',
@@ -92,7 +91,7 @@ describe('TimeLogger', () => {
             'DB insert failed'
         )
 
-        expect(mockGetTimeById).not.toHaveBeenCalled()
+        expect(mockGetLocalTimeLogById).not.toHaveBeenCalled()
         expect(mockAddRemoteTimeLog).not.toHaveBeenCalled()
     })
 
@@ -106,6 +105,6 @@ describe('TimeLogger', () => {
         )
 
         expect(mockInsertTimeToDb).toHaveBeenCalled()
-        expect(mockGetTimeById).not.toHaveBeenCalled()
+        expect(mockGetLocalTimeLogById).not.toHaveBeenCalled()
     })
 })

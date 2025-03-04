@@ -1,10 +1,11 @@
-import queryDatabase from '@/storage/local/queryDatabase'
+import { fetchAll, fetchOne, insert } from '@/storage/local/queryDatabase'
 import {
+    getTimeLogByIdQuery,
     getTimeLogsGroupedByDateQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
 import { StorageUser } from '@/types'
-import { toDisplayTimeLog } from '@/utils/validators'
+import { toDisplayTimeLog, toLocalTimeLogSchema } from '@/utils/validators'
 
 interface TimeLog {
     created_at: string
@@ -38,7 +39,7 @@ export const addLocalTimeLog = async (
     user_id: number
 ) => {
     try {
-        const response = await queryDatabase(insertTimeLogToDbQuery, [
+        const response = await insert(insertTimeLogToDbQuery, [
             duration,
             category_id,
             user_id,
@@ -52,13 +53,21 @@ export const addLocalTimeLog = async (
 
 export const getLocalTimeLogs = async (localUserId: number) => {
     try {
-        const response = await queryDatabase(
-            getTimeLogsGroupedByDateQuery,
-            [localUserId],
-            true
-        )
+        const response = await fetchAll(getTimeLogsGroupedByDateQuery, [
+            localUserId,
+        ])
         const displayTimeLogs = toDisplayTimeLog(response)
         return displayTimeLogs
+    } catch (error) {
+        console.error(error)
+        throw new Error(error instanceof Error ? error.message : String(error))
+    }
+}
+
+export const getLocalTimeLogById = async (rowId: number) => {
+    try {
+        const response = await fetchOne(getTimeLogByIdQuery, [rowId])
+        return toLocalTimeLogSchema(response)
     } catch (error) {
         console.error(error)
         throw new Error(error instanceof Error ? error.message : String(error))

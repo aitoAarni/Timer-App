@@ -1,6 +1,4 @@
-import { TimeDuratio, TimeLogged } from '@/types'
-import * as sqlite from 'expo-sqlite'
-import { openDatabase } from './db'
+
 
 export const insertTimeLogToDbQuery = `INSERT INTO timer (duration, category_id, user_id) VALUES (?, ?, ?);`
 
@@ -15,26 +13,3 @@ export const getTimeLogsGroupedByDateQuery = `SELECT
         DATE(created_at)
     ORDER BY 
         DATE(created_at) DESC;`
-
-const getTimeById = async (rowId: number) => {
-    const query = 'SELECT * FROM timer WHERE id = ?;'
-    let db: sqlite.SQLiteDatabase | null = null
-    try {
-        db = await openDatabase()
-        const result = (await db.getFirstAsync(query, [rowId])) as TimeLogged
-        return result
-    } catch (error) {
-        console.error('getTimesGroupedByData', error)
-        throw new Error(
-            `Error fetching times: ${
-                error instanceof Error ? error.message : String(error)
-            }`
-        )
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
-
-export { getTimeById }
