@@ -30,14 +30,16 @@ export const toStorageUser = (user: unknown) => {
     return LocalStorageUserSchema.parse(user)
 }
 
-export const LocalDatabaseUsersSchema = z.array(
-    LocalStorageUserSchema.omit({
-        token: true,
-    })
-)
+export const LocalDatabaseUserSchema = LocalStorageUserSchema.omit({
+    token: true,
+})
+
+export const toLocalDatabaseUser = (data: unknown) => {
+    return LocalDatabaseUserSchema.parse(data)
+}
 
 export const toLocalDatabaseUsers = (data: unknown) => {
-    return LocalDatabaseUsersSchema.parse(data)
+    return z.array(LocalDatabaseUserSchema).parse(data)
 }
 
 export const NearbyUserSchema = z.object({

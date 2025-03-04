@@ -6,7 +6,6 @@ import {
     screen,
 } from '@testing-library/react-native'
 import LogInView from '@/components/LogInView'
-import { getLocalUsers } from '@/services/userServices'
 
 let mockLogin: jest.Mock
 let mockUseLogIn = jest.fn()

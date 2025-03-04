@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import {
     DisplayTimeLogSchema,
+    LocalDatabaseUserSchema,
     LocalStorageUserSchema,
     NearbyUserSchema,
     RankingsSchema,
@@ -13,13 +14,8 @@ export function isPositiveNumber(value: number): value is PositiveNumber {
     return value > 0
 }
 
-export interface User {
-    id: number
-    username: string
-    password: string
-    server_id: string | null
-    created_at: string
-}
+export type User = z.infer<typeof LocalDatabaseUserSchema>
+
 export type StorageUser = z.infer<typeof LocalStorageUserSchema>
 
 export type RemoteUser = z.infer<typeof RemoteLoggedInUserSchema>
@@ -39,7 +35,6 @@ export type Rankings = z.infer<typeof RankingsSchema>
 export interface TimeDuratio {
     duration: number
 }
-
 
 export type DisplayTimeLogs = z.infer<typeof DisplayTimeLogSchema>
 

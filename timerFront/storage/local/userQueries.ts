@@ -6,27 +6,9 @@ export const insertUserQuery = `INSERT INTO users (username, password, server_id
 
 export const getUsersQuery = 'SELECT * FROM users'
 
+export const getUserByUsernameQuery = 'SELECT * FROM users WHERE username = ?;'
 
-const getUserByUsername = async (username: string) => {
-    let db: sqlite.SQLiteDatabase | null = null
 
-    try {
-        db = await openDatabase()
-        const query = (await db.getAllAsync(
-            'SELECT * FROM users WHERE username = ?;',
-            username
-        )) as User[]
-        console.log('user query', query)
-        return query
-    } catch (error) {
-        console.error(error)
-        throw error
-    } finally {
-        if (db) {
-            db.closeAsync()
-        }
-    }
-}
 
 const removeUserByUsername = async (username: string) => {
     let db: sqlite.SQLiteDatabase | null = null
@@ -44,4 +26,4 @@ const removeUserByUsername = async (username: string) => {
     }
 }
 
-export { getUserByUsername, removeUserByUsername }
+export {  removeUserByUsername }

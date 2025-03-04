@@ -1,18 +1,16 @@
 import useLogIn from '@/hooks/useLogIn'
 import { removeLocalUser } from '@/services/userServices'
+import { getUserByUsernameQuery } from '@/storage/local/userQueries'
 
 let mockGetUserByUsername: typeof jest.fn
 jest.mock('@/storage/local/userQueries', () => ({
-    getUserByUsername: () => {
-        return mockGetUserByUsername()
-    },
+    getUserByUsernameQuery: 'mock query',
 }))
 
 let mockSetUser = jest.fn()
 jest.mock('@/utils/authStorage', () => {
     return jest.fn().mockImplementation(() => ({
         setUser: (...args: string[]) => {
-            console.log('jamaal ayooo')
             mockSetUser(...args)
         },
     }))
@@ -39,6 +37,9 @@ jest.mock('@/services/userServices', () => ({
     },
     removeLocalUser: () => {
         jest.fn()
+    },
+    getLocalUserByUsername: (...args) => {
+        return mockGetUserByUsername(...args)
     },
 }))
 
@@ -72,9 +73,10 @@ describe('useLogIn hook', () => {
         })
         mockGetUserByUsername = jest.fn().mockImplementation(() => {
             console.log('täällääääää')
-            return Promise.resolve([
-                { username: 'testUser', password: 'password123' },
-            ])
+            return Promise.resolve({
+                username: 'testUser',
+                password: 'password123',
+            })
         })
     })
 
@@ -109,6 +111,7 @@ describe('useLogIn hook', () => {
                 token: null,
             })
         )
+
         expect(mockDispatch).toHaveBeenCalledWith(
             mockSetLoggedInUser({
                 username: 'testUser',

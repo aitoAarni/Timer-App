@@ -7,6 +7,7 @@ import { RemoteUser } from '@/types'
 import {
     createLocalUser,
     createRemoteUser,
+    getLocalUserByUsername,
     removeLocalUser,
 } from '@/services/userServices'
 
@@ -17,16 +18,16 @@ const useLogIn = () => {
         let requestNotPossible: boolean
         try {
             remoteUser = await login(username, password)
-            console.log("remote user: ", remoteUser)
+            console.log('remote user: ', remoteUser)
             requestNotPossible = false
         } catch (error) {
             console.error(error)
             requestNotPossible = true
         }
+
         try {
-            const users = await getUserByUsername(username)
-            
-            let localUser = users.length > 0 ?  users[0] : null
+            let localUser = await getLocalUserByUsername(username)
+
             if (localUser && localUser?.password === password) {
                 if (!requestNotPossible && !remoteUser) {
                     await createRemoteUser(username, password)
@@ -37,19 +38,24 @@ const useLogIn = () => {
                     token: remoteUser ? 'Bearer ' + remoteUser.token : null,
                 }
                 const authStorage = new AuthStorage()
-
                 await authStorage.setUser(storageUser)
                 dispatch(setLoggedInUser(storageUser))
                 return true
             } else if (remoteUser) {
                 await removeLocalUser(username)
                 await createLocalUser(username, password, remoteUser.id)
-                localUser = (await getUserByUsername(username))[0]
+                localUser = await getLocalUserByUsername(username)
+                console.log('local user: ', localUser)
+                if (!localUser) {
+                    return false
+                }
                 const storageUser = {
                     ...localUser,
                     token: remoteUser ? 'Bearer ' + remoteUser.token : null,
                 }
                 const authStorage = new AuthStorage()
+                console.log('storageUser: ', storageUser)
+
                 await authStorage.setUser(storageUser)
                 dispatch(setLoggedInUser(storageUser))
                 return true
