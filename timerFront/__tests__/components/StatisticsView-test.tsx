@@ -11,6 +11,7 @@ import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { act } from 'react-test-renderer'
 import { Text } from 'react-native'
 import { getLocalTimeLogs } from '@/services/timeLogServices'
+import { NavigationContainer } from '@react-navigation/native'
 
 jest.mock('react-redux', () => ({
     useSelector: jest.fn(),
@@ -37,17 +38,25 @@ jest.mock('@/components/ErrorBox', () => ({ errorMessage }) => {
     const { Text } = require('react-native')
     return errorMessage ? <Text>{errorMessage}</Text> : null
 })
+jest.mock('expo-router', () => ({
+    useFocusEffect: jest.fn(),
+    useRouter: jest.fn(),
+}))
 
 const mockUser = { id: 'user123', server_id: 'server123' }
 
-beforeEach(() => {
-    jest.clearAllMocks()
-})
 
 describe('StatisticsView', () => {
-    it('renders login prompt if user is not logged in', () => {
+    beforeEach(() => {
+        jest.clearAllMocks()
+    })
+    it.only('renders login prompt if user is not logged in', () => {
         useSelector.mockReturnValue(null)
-        render(<StatisticsView />)
+        render(
+            <NavigationContainer>
+                <StatisticsView />
+            </NavigationContainer>
+        )
         expect(
             screen.getByText('You must be logged in to get statistics')
         ).toBeTruthy()

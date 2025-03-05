@@ -1,4 +1,4 @@
-import AuthStorage from '@/utils/authStorage'
+import AuthStorage from '@/services/authStorageServices'
 import { useDispatch } from 'react-redux'
 import { setLoggedInUser } from '@/redux/userSlice'
 import login from '@/services/loginServices'
@@ -9,6 +9,7 @@ import {
     getLocalUserByUsername,
     removeLocalUser,
 } from '@/services/userServices'
+import { RemoteLoggedInUserSchema } from '@/utils/validators'
 
 const useLogIn = () => {
     const dispatch = useDispatch()
@@ -50,7 +51,6 @@ const useLogIn = () => {
                     token: remoteUser ? 'Bearer ' + remoteUser.token : null,
                 }
                 const authStorage = new AuthStorage()
-
                 await authStorage.setUser(storageUser)
                 dispatch(setLoggedInUser(storageUser))
                 return true

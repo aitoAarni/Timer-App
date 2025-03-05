@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import AreaChartView from './AreaChartView'
 import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { AreaChartData } from '@/types'
@@ -12,6 +12,7 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 import LeaderBoard from './LeaderBoard'
 import ErrorBox from './ErrorBox'
 import { getLocalTimeLogs } from '@/services/timeLogServices'
+import { useFocusEffect } from 'expo-router'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
@@ -24,26 +25,30 @@ export default function StatisticsView() {
         params: { from: 'statistics' },
     })
 
-    useEffect(() => {
-        const getData = async () => {
-            if (!user) return
-            try {
-                const datesData = await getLocalTimeLogs(user.id)
-                const { transformedData, maxValue: maxVal } =
-                    transformDatesAndDurationDataForChart(datesData)
-                setData(transformedData)
-                setMaxValue(maxVal)
-            } catch (error) {
-                console.error('error in StatisticsView', error)
-                throw new Error(
-                    `Error fetching data: ${
-                        error instanceof Error ? error.message : String(error)
-                    }`
-                )
+    useFocusEffect(
+        useCallback(() => {
+            const getData = async () => {
+                if (!user) return
+                try {
+                    const datesData = await getLocalTimeLogs(user.id)
+                    const { transformedData, maxValue: maxVal } =
+                        transformDatesAndDurationDataForChart(datesData)
+                    setData(transformedData)
+                    setMaxValue(maxVal)
+                } catch (error) {
+                    console.error('error in StatisticsView', error)
+                    throw new Error(
+                        `Error fetching data: ${
+                            error instanceof Error
+                                ? error.message
+                                : String(error)
+                        }`
+                    )
+                }
             }
-        }
-        getData()
-    }, [])
+            getData()
+        }, [])
+    )
     if (!user) {
         return (
             <SwipeNavigation leftSwipeCallback={navigateLeft}>
