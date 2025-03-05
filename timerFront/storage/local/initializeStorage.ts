@@ -18,7 +18,6 @@ export default async function initializeStorage() {
         await clearSettings()
         const updatedSettings = await getSettings()
         store.dispatch(updateSettings(updatedSettings))
-        const settings = await getSettings()
         const authStorage = new AuthStorage()
         await authStorage.removeUser()
         store.dispatch(clearUser())
