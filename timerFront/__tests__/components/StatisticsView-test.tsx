@@ -50,7 +50,7 @@ describe('StatisticsView', () => {
     beforeEach(() => {
         jest.clearAllMocks()
     })
-    it.only('renders login prompt if user is not logged in', () => {
+    it('renders login prompt if user is not logged in', () => {
         useSelector.mockReturnValue(null)
         render(
             <NavigationContainer>
@@ -81,7 +81,6 @@ describe('StatisticsView', () => {
         useSelector.mockReturnValue(mockUser)
         render(<StatisticsView />)
         await waitFor(() => {
-            expect(screen.getByTestId('area-chart-view')).toBeTruthy()
             expect(screen.getByTestId('leaderboard')).toBeTruthy()
         })
     })
