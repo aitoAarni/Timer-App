@@ -8,9 +8,7 @@ export const TimerContext = createContext<Timer | null>(null)
 
 export const TimerProvider = function ({ children }: { children: ReactNode }) {
     const settings = useSelector((state: RootState) => state.settings)
-
     const { workTimeLength, breakTimeLength } = settings
-
     const logger = useRef(new TimeLogger(1))
     const timer = useRef(
         new Timer(
