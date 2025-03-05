@@ -1,6 +1,6 @@
 import { Text } from 'react-native'
 
-export const DataPointLabel = (val: string) => {
+export const DataPointLabel = ({ val }: { val: string }) => {
     return (
         <Text
             style={{
