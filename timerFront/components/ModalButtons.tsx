@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from './Text'
 import theme from '@/theme'
-import logout from '@/utils/logout'
+import logout from '@/services/logoutService'
 
 const ModalButton = ({ children }: { children: ReactNode }) => {
     return <View style={styles.modalButton}>{children}</View>

@@ -1,46 +1,54 @@
-import { render, fireEvent } from '@testing-library/react-native';
-import { useRouter } from 'expo-router';
-import { LoginButton, LogoutButton, ProfileButton } from '@/components/ModalButtons';
-import logout from '@/utils/logout';
+import { render, fireEvent } from '@testing-library/react-native'
+import { useRouter } from 'expo-router'
+import {
+    LoginButton,
+    LogoutButton,
+    ProfileButton,
+} from '@/components/ModalButtons'
+import logout from '@/services/logoutService'
 
-jest.mock('expo-router', () => ({ useRouter: jest.fn() }));
-jest.mock('@/utils/logout', () => jest.fn());
+jest.mock('expo-router', () => ({ useRouter: jest.fn() }))
+jest.mock('@/services/logoutService', () => jest.fn())
 
 describe('ModalButtons', () => {
-    const mockCloseModal = jest.fn();
-    const mockRouterPush = jest.fn();
+    const mockCloseModal = jest.fn()
+    const mockRouterPush = jest.fn()
 
     beforeEach(() => {
-        jest.clearAllMocks();
-        (useRouter as jest.Mock).mockReturnValue({ push: mockRouterPush });
-    });
+        jest.clearAllMocks()
+        ;(useRouter as jest.Mock).mockReturnValue({ push: mockRouterPush })
+    })
 
     test('LoginButton calls closeModal and navigates to login', () => {
-        const { getByText } = render(<LoginButton closeModal={mockCloseModal} />);
-        const button = getByText('Login');
+        const { getByText } = render(
+            <LoginButton closeModal={mockCloseModal} />
+        )
+        const button = getByText('Login')
 
-        fireEvent.press(button);
+        fireEvent.press(button)
 
-        expect(mockCloseModal).toHaveBeenCalled();
-        expect(mockRouterPush).toHaveBeenCalledWith('/login');
-    });
+        expect(mockCloseModal).toHaveBeenCalled()
+        expect(mockRouterPush).toHaveBeenCalledWith('/login')
+    })
 
     test('LogoutButton calls logout function', () => {
-        const { getByText } = render(<LogoutButton />);
-        const button = getByText('Logout');
+        const { getByText } = render(<LogoutButton />)
+        const button = getByText('Logout')
 
-        fireEvent.press(button);
+        fireEvent.press(button)
 
-        expect(logout).toHaveBeenCalled();
-    });
+        expect(logout).toHaveBeenCalled()
+    })
 
     test('ProfileButton calls closeModal and navigates to profile', () => {
-        const { getByText } = render(<ProfileButton closeModal={mockCloseModal} />);
-        const button = getByText('Profile');
+        const { getByText } = render(
+            <ProfileButton closeModal={mockCloseModal} />
+        )
+        const button = getByText('Profile')
 
-        fireEvent.press(button);
+        fireEvent.press(button)
 
-        expect(mockCloseModal).toHaveBeenCalled();
-        expect(mockRouterPush).toHaveBeenCalledWith('/profile');
-    });
-});
+        expect(mockCloseModal).toHaveBeenCalled()
+        expect(mockRouterPush).toHaveBeenCalledWith('/profile')
+    })
+})
