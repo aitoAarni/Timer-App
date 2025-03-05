@@ -3,8 +3,8 @@ import {
     removeSecureKeyValuePair,
     setSecureKeyValuePair,
 } from '@/storage/local/secureKeyValueStorage'
-import { StorageUser, User } from '@/types'
-import { toStorageUser } from './validators'
+import { StorageUser } from '@/types'
+import { toStorageUser } from '../utils/validators'
 
 export default class AuthStorage {
     key: string

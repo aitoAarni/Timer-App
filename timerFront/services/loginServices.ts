@@ -18,6 +18,7 @@ export default async function remoteLogin(username: string, password: string) {
             console.error(`Http: ${response.status}, ${errorText}`)
             return null
         }
+
         const json = toRemoteLoggedInUser(await response.json())
         return json
     } catch (error) {
