@@ -32,6 +32,6 @@ export const removeKeyValuePair = async function (key: string) {
         await AsyncStorage.removeItem(key)
     } catch (error) {
         console.error('error in removeKeyValuePair', error)
-        throw error
+        throw new Error(`Error removing data: ${String(error)}`)
     }
 }
