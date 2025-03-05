@@ -17,7 +17,7 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import { useSharedValue } from 'react-native-reanimated'
 import { Slider } from 'react-native-awesome-slider'
-import { setSettings } from '@/services/settings'
+import { setSettings } from '@/services/settingServices'
 export default function SettingsView() {
     const navigateRight = useNavigateTo({
         pathname: '/',

@@ -1,11 +1,8 @@
+// @ts-nocheck
 import { render, screen, fireEvent } from '@testing-library/react-native'
 import SettingsView from '@/components/SettingsView'
 import React from 'react'
 import { updateSettings } from '@/redux/settingsSlice'
-
-jest.mock('@/services/settings', () => ({
-    setSettings: jest.fn(),
-}))
 
 jest.mock('react-native-reanimated', () =>
     require('react-native-reanimated/mock')
@@ -26,7 +23,7 @@ jest.mock('@/hooks/useNavigateTo', () => {
 })
 
 let mockSetSettings = jest.fn()
-jest.mock('@/services/settings', () => ({
+jest.mock('@/services/settingServices', () => ({
     setSettings: (...args) => {
         return mockSetSettings(...args)
     },

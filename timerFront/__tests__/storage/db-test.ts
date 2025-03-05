@@ -58,7 +58,6 @@ describe('Database Functions', () => {
     test('dropUsersDatabase should drop users table', async () => {
         await dropUsersDatabase()
         const db = await openDatabase()
-        console.log("database: " , db)
 
         expect(db.execAsync).toHaveBeenCalledWith('DROP TABLE IF EXISTS users')
     })

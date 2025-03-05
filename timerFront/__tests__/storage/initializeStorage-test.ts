@@ -1,20 +1,19 @@
 import initializeStorage from '@/storage/local/initializeStorage'
 import { initializeDatabase, createTables } from '@/storage/local/db'
-import { clearSettings, getSettings } from '@/services/settings'
+import { clearSettings, getSettings } from '@/services/settingServices'
 import { isTest } from '@/utils/environment'
 import { clearUser } from '@/redux/userSlice'
-import AuthStorage from '@/utils/authStorage'
+import AuthStorage from '@/services/authStorageServices'
 import store from '@/redux/store'
 import { updateSettings } from '@/redux/settingsSlice'
 import { createLocalUser } from '@/services/userServices'
 
-// Mock dependencies
 jest.mock('@/storage/local/db', () => ({
     initializeDatabase: jest.fn(),
     createTables: jest.fn(),
 }))
 
-jest.mock('@/services/settings', () => ({
+jest.mock('@/services/settingServices', () => ({
     clearSettings: jest.fn(),
     getSettings: jest
         .fn()
@@ -29,7 +28,7 @@ jest.mock('@/services/userServices', () => ({
     createLocalUser: jest.fn(),
 }))
 
-jest.mock('@/utils/authStorage')
+jest.mock('@/services/authStorageServices')
 jest.mock('@/redux/store', () => ({
     dispatch: jest.fn(),
 }))

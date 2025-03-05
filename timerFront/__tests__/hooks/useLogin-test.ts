@@ -9,7 +9,7 @@ jest.mock('@/storage/local/userQueries', () => ({
 }))
 
 let mockSetUser = jest.fn()
-jest.mock('@/utils/authStorage', () => {
+jest.mock('@/services/authStorageServices', () => {
     return jest.fn().mockImplementation(() => ({
         setUser: (...args: string[]) => {
             mockSetUser(...args)

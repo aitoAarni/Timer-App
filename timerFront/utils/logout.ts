@@ -1,6 +1,6 @@
 import store from '@/redux/store'
 import { clearUser } from '@/redux/userSlice'
-import AuthStorage from './authStorage'
+import AuthStorage from '../services/authStorageServices'
 
 export default async function logout() {
     const authStorage = new AuthStorage()

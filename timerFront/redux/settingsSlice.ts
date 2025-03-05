@@ -1,4 +1,4 @@
-import { getSettings, setSettings } from '@/services/settings'
+import { getSettings, setSettings } from '@/services/settingServices'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface Settings {
