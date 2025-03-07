@@ -55,3 +55,4 @@
 | 1.3.2025   | 2.5h   | creating unit tests                                                                           |
 | 2.3.2025   | 2.5h   | create unit tests and refctor code                                                            |
 | 4.3.2025   | 4h     | refactor local database calls and fix tests / bugs                                            |
+| 5.3.2025   | 4h     | create unit tests                                                                             |
