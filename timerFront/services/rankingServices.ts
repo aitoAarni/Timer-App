@@ -4,7 +4,6 @@ import { BACK_END_URL } from '@/utils/environment'
 export const getRankings = async (userId: string, date: string) => {
     try {
         const url = `${BACK_END_URL}/api/ranking/${date}/${userId}`
-        console.log('get rankings called')
         const token = store.getState().user.loggedInUser?.token
         if (!token) return null
         const response = await fetch(url, {

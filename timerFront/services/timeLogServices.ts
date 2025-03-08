@@ -1,7 +1,7 @@
 import { fetchAll, fetchOne, insert } from '@/storage/local/queryDatabase'
 import {
     getTimeLogByIdQuery,
-    getTimeLogsGroupedByDateQuery,
+    getTimeLogsAfterDateQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
 import { StorageUser } from '@/types'
@@ -52,10 +52,14 @@ export const addLocalTimeLog = async (
     }
 }
 
-export const getLocalTimeLogs = async (localUserId: number) => {
+export const getLocalTimeLogs = async (
+    localUserId: number,
+    afterDate: string
+) => {
     try {
-        const response = await fetchAll(getTimeLogsGroupedByDateQuery, [
+        const response = await fetchAll(getTimeLogsAfterDateQuery, [
             localUserId,
+            afterDate,
         ])
         const displayTimeLogs = toDisplayTimeLog(response)
         return displayTimeLogs

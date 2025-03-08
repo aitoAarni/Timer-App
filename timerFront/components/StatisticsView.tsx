@@ -13,6 +13,8 @@ import LeaderBoard from './LeaderBoard'
 import ErrorBox from './ErrorBox'
 import { getLocalTimeLogs } from '@/services/timeLogServices'
 import { useFocusEffect } from 'expo-router'
+import StatisticsViewTotals from './StatisticsViewTotals'
+import { getDateNdaysAgo } from '@/utils/utils'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | AreaChartData[]>(null)
@@ -30,7 +32,8 @@ export default function StatisticsView() {
             const getData = async () => {
                 if (!user) return
                 try {
-                    const datesData = await getLocalTimeLogs(user.id)
+                    const monthAgo = getDateNdaysAgo(30)
+                    const datesData = await getLocalTimeLogs(user.id, monthAgo)
                     const { transformedData, maxValue: maxVal } =
                         transformDatesAndDurationDataForChart(datesData)
                     setData(transformedData)
@@ -65,6 +68,7 @@ export default function StatisticsView() {
                 setErrorMessage={setErrorMessage}
                 errorMessage={errorMessage}
             />
+            <StatisticsViewTotals />
             {data ? (
                 <AreaChartView data={data} maxValue={maxValue} />
             ) : (
