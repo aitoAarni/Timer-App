@@ -1,4 +1,4 @@
-import remoteLogin from '@/services/loginServices' // Adjust path if needed
+import remoteLogin from '@/services/loginServices'
 import { BACK_END_URL } from '@/utils/environment'
 import { toRemoteLoggedInUser } from '@/utils/validators'
 

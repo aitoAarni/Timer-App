@@ -4,7 +4,6 @@ import AreaChartView from '@/components/AreaChartView'
 import theme from '@/theme'
 import { View } from 'react-native'
 
-// Mock react-native-gifted-charts to avoid actual rendering
 jest.mock('react-native-gifted-charts', () => ({
     LineChart: jest.fn(() => {
         const { View } = require('react-native')

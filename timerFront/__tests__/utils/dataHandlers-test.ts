@@ -95,10 +95,10 @@ describe('formStringDate', () => {
     })
 
     it('should return null for an invalid date', () => {
-        expect(formStringDate('2024', '13', '1')).toBeNull() // Invalid month
-        expect(formStringDate('2024', '2', '30')).toBeNull() // Invalid day
-        expect(formStringDate('abc', '10', '10')).toBeNull() // Non-numeric year
-        expect(formStringDate('2024', '10', 'xyz')).toBeNull() // Non-numeric day
+        expect(formStringDate('2024', '13', '1')).toBeNull()
+        expect(formStringDate('2024', '2', '30')).toBeNull()
+        expect(formStringDate('abc', '10', '10')).toBeNull()
+        expect(formStringDate('2024', '10', 'xyz')).toBeNull()
     })
 
     it('should return null for future dates', () => {

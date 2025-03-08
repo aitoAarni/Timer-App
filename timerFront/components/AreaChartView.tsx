@@ -20,13 +20,6 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 height={300}
                 scrollToIndex={30}
                 maxValue={maxValue > 4 ? maxValue * 1.1 : 6}
-                // animateOnDataChange
-                // onDataChangeAnimationDuration={600}
-                // isAnimated
-                // animationDuration={600}
-                onPress={(item: { value: number }, index: number) => {
-                    console.log(item, index)
-                }}
                 curved
                 curvature={0.1}
                 thickness={1}
@@ -34,13 +27,6 @@ const AreaChartView = ({ data, maxValue }: AreaChartViewProps) => {
                 spacing={100}
                 xAxisThickness={0}
                 yAxisThickness={0}
-                // yAxisLabelWidth={25}
-                // yAxisTextStyle={{ color: theme.colors.grayLight }}
-                // yAxisColor="#555555"
-                // xAxisColor="#555555"
-                // noOfSections={1}
-                // rulesColor="gray"
-                // rulesType="solid"
                 hideRules
                 hideYAxisText
                 backgroundColor={theme.colors.background}

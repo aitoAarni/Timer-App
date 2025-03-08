@@ -148,8 +148,8 @@ describe('useLogIn hook', () => {
     it('creates a remote user if remote login fails initially', async () => {
         mockLogin = jest
             .fn()
-            .mockResolvedValueOnce(null) // First attempt fails
-            .mockResolvedValueOnce({ id: 'remote123', token: 'abc123' }) // Second attempt succeeds
+            .mockResolvedValueOnce(null) 
+            .mockResolvedValueOnce({ id: 'remote123', token: 'abc123' }) 
 
         const logIn = useLogIn()
 

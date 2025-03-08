@@ -8,7 +8,6 @@ import {
 import { isTest } from '@/utils/environment'
 import * as sqlite from 'expo-sqlite'
 
-// Mock dependencies
 jest.mock('@/utils/environment', () => ({
     isTest: jest.fn(),
 }))
