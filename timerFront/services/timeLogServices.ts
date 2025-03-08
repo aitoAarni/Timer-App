@@ -5,6 +5,7 @@ import {
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
 import { StorageUser } from '@/types'
+import { BACK_END_URL } from '@/utils/environment'
 import { toDisplayTimeLog, toLocalTimeLogSchema } from '@/utils/validators'
 
 interface TimeLog {
@@ -14,7 +15,7 @@ interface TimeLog {
 }
 
 export const addRemoteTimeLog = async (timeLog: TimeLog, user: StorageUser) => {
-    const url = 'http://192.168.1.120:3000/api/timelog'
+    const url = `${BACK_END_URL}/api/timelog`
     const body = JSON.stringify(timeLog)
     if (!user.token) {
         throw new Error('No user token in memory')

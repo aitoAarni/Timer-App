@@ -5,6 +5,7 @@ import {
     insertUserQuery,
     removeUserByUsernameQuery,
 } from '@/storage/local/userQueries'
+import { BACK_END_URL } from '@/utils/environment'
 import {
     toLocalDatabaseUser,
     toLocalDatabaseUsers,
@@ -58,7 +59,7 @@ export async function createRemoteUser(username: String, password: string) {
     const body = JSON.stringify({ username, password })
     try {
         const response = await fetch(
-            'http://192.168.1.120:3000/api/user/create',
+            `${BACK_END_URL}/api/user/create`,
             {
                 method: 'POST',
                 headers: {

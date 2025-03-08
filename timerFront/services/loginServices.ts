@@ -1,10 +1,11 @@
+import { BACK_END_URL } from '@/utils/environment'
 import { toRemoteLoggedInUser } from '@/utils/validators'
 
 export default async function remoteLogin(username: string, password: string) {
     const body = JSON.stringify({ username, password })
     try {
         const response = await fetch(
-            'http://192.168.1.120:3000/api/user/login',
+            `${BACK_END_URL}/api/user/login`,
             {
                 method: 'POST',
                 headers: {
