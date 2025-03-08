@@ -10,11 +10,12 @@ import Text from './Text'
 import { formatTotalTime } from '@/utils/format'
 import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { formStringDate } from '@/utils/dataHandlers'
 import { NearbyUser, Rankings } from '@/types'
 import { toRankings } from '@/utils/validators'
+import { useFocusEffect } from 'expo-router'
 
 interface LeaderBoardProps {
     userId: string | null
@@ -37,9 +38,11 @@ export default function LeaderBoard({
     const rankPercentage =
         rankings &&
         Math.round((rankings.userRank / rankings.totalParticipants) * 100)
-    useEffect(() => {
-        refreshData()
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            refreshData()
+        }, [])
+    )
     const refreshData = async () => {
         const rankingDate = formStringDate(year, month, day)
         if (!rankingDate) {
