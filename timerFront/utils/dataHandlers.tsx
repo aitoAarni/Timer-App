@@ -40,8 +40,8 @@ export const transformDatesAndDurationDataForChart = (
             value: 0,
             label: `${months[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
 
-            dataPointLabelComponent: () =>
-                DataPointLabel(String(DataPoint.value) + ' h'),
+            dataPointLabelComponent: () => {
+                return <DataPointLabel val={String(DataPoint.value) + ' h'} /> },
             labelTextStyle: { color: theme.colors.grayLight },
         }
         if (
