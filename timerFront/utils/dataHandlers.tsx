@@ -3,7 +3,7 @@ import { DataPointLabel } from './Stylers'
 import theme from '@/theme'
 
 const msToHours = (ms: number) => {
-    const hours = Math.round(ms / 360_000) / 10
+    const hours = Math.floor(ms / 360_000) / 10
     return hours
 }
 
@@ -41,7 +41,8 @@ export const transformDatesAndDurationDataForChart = (
             label: `${months[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
 
             dataPointLabelComponent: () => {
-                return <DataPointLabel val={String(DataPoint.value) + ' h'} /> },
+                return <DataPointLabel val={String(DataPoint.value) + ' h'} />
+            },
             labelTextStyle: { color: theme.colors.grayLight },
         }
         if (
