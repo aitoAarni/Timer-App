@@ -27,8 +27,6 @@ describe('remoteLogin', () => {
     })
 
     it('should return a valid user object on successful login', async () => {
-        console.log('backend url: ', BACK_END_URL)
-        console.log('EXPO_PUBLIC_TESTING: ', process.env.EXPO_PUBLIC_TESTING)
         ;(global.fetch as jest.Mock).mockResolvedValue({
             ok: true,
             json: jest.fn().mockResolvedValue(mockUser),

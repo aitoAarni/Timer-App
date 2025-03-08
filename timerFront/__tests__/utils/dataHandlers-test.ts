@@ -29,7 +29,7 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 2.8,
+        value: 2.7,
         label: 'Jan 29',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
@@ -44,7 +44,7 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 3.4,
+        value: 3.3,
         label: 'Feb 1',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
@@ -54,7 +54,7 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 0.6,
+        value: 0.5,
         label: 'Feb 3',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },

@@ -8,7 +8,7 @@ import { StorageUser } from '@/types'
 import { fetchAll, fetchOne, insert } from '@/storage/local/queryDatabase'
 import {
     getTimeLogByIdQuery,
-    getTimeLogsGroupedByDateQuery,
+    getTimeLogsAfterDateQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
 import { toDisplayTimeLog, toLocalTimeLogSchema } from '@/utils/validators'
@@ -143,12 +143,12 @@ describe('Time Log Storage Functions', () => {
             const mockLogs = [{ date: '2025-03-05', duration: 1200 }]
             ;(fetchAll as jest.Mock).mockResolvedValue(mockLogs)
 
-            const result = await getLocalTimeLogs(1)
+            const result = await getLocalTimeLogs(1, '2025-02-02')
 
-            expect(fetchAll).toHaveBeenCalledWith(
-                getTimeLogsGroupedByDateQuery,
-                [1]
-            )
+            expect(fetchAll).toHaveBeenCalledWith(getTimeLogsAfterDateQuery, [
+                1,
+                '2025-02-02',
+            ])
             expect(toDisplayTimeLog).toHaveBeenCalledWith(mockLogs)
             expect(result).toEqual(mockLogs)
         })
@@ -158,7 +158,9 @@ describe('Time Log Storage Functions', () => {
                 new Error('DB fetch failed')
             )
 
-            await expect(getLocalTimeLogs(1)).rejects.toThrow('DB fetch failed')
+            await expect(getLocalTimeLogs(1, '2025-02-02')).rejects.toThrow(
+                'DB fetch failed'
+            )
         })
     })
 

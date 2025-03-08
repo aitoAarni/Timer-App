@@ -30,18 +30,22 @@ jest.mock('@expo/vector-icons/AntDesign', () => {
     }
 })
 
-let mockGetRankings: typeof jest.fn
+let mockGetRankings: jest.Mock
 jest.mock('@/services/rankingServices', () => ({
     getRankings: (...args) => {
         return mockGetRankings(...args)
     },
 }))
 
-let mockToRankings: typeof jest.fn
+let mockToRankings: jest.Mock
 jest.mock('@/utils/validators', () => ({
     toRankings: (...args) => {
         return mockToRankings(...args)
     },
+}))
+
+jest.mock("expo-router", () => ({
+    useFocusEffect: jest.fn(callback => callback())
 }))
 
 describe('LeaderBoard Component', () => {
@@ -65,6 +69,7 @@ describe('LeaderBoard Component', () => {
         expect(getByPlaceholderText('MM')).toBeTruthy()
         expect(getByPlaceholderText('DD')).toBeTruthy()
     })
+
 
     it('fetches rankings on mount', async () => {
         const { getByText } = render(

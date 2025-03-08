@@ -137,7 +137,6 @@ describe('User Storage Functions', () => {
             })
 
             const result = await createUser('testuser', 'password')
-            console.log('result: ', result)
             expect(result).toBeUndefined()
         })
 

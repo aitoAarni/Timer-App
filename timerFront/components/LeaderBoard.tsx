@@ -38,11 +38,6 @@ export default function LeaderBoard({
     const rankPercentage =
         rankings &&
         Math.round((rankings.userRank / rankings.totalParticipants) * 100)
-    useFocusEffect(
-        useCallback(() => {
-            refreshData()
-        }, [])
-    )
     const refreshData = async () => {
         const rankingDate = formStringDate(year, month, day)
         if (!rankingDate) {
@@ -64,6 +59,11 @@ export default function LeaderBoard({
         }
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            refreshData()
+        }, [])
+    )
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>
