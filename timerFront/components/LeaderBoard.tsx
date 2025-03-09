@@ -195,7 +195,7 @@ const Item = ({
 }
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1, marginTop: 30 },
+    container: { marginTop: 30,  height: 400 },
 
     headerText: { fontSize: 24, marginBottom: 1 },
     inputRow: {
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
         height: 40,
     },
     itemContainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
     },
     rankingText: { fontSize: 18, flex: 1, color: theme.colors.text },

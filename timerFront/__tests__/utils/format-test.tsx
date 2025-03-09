@@ -1,4 +1,5 @@
 import { formatTime, formatTotalTime } from '@/utils/format'
+import { TurboModuleRegistry } from 'react-native'
 
 describe('format', () => {
     it('Formats 4 seconds as 00:04', () => {
@@ -17,24 +18,24 @@ describe('format', () => {
 })
 
 describe('formatTotalTime', () => {
-    it('should format milliseconds correctly into HH:MM:SS', () => {
-        expect(formatTotalTime(0)).toBe('00:00:00')
-        expect(formatTotalTime(1000)).toBe('00:00:01')
-        expect(formatTotalTime(60000)).toBe('00:01:00')
-        expect(formatTotalTime(3600000)).toBe('01:00:00')
-        expect(formatTotalTime(3661000)).toBe('01:01:01')
-        expect(formatTotalTime(86399000)).toBe('23:59:59')
+    it('should format milliseconds correctly into ', () => {
+        expect(formatTotalTime(0)).toBe('0s')
+        expect(formatTotalTime(1000, true, false, false)).toBe('01s')
+        expect(formatTotalTime(60000)).toBe('01m')
+        expect(formatTotalTime(3600000)).toBe('01h')
+        expect(formatTotalTime(3661000)).toBe('01h 01m 01s')
+        expect(formatTotalTime(86399000)).toBe('23h 59m 59s')
     })
 
     it('should handle large durations correctly', () => {
-        expect(formatTotalTime(86400000)).toBe('24:00:00') 
-        expect(formatTotalTime(90061000)).toBe('25:01:01') 
+        expect(formatTotalTime(86400000)).toBe('24h') 
+        expect(formatTotalTime(90061000)).toBe('25h 01m 01s') 
     })
 
     it('should pad single-digit numbers with leading zeros', () => {
-        expect(formatTotalTime(5 * 1000)).toBe('00:00:05')
-        expect(formatTotalTime(60 * 1000)).toBe('00:01:00')
-        expect(formatTotalTime(9 * 60 * 1000)).toBe('00:09:00')
-        expect(formatTotalTime(10 * 60 * 1000)).toBe('00:10:00')
+        expect(formatTotalTime(5 * 1000)).toBe('05s')
+        expect(formatTotalTime(60 * 1000)).toBe('01m')
+        expect(formatTotalTime(9 * 60 * 1000)).toBe('09m')
+        expect(formatTotalTime(10 * 60 * 1000)).toBe('10m')
     })
 })

@@ -115,7 +115,7 @@ describe('LeaderBoard Component', () => {
         fireEvent.changeText(getByPlaceholderText('DD'), '25')
         fireEvent.press(getByTestId('submit-button'))
         await waitFor(() => {
-            expect(getByText('15 s')).toBeTruthy()
+            expect(getByText('15s')).toBeTruthy()
             expect(queryByText('Bob')).toBeNull()
             expect(queryByText('Alice')).toBeNull()
         })

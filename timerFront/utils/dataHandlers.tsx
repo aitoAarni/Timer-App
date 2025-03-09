@@ -41,7 +41,7 @@ export const transformDatesAndDurationDataForChart = (
             label: `${months[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
 
             dataPointLabelComponent: () => {
-                return <DataPointLabel val={String(DataPoint.value) + ' h'} />
+                return <DataPointLabel val={DataPoint.value * 3600000} />
             },
             labelTextStyle: { color: theme.colors.grayLight },
         }

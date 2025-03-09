@@ -1,16 +1,22 @@
-import { Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { formatTotalTime } from './format'
 
-export const DataPointLabel = ({ val }: { val: string }) => {
+export const DataPointLabel = ({ val }: { val: number }) => {
+    console.log(formatTotalTime(val, false))
     return (
-        <Text
-            style={{
-                flexGrow: 1,
-                color: 'gray',
-                fontSize: 20,
-                fontWeight: 'bold',
-            }}
-        >
-            {val}
-        </Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>{formatTotalTime(val, false)}</Text>
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: { flexGrow: 2 },
+    text: {
+        flex: 1,
+        color: 'gray',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+})

@@ -40,7 +40,7 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 data={transformedData}
                 dataPointsRadius={5}
                 dataPointLabelShiftX={10}
-                dataPointLabelShiftY={-30}
+                dataPointLabelShiftY={-40}
                 dataPointsColor={theme.colors.grayLight}
             />
         </View>
