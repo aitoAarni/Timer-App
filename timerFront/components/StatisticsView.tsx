@@ -3,7 +3,7 @@ import Text from './Text'
 import { useCallback, useState } from 'react'
 import AreaChartView from './AreaChartView'
 import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
-import { AreaChartData } from '@/types'
+import { AreaChartData, DisplayTimeLogs } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import theme from '@/theme'
@@ -17,8 +17,7 @@ import StatisticsViewTotals from './StatisticsViewTotals'
 import { getDateNdaysAgo } from '@/utils/utils'
 
 export default function StatisticsView() {
-    const [data, setData] = useState<null | AreaChartData[]>(null)
-    const [maxValue, setMaxValue] = useState(0)
+    const [data, setData] = useState<null | DisplayTimeLogs>(null)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const user = useSelector((state: RootState) => state.user.loggedInUser)
@@ -34,10 +33,7 @@ export default function StatisticsView() {
                 try {
                     const monthAgo = getDateNdaysAgo(30)
                     const datesData = await getLocalTimeLogs(user.id, monthAgo)
-                    const { transformedData, maxValue: maxVal } =
-                        transformDatesAndDurationDataForChart(datesData)
-                    setData(transformedData)
-                    setMaxValue(maxVal)
+                    setData(datesData)
                 } catch (error) {
                     console.error('error in StatisticsView', error)
                     throw new Error(
@@ -70,7 +66,7 @@ export default function StatisticsView() {
             />
             <StatisticsViewTotals />
             {data ? (
-                <AreaChartView data={data} maxValue={maxValue} />
+                <AreaChartView data={data} />
             ) : (
                 <ActivityIndicator
                     style={styles.acitivityIndicator}
