@@ -2,6 +2,7 @@ import { fetchAll, fetchOne, insert } from '@/storage/local/queryDatabase'
 import {
     getTimeLogByIdQuery,
     getTimeLogsAfterDateQuery,
+    getTotalTimeLogsDurationQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
 import { StorageUser, TimeLogged } from '@/types'
@@ -52,7 +53,7 @@ export const addLocalTimeLog = async (
     }
 }
 
-export const getLocalTimeLogs = async (
+export const getLocalTimeLogsAfterDate = async (
     localUserId: number,
     afterDate: string
 ) => {
@@ -61,10 +62,10 @@ export const getLocalTimeLogs = async (
             localUserId,
             afterDate,
         ])
-        const debugResponse = await fetchAll(
+        const debugResponse = (await fetchAll(
             `SELECT * FROM timer WHERE user_id = ?;`,
             [localUserId]
-        ) as TimeLogged[]
+        )) as TimeLogged[]
         console.log()
         debugResponse.forEach(timelog => {
             console.log(
@@ -89,4 +90,9 @@ export const getLocalTimeLogById = async (rowId: number) => {
         console.error(error)
         throw new Error(error instanceof Error ? error.message : String(error))
     }
+}
+
+export const getAllLocalTimeLogs = async (userId: number) => {
+    const response = await fetchOne(getTotalTimeLogsDurationQuery, [userId])
+    console.log("respones: ", response)
 }

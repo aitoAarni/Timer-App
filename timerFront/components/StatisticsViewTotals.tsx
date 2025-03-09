@@ -4,13 +4,16 @@ import { DisplayTimeLogs } from '@/types'
 import { useEffect, useState } from 'react'
 import { getDateNdaysAgo } from '@/utils/utils'
 import { formatTotalTime } from '@/utils/format'
+import { getAllLocalTimeLogs } from '@/services/timeLogServices'
 
 interface StatisticsViewTotalsProps {
     timeLogs: DisplayTimeLogs | null
+    localUserId: number
 }
 
 export default function StatisticsViewTotals({
     timeLogs,
+    localUserId,
 }: StatisticsViewTotalsProps) {
     const [weekTotal, setWeekTotal] = useState(0)
     const [allTimeTotal, setAllTimeTotal] = useState(0)
@@ -18,6 +21,7 @@ export default function StatisticsViewTotals({
     useEffect(() => {
         if (timeLogs) {
             console.log('timeLogs: ')
+            getAllLocalTimeLogs(localUserId)
             const weekAgo = getDateNdaysAgo(7)
             const countWeekTotal = timeLogs.reduce((sum, timeLog) => {
                 return timeLog.date > weekAgo
@@ -34,7 +38,7 @@ export default function StatisticsViewTotals({
     return (
         <View style={styles.container}>
             <Text style={styles.text}>
-                last 7 days: {formatTotalTime(weekTotal, false)}
+                7 days: {formatTotalTime(weekTotal, false)}
             </Text>
         </View>
     )

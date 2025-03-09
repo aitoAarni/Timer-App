@@ -10,7 +10,7 @@ import SwipeNavigation from './SwipeNavigation'
 import useNavigateTo from '@/hooks/useNavigateTo'
 import LeaderBoard from './LeaderBoard'
 import ErrorBox from './ErrorBox'
-import { getLocalTimeLogs } from '@/services/timeLogServices'
+import { getLocalTimeLogsAfterDate } from '@/services/timeLogServices'
 import { useFocusEffect } from 'expo-router'
 import StatisticsViewTotals from './StatisticsViewTotals'
 import { getDateNdaysAgo } from '@/utils/utils'
@@ -31,7 +31,7 @@ export default function StatisticsView() {
                 if (!user) return
                 try {
                     const monthAgo = getDateNdaysAgo(30)
-                    const datesData = await getLocalTimeLogs(user.id, monthAgo)
+                    const datesData = await getLocalTimeLogsAfterDate(user.id, monthAgo)
                     setData(datesData)
                 } catch (error) {
                     console.error('error in StatisticsView', error)
@@ -63,7 +63,7 @@ export default function StatisticsView() {
                 setErrorMessage={setErrorMessage}
                 errorMessage={errorMessage}
             />
-            <StatisticsViewTotals timeLogs={data}/>
+            <StatisticsViewTotals timeLogs={data} localUserId={user.id}/>
             {data ? (
                 <AreaChartView data={data} />
             ) : (

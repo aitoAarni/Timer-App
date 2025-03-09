@@ -1,7 +1,7 @@
 import {
     addRemoteTimeLog,
     addLocalTimeLog,
-    getLocalTimeLogs,
+    getLocalTimeLogsAfterDate,
     getLocalTimeLogById,
 } from '@/services/timeLogServices'
 import { StorageUser } from '@/types'
@@ -138,12 +138,12 @@ describe('Time Log Storage Functions', () => {
         })
     })
 
-    describe('getLocalTimeLogs', () => {
+    describe('getLocalTimeLogsAfterDate', () => {
         it('should fetch time logs and transform them', async () => {
             const mockLogs = [{ date: '2025-03-05', duration: 1200 }]
             ;(fetchAll as jest.Mock).mockResolvedValue(mockLogs)
 
-            const result = await getLocalTimeLogs(1, '2025-02-02')
+            const result = await getLocalTimeLogsAfterDate(1, '2025-02-02')
 
             expect(fetchAll).toHaveBeenCalledWith(getTimeLogsAfterDateQuery, [
                 1,
@@ -158,7 +158,7 @@ describe('Time Log Storage Functions', () => {
                 new Error('DB fetch failed')
             )
 
-            await expect(getLocalTimeLogs(1, '2025-02-02')).rejects.toThrow(
+            await expect(getLocalTimeLogsAfterDate(1, '2025-02-02')).rejects.toThrow(
                 'DB fetch failed'
             )
         })

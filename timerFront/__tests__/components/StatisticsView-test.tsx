@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 import { act } from 'react-test-renderer'
 import { Text } from 'react-native'
-import { getLocalTimeLogs } from '@/services/timeLogServices'
+import { getLocalTimeLogsAfterDate } from '@/services/timeLogServices'
 import { NavigationContainer } from '@react-navigation/native'
 
 jest.mock('react-redux', () => ({
@@ -20,7 +20,7 @@ jest.mock('react-redux', () => ({
 jest.mock('@/hooks/useNavigateTo', () => () => jest.fn())
 
 jest.mock('@/services/timeLogServices', () => ({
-    getLocalTimeLogs: jest.fn(),
+    getLocalTimeLogsAfterDate: jest.fn(),
 }))
 
 jest.mock('@/utils/dataHandlers', () => ({
@@ -73,7 +73,7 @@ describe('StatisticsView', () => {
         }
         const mockData = [{ date: '2025-02-28', duration: 30 }]
         const mockTransformedData = { transformedData: mockData, maxValue: 100 }
-        getLocalTimeLogs.mockResolvedValue(mockData)
+        getLocalTimeLogsAfterDate.mockResolvedValue(mockData)
         transformDatesAndDurationDataForChart.mockReturnValue(
             mockTransformedData
         )
