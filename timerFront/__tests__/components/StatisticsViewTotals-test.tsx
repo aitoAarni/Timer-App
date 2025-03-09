@@ -1,7 +1,6 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react-native'
+import { render } from '@testing-library/react-native'
 import StatisticsViewTotals from '@/components/StatisticsViewTotals'
-import { getAllLocalTimeLogsLength } from '@/services/timeLogServices'
 jest.mock('@/services/timeLogServices', () => ({
     getAllLocalTimeLogsLength: jest.fn(),
 }))
