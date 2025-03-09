@@ -20,11 +20,14 @@ describe('format', () => {
 describe('formatTotalTime', () => {
     it('should format milliseconds correctly into ', () => {
         expect(formatTotalTime(0)).toBe('0s')
+        expect(formatTotalTime(0, false)).toBe('0m')
+        expect(formatTotalTime(0, false, false)).toBe('0h')
         expect(formatTotalTime(1000, true, false, false)).toBe('01s')
         expect(formatTotalTime(60000)).toBe('01m')
         expect(formatTotalTime(3600000)).toBe('01h')
         expect(formatTotalTime(3661000)).toBe('01h 01m 01s')
         expect(formatTotalTime(86399000)).toBe('23h 59m 59s')
+
     })
 
     it('should handle large durations correctly', () => {
