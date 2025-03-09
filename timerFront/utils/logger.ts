@@ -8,6 +8,7 @@ class TimeLogger {
         this.categoryId = categoryId
     }
     async addTimeLog(timeMs: number) {
+        console.log("addTimeLog called with: ", timeMs)
         const state = store.getState()
         const user = state.user.loggedInUser
 

@@ -13,4 +13,5 @@ export const getTimeLogsAfterDateQuery = `SELECT
     ORDER BY DATE(created_at) DESC;
 `
 
+
 export const getTimeLogByIdQuery = 'SELECT * FROM timer WHERE id = ?;'

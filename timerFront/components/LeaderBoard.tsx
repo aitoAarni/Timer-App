@@ -156,7 +156,7 @@ const Item = ({
         >
             <Text
                 style={[
-                    styles.itemText,
+                    styles.rankingText,
                     item.user_id === currentUserId
                         ? {
                               color: theme.colors.highlight,
@@ -168,7 +168,7 @@ const Item = ({
             </Text>
             <Text
                 style={[
-                    styles.itemText,
+                    styles.timeText,
                     item.user_id === currentUserId
                         ? {
                               color: theme.colors.highlight,
@@ -180,7 +180,7 @@ const Item = ({
             </Text>
             <Text
                 style={[
-                    styles.itemText,
+                    styles.usernameText,
                     item.user_id === currentUserId
                         ? {
                               color: theme.colors.highlight,
@@ -230,8 +230,18 @@ const styles = StyleSheet.create({
     itemContainer: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
-    itemText: { fontSize: 20, flex: 1, color: theme.colors.text },
+    rankingText: { fontSize: 18, flex: 1, color: theme.colors.text },
+    usernameText: {
+        fontSize: 18,
+        flex: 2,
+        color: theme.colors.text,
+        textAlign: 'center',
+    },
+    timeText: {
+        fontSize: 18,
+        flex: 2,
+        color: theme.colors.text,
+        textAlign: 'right',
+    },
 })

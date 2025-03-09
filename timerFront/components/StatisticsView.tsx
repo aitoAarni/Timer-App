@@ -2,8 +2,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useCallback, useState } from 'react'
 import AreaChartView from './AreaChartView'
-import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
-import { AreaChartData, DisplayTimeLogs } from '@/types'
+import {  DisplayTimeLogs } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import theme from '@/theme'
@@ -64,7 +63,7 @@ export default function StatisticsView() {
                 setErrorMessage={setErrorMessage}
                 errorMessage={errorMessage}
             />
-            <StatisticsViewTotals />
+            <StatisticsViewTotals timeLogs={data}/>
             {data ? (
                 <AreaChartView data={data} />
             ) : (

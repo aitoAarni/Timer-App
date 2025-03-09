@@ -4,7 +4,7 @@ import {
     getTimeLogsAfterDateQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
-import { StorageUser } from '@/types'
+import { StorageUser, TimeLogged } from '@/types'
 import { BACK_END_URL } from '@/utils/environment'
 import { toDisplayTimeLog, toLocalTimeLogSchema } from '@/utils/validators'
 
@@ -61,6 +61,18 @@ export const getLocalTimeLogs = async (
             localUserId,
             afterDate,
         ])
+        const debugResponse = await fetchAll(
+            `SELECT * FROM timer WHERE user_id = ?;`,
+            [localUserId]
+        ) as TimeLogged[]
+        console.log()
+        debugResponse.forEach(timelog => {
+            console.log(
+                `date: ${timelog?.created_at} duration: ${
+                    timelog?.duration / 1000
+                } userId: ${timelog?.user_id}`
+            )
+        })
         const displayTimeLogs = toDisplayTimeLog(response)
         return displayTimeLogs
     } catch (error) {
