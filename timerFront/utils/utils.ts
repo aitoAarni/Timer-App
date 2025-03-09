@@ -6,4 +6,4 @@ export const getDateNdaysAgo = (n: number ) => {
     const dateString = date.toISOString().split("T")[0]
     return dateString
 
-}
+}   
