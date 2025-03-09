@@ -62,18 +62,6 @@ export const getLocalTimeLogsAfterDate = async (
             localUserId,
             afterDate,
         ])
-        const debugResponse = (await fetchAll(
-            `SELECT * FROM timer WHERE user_id = ?;`,
-            [localUserId]
-        )) as TimeLogged[]
-        console.log()
-        debugResponse.forEach(timelog => {
-            console.log(
-                `date: ${timelog?.created_at} duration: ${
-                    timelog?.duration / 1000
-                } userId: ${timelog?.user_id}`
-            )
-        })
         const displayTimeLogs = toDisplayTimeLog(response)
         return displayTimeLogs
     } catch (error) {
@@ -92,7 +80,14 @@ export const getLocalTimeLogById = async (rowId: number) => {
     }
 }
 
-export const getAllLocalTimeLogs = async (userId: number) => {
+export const getAllLocalTimeLogsLength = async (userId: number) => {
     const response = await fetchOne(getTotalTimeLogsDurationQuery, [userId])
-    console.log("respones: ", response)
+    if (
+        response &&
+        typeof response === 'object' &&
+        'total_duration' in response
+    ) {
+        return response.total_duration as number
+    }
+    throw new Error('total duration fetch failed')
 }

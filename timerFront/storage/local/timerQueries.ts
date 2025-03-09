@@ -10,7 +10,7 @@ export const getTimeLogsAfterDateQuery = `SELECT
     GROUP BY DATE(created_at)
     ORDER BY DATE(created_at) DESC;
 `
-export const getTotalTimeLogsDurationQuery = `SELECT SUM(duration) AS total_time
+export const getTotalTimeLogsDurationQuery = `SELECT SUM(duration) AS total_duration
 FROM timer
 WHERE user_id = ?;
 `

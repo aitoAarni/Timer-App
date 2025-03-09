@@ -197,7 +197,7 @@ const Item = ({
 const styles = StyleSheet.create({
     container: { marginTop: 30,  height: 400 },
 
-    headerText: { fontSize: 24, marginBottom: 1 },
+    headerText: { fontSize: 20, marginBottom: 1 },
     inputRow: {
         flexDirection: 'row',
         justifyContent: 'center',

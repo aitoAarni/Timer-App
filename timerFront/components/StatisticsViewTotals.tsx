@@ -4,17 +4,19 @@ import { DisplayTimeLogs } from '@/types'
 import { useCallback, useState } from 'react'
 import { getDateNdaysAgo } from '@/utils/utils'
 import { formatTotalTime } from '@/utils/format'
-import { getAllLocalTimeLogs } from '@/services/timeLogServices'
+import { getAllLocalTimeLogsLength } from '@/services/timeLogServices'
 import { useFocusEffect } from 'expo-router'
 
 interface StatisticsViewTotalsProps {
     timeLogs: DisplayTimeLogs | null
     localUserId: number
+    setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 export default function StatisticsViewTotals({
     timeLogs,
     localUserId,
+    setErrorMessage,
 }: StatisticsViewTotalsProps) {
     const [weekTotal, setWeekTotal] = useState(0)
     const [allTimeTotal, setAllTimeTotal] = useState(0)
@@ -22,8 +24,15 @@ export default function StatisticsViewTotals({
     useFocusEffect(
         useCallback(() => {
             if (timeLogs) {
-                console.log('timeLogs: ')
-                getAllLocalTimeLogs(localUserId)
+                getAllLocalTimeLogsLength(localUserId)
+                    .then(response => {
+                        setAllTimeTotal(response)
+                    })
+                    .catch(reason => {
+                        console.log("reason: ", reason)
+                        const errorMessage = reason instanceof Error ? reason.message : String(reason)
+                        setErrorMessage(errorMessage)
+                    })
                 const weekAgo = getDateNdaysAgo(7)
                 const countWeekTotal = timeLogs.reduce((sum, timeLog) => {
                     return timeLog.date > weekAgo
@@ -31,10 +40,6 @@ export default function StatisticsViewTotals({
                         : sum
                 }, 0)
                 setWeekTotal(countWeekTotal)
-
-                timeLogs.forEach(log => {
-                    console.log(log)
-                })
             }
         }, [timeLogs])
     )
@@ -44,7 +49,7 @@ export default function StatisticsViewTotals({
                 <Text style={styles.text}>All time</Text>
 
                 <Text style={styles.text}>
-                    {formatTotalTime(weekTotal, false)}
+                    {formatTotalTime(allTimeTotal, false)}
                 </Text>
             </View>
             <View style={styles.textContainer}>

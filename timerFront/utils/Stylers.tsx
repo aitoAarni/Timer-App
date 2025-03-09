@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import { formatTotalTime } from './format'
 
 export const DataPointLabel = ({ val }: { val: number }) => {
-    console.log(formatTotalTime(val, false))
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{formatTotalTime(val, false)}</Text>

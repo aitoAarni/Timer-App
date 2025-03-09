@@ -63,7 +63,7 @@ export default function StatisticsView() {
                 setErrorMessage={setErrorMessage}
                 errorMessage={errorMessage}
             />
-            <StatisticsViewTotals timeLogs={data} localUserId={user.id}/>
+            <StatisticsViewTotals timeLogs={data} localUserId={user.id} setErrorMessage={setErrorMessage}/>
             {data ? (
                 <AreaChartView data={data} />
             ) : (
