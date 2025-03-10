@@ -4,7 +4,6 @@ export const RemoteLoggedInUserSchema = z.object({
     id: z.string(),
     username: z.string().min(3).max(20),
     token: z.string(),
-    times: z.array(z.string()),
 })
 
 export const toRemoteLoggedInUser = (user: unknown) => {

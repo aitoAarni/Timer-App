@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 const { Schema, model } = mongoose
 
-
-
 const userSchema = new Schema({
     username: {
         type: String,
@@ -18,12 +16,6 @@ const userSchema = new Schema({
         default: () => Date.now(),
         immutable: true,
     },
-    times: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'TimeLog',
-        },
-    ],
 })
 
 userSchema.set('toJSON', {
