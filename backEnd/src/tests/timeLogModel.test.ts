@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import TimeLog from '../models/timeLogModel'
 
 describe('TimeLog Model', () => {
-    test('validates correct date format', () => {
+    it('validates correct date format', () => {
         const log = new TimeLog({
             created_at: '2025-03-10',
             duration: 300,
@@ -11,7 +11,7 @@ describe('TimeLog Model', () => {
         expect(log.validateSync()).toBeUndefined()
     })
 
-    test('rejects invalid date format', () => {
+    it('rejects invalid date format', () => {
         const log = new TimeLog({
             created_at: 'invalid-date',
             duration: 60,
