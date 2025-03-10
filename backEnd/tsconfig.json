@@ -6,6 +6,8 @@
         "strict": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
-        "esModuleInterop": true
-    }
+        "esModuleInterop": true,
+        "baseUrl": "src"
+    },
+    "include": ["src"]
 }

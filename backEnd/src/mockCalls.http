@@ -2,7 +2,7 @@ POST http://localhost:3000/api/user/create
 Content-Type: application/json
 
 {
-    "username": "bruh boi",
+    "username": "uzumaki",
     "password": "password"
 }
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
     "password": "password",
-    "username": "bro"
+    "username": "uzumaki"
 }
 ###
 
