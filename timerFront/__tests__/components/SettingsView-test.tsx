@@ -2,19 +2,23 @@
 import { render, screen, fireEvent } from '@testing-library/react-native'
 import SettingsView from '@/components/SettingsView'
 import React from 'react'
-import { updateSettings } from '@/redux/settingsSlice'
-
-jest.mock('react-native-reanimated', () =>
-    require('react-native-reanimated/mock')
-)
 
 let mockUpdateSettings = jest.fn()
+
+jest.mock('@/redux/store', () => ({
+    dispatch: jest.fn(),
+}))
+
 jest.mock('@/redux/settingsSlice', () => ({
     updateSettings: (...args) => {
         return mockUpdateSettings(...args)
     },
-}))
 
+    fetchSettings: jest.fn().mockReturnValue({})
+}))
+jest.mock('react-native-reanimated', () =>
+    require('react-native-reanimated/mock')
+)
 let mockNavigateTo = jest.fn()
 jest.mock('@/hooks/useNavigateTo', () => {
     return () => {
@@ -41,6 +45,13 @@ jest.mock('react-redux', () => ({
     },
 }))
 
+jest.mock('@expo/vector-icons/Feather', () => {
+    return (props: React.ComponentProps<'svg'>) => {
+        return <svg {...props} />
+    }
+})
+
+
 describe('SettingsView', () => {
     beforeEach(() => {
         jest.clearAllMocks()
@@ -63,7 +74,6 @@ describe('SettingsView', () => {
 describe('TimerSlider', () => {
     beforeEach(() => {
         jest.clearAllMocks()
-
         mockUseSelector.mockReturnValue({
             workTimeLength: 25,
             breakTimeLength: 5,

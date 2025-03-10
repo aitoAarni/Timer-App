@@ -15,7 +15,6 @@ describe('validators', () => {
                 id: 'e3e32wfd2r',
                 username: 'username',
                 token: 'mockToken1343',
-                times: ['fakeId'],
             }
         })
         it('should parse correct user', () => {
@@ -34,10 +33,7 @@ describe('validators', () => {
             user.token = 234
             expect(() => toRemoteLoggedInUser(user)).toThrow()
         })
-        it('should throw an error for invalid times', () => {
-            user.times = 'times'
-            expect(() => toRemoteLoggedInUser(user)).toThrow()
-        })
+   
     })
     describe('toStorageUser', () => {
         let user

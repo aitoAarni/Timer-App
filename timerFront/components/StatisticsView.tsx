@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import Text from './Text'
 import { useCallback, useState } from 'react'
 import AreaChartView from './AreaChartView'
-import {  DisplayTimeLogs } from '@/types'
+import { DisplayTimeLogs } from '@/types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import theme from '@/theme'
@@ -14,6 +14,7 @@ import { getLocalTimeLogsAfterDate } from '@/services/timeLogServices'
 import { useFocusEffect } from 'expo-router'
 import StatisticsViewTotals from './StatisticsViewTotals'
 import { getDateNdaysAgo } from '@/utils/utils'
+import ModalView from './ModalView'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | DisplayTimeLogs>(null)
@@ -31,7 +32,10 @@ export default function StatisticsView() {
                 if (!user) return
                 try {
                     const monthAgo = getDateNdaysAgo(30)
-                    const datesData = await getLocalTimeLogsAfterDate(user.id, monthAgo)
+                    const datesData = await getLocalTimeLogsAfterDate(
+                        user.id,
+                        monthAgo
+                    )
                     setData(datesData)
                 } catch (error) {
                     console.error('error in StatisticsView', error)
@@ -63,7 +67,11 @@ export default function StatisticsView() {
                 setErrorMessage={setErrorMessage}
                 errorMessage={errorMessage}
             />
-            <StatisticsViewTotals timeLogs={data} localUserId={user.id} setErrorMessage={setErrorMessage}/>
+            <StatisticsViewTotals
+                timeLogs={data}
+                localUserId={user.id}
+                setErrorMessage={setErrorMessage}
+            />
             {data ? (
                 <AreaChartView data={data} />
             ) : (
@@ -76,7 +84,7 @@ export default function StatisticsView() {
                 userId={user.server_id}
                 setErrorMessage={setErrorMessage}
             />
-            <SwipeNavigation leftSwipeCallback={navigateLeft}></SwipeNavigation>
+            
         </View>
     )
 }

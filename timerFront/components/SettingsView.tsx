@@ -18,17 +18,15 @@ import useNavigateTo from '@/hooks/useNavigateTo'
 import { useSharedValue } from 'react-native-reanimated'
 import { Slider } from 'react-native-awesome-slider'
 import { setSettings } from '@/services/settingServices'
+import ModalView from './ModalView'
 export default function SettingsView() {
     const navigateRight = useNavigateTo({
         pathname: '/',
         params: { from: 'settings' },
     })
     return (
-        <SwipeNavigation
-            style={styles.container}
-            rightSwipeCallback={navigateRight}
-        >
-            <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
+            <SwipeNavigation rightSwipeCallback={navigateRight}>
                 <TimerSlider
                     settingsKey="workTimeLength"
                     style={{ marginBottom: 30 }}
@@ -40,8 +38,9 @@ export default function SettingsView() {
                     minimumValue={1}
                     maximumValue={20}
                 />
-            </ScrollView>
-        </SwipeNavigation>
+            </SwipeNavigation>
+            <ModalView />
+        </View>
     )
 }
 
@@ -150,9 +149,7 @@ const TimerSlider = function ({
 }
 
 const styles = StyleSheet.create({
-    container: { paddingTop: 30 },
-
-    scrollView: { flexGrow: 1 },
+    container: { paddingTop: 30, flexGrow: 1 },
 
     timerSliderContainer: {
         alignItems: 'center',
