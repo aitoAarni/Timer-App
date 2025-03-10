@@ -16,7 +16,6 @@ describe('Ranking Router', () => {
     beforeAll(async () => {
         await TimeLog.deleteMany({})
         await User.deleteMany({})
-        const users = await User.find({})
 
         const userOne = await new User({
             username: 'testUser1',
@@ -38,8 +37,6 @@ describe('Ranking Router', () => {
             { created_at: '2025-03-10', duration: 5000, user_id: user1Id },
             { created_at: '2025-03-10', duration: 3000, user_id: user2Id },
         ])
-
-        const users2 = await User.find({})
     })
 
     afterAll(async () => {
@@ -61,20 +58,20 @@ describe('Ranking Router', () => {
 
     test('GET /api/ranking/:date/:user_id should return 404 for non-existing user', async () => {
         const nonExistentUser = new mongoose.Types.ObjectId()
-        const response = await request(app).get(
-            `/api/ranking/2025-03-10/${nonExistentUser.toString()}`
-        )
+        const response = await request(app)
+            .get(`/api/ranking/2025-03-10/${nonExistentUser.toString()}`)
+            .set('Authorization', user2Token)
 
         expect(response.status).toBe(400)
-        expect(response.body.error).toBe('unknown error on the server')
+        expect(response.body.error).toBe('No ranking information for user')
     })
 
     test('GET /api/ranking/:date/:user_id should return 500 for date with no logs', async () => {
-        const response = await request(app).get(
-            `/api/ranking/2026-01-01/${user1Id.toString()}`
-        )
+        const response = await request(app)
+            .get(`/api/ranking/2026-01-01/${user1Id.toString()}`)
+            .set('Authorization', user2Token)
 
         expect(response.status).toBe(400)
-        expect(response.body.error).toBe('unknown error on the server')
+        expect(response.body.error).toBe('No ranking information for user')
     })
 })
