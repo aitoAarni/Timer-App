@@ -24,6 +24,7 @@ jobs:
         SALT_ROUNDS: ${{ secrets.SALT_ROUNDS }}
         TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
         SECRET: ${{ secrets.SECRET }}
+        PORT: ${{ secrets.PORT }}
       steps:
           - name: Checkout repository
             uses: actions/checkout@v3
