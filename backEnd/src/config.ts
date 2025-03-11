@@ -15,3 +15,6 @@ export const SECRET = getEnvVar('SECRET')
 export const DATABASE_URI = getEnvVar(
     process.env.NODE_ENV === 'test' ? 'TEST_MONGODB_URI' : 'MONGODB_URI'
 )
+
+const port_string = getEnvVar('PORT')
+export const PORT = isNaN(Number(port_string)) ? 3000 : Number(port_string)

@@ -7,7 +7,6 @@ const isValidDateTime = (value: string): boolean => {
     }
 
     const [year, month, day] = value.split('-').map(Number)
-    console.log(year, month, day)
     const date = new Date(year, month - 1, day)
 
     return (

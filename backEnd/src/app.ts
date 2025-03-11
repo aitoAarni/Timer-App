@@ -4,7 +4,6 @@ import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
 import timeRouter from './routes/timeLogRouter'
-import { toTimeLog } from './utils'
 import rankingRouter from './routes/rankingRouter'
 
 if (!DATABASE_URI) {
@@ -35,7 +34,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.post('/ping', (_req, res) => {
     console.log('someone pinged here')
-    res.send('pong')
+    res.send('pong').status(200)
 })
 
 app.use('/api/user', userRouter)

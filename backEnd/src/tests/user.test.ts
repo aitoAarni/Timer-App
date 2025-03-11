@@ -12,7 +12,6 @@ describe('test user creation and login', () => {
     const api = supertest(app)
     afterAll(async () => {
         await mongoose.connection.close()
-        console.log('closing connection')
     })
     beforeEach(async () => {
         await User.deleteMany({})
