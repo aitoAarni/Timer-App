@@ -3,7 +3,8 @@
     "main": "expo-router/entry",
     "version": "1.0.0",
     "scripts": {
-        "start": "expo start",
+        "start": "NODE_ENV=production npx expo start",
+        "dev": "expo start",
         "start:e2e": "NODE_ENV=test npx expo start",
         "reset-project": "node ./scripts/reset-project.js",
         "android": "expo run:android",
