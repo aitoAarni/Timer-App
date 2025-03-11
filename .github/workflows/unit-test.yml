@@ -1,10 +1,10 @@
-name: Unite test flow
+name: Unit test flow
 on:
     push:
         branches: [main]
 
 jobs:
-    unit-test:
+    frontend-tests:
         runs-on: ubuntu-latest
         steps:
             - name: Setup repository
@@ -17,3 +17,17 @@ jobs:
             - name: Run unit-tests
               run: npm run test-ci
               working-directory: ./timerFront
+
+    backend-tests:
+      runs-on: ubuntu-latest
+      steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Install backend dependencies
+            run: npm install
+            working-directory: ./backEnd
+
+          - name: Run backend unit tests
+            run: npm run test
+            working-directory: ./backEnd
