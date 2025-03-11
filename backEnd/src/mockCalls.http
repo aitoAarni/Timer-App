@@ -29,8 +29,8 @@ Content-Type: application/json
 ###
 
 POST http://localhost:3000/ping
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3YzIyY2RmNzIzOGJhNzZhYSIsInVzZXJuYW1lIjoiYnJvIiwiaWF0IjoxNzQwNDAzOTAwLCJleHAiOjE3NDE2MTM1MDB9.3qpHkuTRmgkhEB02JOxpnGH_MbP4aS5l6S1PDBHaYDM
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjYyOGQ3YzIyY2RmNzIzOGJhNzZhYSIsInVzZXJuYW1lIjoiYnJvIiwiaWF0IjoxNzQwNDAzOTAwLCJleHAiOjE3NDE2MTM1MDB9.3qpHkuTRmgkhEB02JOxpnGH_MbP4aS5l6S1PDBHaYDM
 
 ###
 

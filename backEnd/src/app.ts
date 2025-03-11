@@ -29,7 +29,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     console.log('Request URL: ', req.url)
     console.log('Request Body: ', req.body)
     console.log('Request Query Params: ', req.query)
-    console.log('Request Headers: ', req.headers)
+    console.log(new Date().toUTCString())
     next()
 })
 
