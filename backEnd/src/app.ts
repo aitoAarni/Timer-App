@@ -23,6 +23,7 @@ mongoose
 const app = express()
 
 app.use(express.json())
+
 app.use((req: Request, res: Response, next: NextFunction) => {
     console.log('Request Method: ', req.method)
     console.log('Request URL: ', req.url)
