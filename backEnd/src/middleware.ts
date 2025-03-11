@@ -37,7 +37,8 @@ export const authMiddleware = async (
 }
 
 export const unknownEndpoint = (req: Request, res: Response) => {
-    res.status(404).send({ error: 'unknown endpoint' })
+    console.log("at unknown endpoint: ", req.url)
+    res.status(404).send({ error: '404 unknown endpoint' })
 }
 
 export const errorHandler = (
