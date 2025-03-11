@@ -32,7 +32,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     console.log(new Date().toUTCString())
     next()
 })
-
+// test
 app.get('/ping', (_req, res) => {
     console.log('someone pinged here')
     res.send('pong').status(200)
