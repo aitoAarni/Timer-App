@@ -5,6 +5,11 @@ jest.mock('@/redux/store', () => ({
     getState: jest.fn(),
 }))
 
+jest.mock("@/utils/environment", () => ({
+    BACK_END_URL: "http://192.168.1.120:3000"
+}))
+
+
 describe('getRankings', () => {
     const userId = '123'
     const date = '2024-02-28'
