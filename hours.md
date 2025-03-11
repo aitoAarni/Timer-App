@@ -59,3 +59,4 @@
 | 7.3.2025   | 1.5h   | unit tests and refactoring                                                                    |
 | 8.3.2025   | 2.5h   | adding unit tests and fixing bugs                                                             |
 | 9.3.2025   | 4h     | refactor code, add unite tests and create a new component to show past 7 days and total hours |
+| 10.3.2025  | 3h     | refactor code, create unit tests, fix a bug                                                   |
