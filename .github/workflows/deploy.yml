@@ -1,0 +1,13 @@
+name: Deploy to production
+on:
+    push:
+        branches: [main] 
+    pull_request:
+
+jobs:
+    deploy:
+        
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger Deployment
+              run: curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK }}
