@@ -33,31 +33,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next()
 })
 
-app.post(
-    '/ping',
-    /* async */ (_req, res, next) => {
-        console.log('someone pinged here')
-        const t = {
-            created_at: '2025-03-02',
-            duration: 10000,
-            user_id: '67b628d7c22cdf7238ba76aa',
-        }
-        console.log(toTimeLog(t))
-        res.send('pong')
-        try {
-            // const timelog = new TimeLog({
-            //     created_at: '2025-03-02',
-            //     duration: 10000,
-            //     user_id: '67b628d7c22cdf7238ba76aa',
-            // })
-            // const saved = await timelog.save()
-            // console.log(saved)
-            // res.status(201).send(saved.toJSON())
-        } catch (error) {
-            next(error)
-        }
-    }
-)
+app.post('/ping', (_req, res) => {
+    console.log('someone pinged here')
+    res.send('pong')
+})
 
 app.use('/api/user', userRouter)
 app.use('/api/timelog', timeRouter)
