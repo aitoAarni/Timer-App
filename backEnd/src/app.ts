@@ -1,5 +1,5 @@
 import { DATABASE_URI } from './config'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { errorHandler, unknownEndpoint } from './middleware'
@@ -24,14 +24,6 @@ const app = express()
 
 app.use(express.json())
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log('Request Method: ', req.method)
-    console.log('Request URL: ', req.url)
-    console.log('Request Body: ', req.body)
-    console.log('Request Query Params: ', req.query)
-    console.log('Request Headers: ', req.headers)
-    next()
-})
 
 app.post('/ping', (_req, res) => {
     console.log('someone pinged here')
