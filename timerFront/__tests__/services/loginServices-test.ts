@@ -1,11 +1,14 @@
 import remoteLogin from '@/services/loginServices'
-import { BACK_END_URL } from '@/utils/environment'
 import { toRemoteLoggedInUser } from '@/utils/validators'
 
 global.fetch = jest.fn()
 
 jest.mock('@/utils/validators', () => ({
     toRemoteLoggedInUser: jest.fn(),
+}))
+
+jest.mock("@/utils/environment", () => ({
+    BACK_END_URL: "http://192.168.1.120:3000"
 }))
 
 describe('remoteLogin', () => {

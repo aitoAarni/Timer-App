@@ -12,6 +12,7 @@ import { TimerProvider } from '@/contexts/TimerContext'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import initializeStorage from '@/storage/local/initializeStorage'
+import { ping } from '@/services/pingService'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -26,7 +27,7 @@ export default function RootLayout() {
     })
     useEffect(() => {
         const initialize = async () => {
-
+            await ping()
             initializeStorage().then(() => {
 
                 setIsInitializing(false)

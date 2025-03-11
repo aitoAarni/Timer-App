@@ -43,6 +43,11 @@ jest.mock('@/utils/validators', () => ({
     }),
 }))
 
+jest.mock("@/utils/environment", () => ({
+    BACK_END_URL: "http://192.168.1.120:3000"
+}))
+
+
 describe('User Storage Functions', () => {
     let consoleErrorSpy: jest.SpyInstance
     beforeEach(() => {

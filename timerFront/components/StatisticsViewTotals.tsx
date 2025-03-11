@@ -29,7 +29,6 @@ export default function StatisticsViewTotals({
                         setAllTimeTotal(response)
                     })
                     .catch(reason => {
-                        console.log("reason: ", reason)
                         const errorMessage = reason instanceof Error ? reason.message : String(reason)
                         setErrorMessage(errorMessage)
                     })
