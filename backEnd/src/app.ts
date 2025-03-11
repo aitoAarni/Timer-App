@@ -33,6 +33,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next()
 })
 // test
+// another test
 app.get('/ping', (_req, res) => {
     console.log('someone pinged here')
     res.send('pong').status(200)
