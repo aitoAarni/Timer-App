@@ -86,4 +86,31 @@ describe('test user creation and login', () => {
             expect(response.body.error).toContain('Credentials are incorrect')
         })
     })
+    describe('User remove', () => {
+        it('should remove an existing user with correct credentials', async () => {
+            const newUser = { username: 'testuser', password: 'password123' }
+            await api.post('/api/user/create').send(newUser).expect(201)
+
+            const response = await api
+                .delete('/api/user/remove')
+                .send(newUser)
+                .expect(200)
+            expect(response.body).toEqual({
+                message: 'User deleted successfully',
+            })
+        })
+        it('should return 400 for incorrect user credentials', async () => {
+            const incorrectUser = {
+                username: 'nope',
+                password: 'not a real one',
+            }
+            const response = await api
+                .delete('/api/user/remove')
+                .send(incorrectUser)
+                .expect(400)
+            expect(response.body).toEqual({
+                error: 'Credentials are incorrect',
+            })
+        })
+    })
 })

@@ -4,6 +4,7 @@ import { toUserCredentials } from '../utils'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel'
 import { SECRET, SALT_ROUNDS } from '../config'
+import TimeLog from '../models/timeLogModel'
 
 const router = express.Router()
 
@@ -37,6 +38,28 @@ router.post('/login', async (req, res, next) => {
         const token = jwt.sign(userForToken, SECRET, { expiresIn: '14d' })
         const response = { ...user.toJSON(), token }
         res.status(201).send(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.delete('/remove', async (req, res, next) => {
+    try {
+        const { username, password } = toUserCredentials(req.body)
+        const user = await User.findOne({ username }).exec()
+        const passwordCorrect =
+            typeof user?.passwordHash === 'string'
+                ? await bcrypt.compare(password, user.passwordHash)
+                : false
+        if (!passwordCorrect || !user) {
+            throw new Error('Credentials are incorrect')
+        }
+
+
+        
+        await User.deleteOne({ _id: user._id })
+        await TimeLog.deleteMany({ user_id: user._id })
+        res.status(200).json({ message: 'User deleted successfully' })
     } catch (error) {
         next(error)
     }

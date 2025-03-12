@@ -40,7 +40,6 @@ rankingRouter.get(
                     username: log.user_id.username,
                     duration: log.duration,
                 }))
-
             res.json({
                 userRank: userIndex + 1,
                 userDuration: rankings[userIndex].duration,
