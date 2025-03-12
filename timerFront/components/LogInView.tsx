@@ -135,7 +135,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
             >
                 <Text style={styles.button}>Create an account</Text>
             </TouchableOpacity>
-            {users && users.length && (
+            {users && users.length ? (
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     style={styles.flatList}
@@ -151,7 +151,7 @@ export default function LogInView({ setLogin }: LogInViewProps) {
                     )}
                     keyExtractor={user => String(user.id)}
                 />
-            )}
+            ) : null}
         </View>
     )
 }
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
     },
     text: { fontSize: 20, color: theme.colors.grayLight },
-    button: { width: '100%', color: theme.colors.grayLight, fontSize: 30 },
+    button: { width: '100%' , color: theme.colors.grayLight, fontSize: 30},
     listHeader: {
         fontSize: 24,
         color: theme.colors.grayLight,
