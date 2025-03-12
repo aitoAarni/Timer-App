@@ -1,0 +1,16 @@
+appId: com.isovertti.timerFront
+---
+- runFlow: utility/setup.yaml
+- tapOn:
+      id: 'modal-view'
+- tapOn: 'Login'
+- tapOn: 'test_user'
+- tapOn:
+    text: '24:59'
+    retryTapIfNoChange: false
+- extendedWaitUntil:
+      visible: '24:57'
+      timeout: 3200
+- tapOn: '24:55'
+- tapOn: Statistics
+- assertVisible: test_user
