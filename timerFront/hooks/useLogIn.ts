@@ -9,7 +9,6 @@ import {
     getLocalUserByUsername,
     removeLocalUser,
 } from '@/services/userServices'
-import { RemoteLoggedInUserSchema } from '@/utils/validators'
 
 const useLogIn = () => {
     const dispatch = useDispatch()

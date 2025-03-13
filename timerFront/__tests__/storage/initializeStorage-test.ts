@@ -6,7 +6,7 @@ import { clearUser } from '@/redux/userSlice'
 import AuthStorage from '@/services/authStorageServices'
 import store from '@/redux/store'
 import { updateSettings } from '@/redux/settingsSlice'
-import { createLocalUser } from '@/services/userServices'
+import createUser from '@/services/userServices'
 
 jest.mock('@/storage/local/db', () => ({
     initializeDatabase: jest.fn(),
@@ -22,16 +22,21 @@ jest.mock('@/services/settingServices', () => ({
 
 jest.mock('@/utils/environment', () => ({
     isTest: jest.fn(),
+    BACK_END_URL: 'http://192.168.1.120:3000',
 }))
 
-jest.mock('@/services/userServices', () => ({
-    createLocalUser: jest.fn(),
-}))
+jest.mock('@/services/userServices', () => {
+    return jest.fn()
+})
 
 jest.mock('@/services/authStorageServices')
 jest.mock('@/redux/store', () => ({
     dispatch: jest.fn(),
 }))
+
+global.fetch = jest.fn().mockResolvedValue({
+    ok: true,
+})
 
 describe('initializeStorage', () => {
     beforeEach(() => {
@@ -57,11 +62,7 @@ describe('initializeStorage', () => {
 
         await initializeStorage()
 
-        expect(createLocalUser).toHaveBeenCalledWith(
-            'test_user',
-            'password',
-            null
-        )
+        expect(createUser).toHaveBeenCalledWith('test_user', 'password')
         expect(clearSettings).toHaveBeenCalled()
         expect(getSettings).toHaveBeenCalled()
         expect(store.dispatch).toHaveBeenCalledWith(
