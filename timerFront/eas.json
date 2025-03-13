@@ -1,31 +1,35 @@
 {
-    "cli": {
-        "version": ">= 14.2.0",
-        "appVersionSource": "remote"
+  "cli": {
+    "version": ">= 14.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development-sim": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "channel": "development-sim"
     },
-    "build": {
-        "development-sim": {
-            "distribution": "internal",
-            "ios": {
-                "simulator": true
-            }
-        },
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal"
-        },
-        "preview": {
-            "distribution": "internal",
-            "extends": "production",
-            "env": {
-                "EXPO_PUBLIC_TESTING": "false"
-            }
-        },
-        "production": {
-            "autoIncrement": true
-        }
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development"
     },
-    "submit": {
-        "production": {}
+    "preview": {
+      "distribution": "internal",
+      "extends": "production",
+      "env": {
+        "EXPO_PUBLIC_TESTING": "false"
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "autoIncrement": true,
+      "channel": "production"
     }
+  },
+  "submit": {
+    "production": {}
+  }
 }
