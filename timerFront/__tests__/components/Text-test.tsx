@@ -12,7 +12,7 @@ describe('Text Component', () => {
 
         expect(textElement).toBeTruthy()
         expect(textElement.props.style).toContainEqual({
-            fontFamily: 'SpaceMono-Regular',
+            fontFamily: 'IBM-Plex-Mono',
             color: theme.colors.text,
             fontSize: theme.fontSizes.timer,
             textAlign: 'center',
@@ -54,7 +54,7 @@ describe('Text Component', () => {
 
         expect(textElement.props.style).toContainEqual(customStyle)
         expect(textElement.props.style).toContainEqual({
-            fontFamily: 'SpaceMono-Regular',
+            fontFamily: 'IBM-Plex-Mono',
             color: theme.colors.text,
             fontSize: theme.fontSizes.timer,
             textAlign: 'center',
