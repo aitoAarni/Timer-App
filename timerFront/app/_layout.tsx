@@ -19,17 +19,12 @@ SplashScreen.preventAutoHideAsync()
 export default function RootLayout() {
     const [isInitializing, setIsInitializing] = useState(true)
     const [loaded, error] = useFonts({
-        'PermanentMarker-Regular': require('@/assets/fonts/PermanentMarker-Regular.ttf'),
         'IBM-Plex-Mono': require('@/assets/fonts/IBMPlexMono-Bold.ttf'),
-        PlaywriterFont: require('@/assets/fonts/PlaywriteFont.ttf'),
-        'SpaceMono-Regular': require('@/assets/fonts/SpaceMono-Regular.ttf'),
-        DancingScript: require('@/assets/fonts/DancingScript-VariableFont_wght.ttf'),
     })
     useEffect(() => {
         const initialize = async () => {
             await ping()
             initializeStorage().then(() => {
-
                 setIsInitializing(false)
             })
         }
