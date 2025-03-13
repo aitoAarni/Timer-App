@@ -1,4 +1,4 @@
-import { setItemAsync, getItemAsync, deleteItemAsync    } from 'expo-secure-store'
+import { setItemAsync, getItemAsync, deleteItemAsync } from 'expo-secure-store'
 
 export const setSecureKeyValuePair = async (key: string, value: string) => {
     try {

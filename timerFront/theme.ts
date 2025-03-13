@@ -8,7 +8,7 @@ const theme = {
         grayLight: 'rgba(153,153, 153,1)',
         error: 'red',
         grayDark: 'rgb(44, 44, 44)',
-        highlight: 'rgb(11, 195, 219)'
+        highlight: 'rgb(11, 195, 219)',
     },
 
     fontSizes: {

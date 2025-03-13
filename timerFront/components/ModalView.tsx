@@ -6,7 +6,6 @@ import { LoginButton, LogoutButton, ProfileButton } from './ModalButtons'
 import useLoggedIn from '@/hooks/useLoggedIn'
 import Feather from '@expo/vector-icons/Feather'
 
-
 export default function ModalView() {
     const [showModal, setShowModal] = useState<boolean>(false)
     const loggedIn = useLoggedIn()

@@ -1,8 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
 import AreaChartView from '@/components/AreaChartView'
-import theme from '@/theme'
-import { View } from 'react-native'
 
 jest.mock('react-native-gifted-charts', () => ({
     LineChart: jest.fn(() => {

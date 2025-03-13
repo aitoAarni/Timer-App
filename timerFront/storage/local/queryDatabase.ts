@@ -3,7 +3,7 @@ import { openDatabase } from './db'
 
 export const insert = async (
     query: string,
-    values: (string | number | null)[] = [],
+    values: (string | number | null)[] = []
 ) => {
     let db: sqlite.SQLiteDatabase | null = null
     try {
@@ -22,7 +22,7 @@ export const insert = async (
 
 export const fetchOne = async (
     query: string,
-    values: (string | number | null)[] = [],
+    values: (string | number | null)[] = []
 ) => {
     let db: sqlite.SQLiteDatabase | null = null
     try {
@@ -41,7 +41,7 @@ export const fetchOne = async (
 
 export const fetchAll = async (
     query: string,
-    values: (string | number | null)[] = [],
+    values: (string | number | null)[] = []
 ) => {
     let db: sqlite.SQLiteDatabase | null = null
     try {
@@ -57,4 +57,3 @@ export const fetchAll = async (
         }
     }
 }
-

@@ -14,7 +14,6 @@ import { getLocalTimeLogsAfterDate } from '@/services/timeLogServices'
 import { useFocusEffect } from 'expo-router'
 import StatisticsViewTotals from './StatisticsViewTotals'
 import { getDateNdaysAgo } from '@/utils/utils'
-import ModalView from './ModalView'
 
 export default function StatisticsView() {
     const [data, setData] = useState<null | DisplayTimeLogs>(null)
@@ -84,7 +83,6 @@ export default function StatisticsView() {
                 userId={user.server_id}
                 setErrorMessage={setErrorMessage}
             />
-            
         </View>
     )
 }

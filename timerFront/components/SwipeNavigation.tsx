@@ -1,12 +1,5 @@
-import theme from '@/theme'
-import { ReactNode, useState } from 'react'
-import {
-    GestureResponderEvent,
-    StyleProp,
-    StyleSheet,
-    View,
-    ViewStyle,
-} from 'react-native'
+import { ReactNode } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import {
     Directions,
     Gesture,

@@ -22,8 +22,8 @@ export default function RootLayout() {
         'IBM-Plex-Mono': require('@/assets/fonts/IBMPlexMono-Bold.ttf'),
     })
     useEffect(() => {
-        const initialize = async () => {
-            await ping()
+        const initialize = () => {
+            ping()
             initializeStorage().then(() => {
                 setIsInitializing(false)
             })

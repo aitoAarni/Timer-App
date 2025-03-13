@@ -5,7 +5,7 @@ import { clearUser } from '@/redux/userSlice'
 import AuthStorage from '@/services/authStorageServices'
 import store from '@/redux/store'
 import { updateSettings } from '@/redux/settingsSlice'
-import createUser, { createLocalUser } from '@/services/userServices'
+import createUser from '@/services/userServices'
 
 export default async function initializeStorage() {
     await initializeDatabase()
