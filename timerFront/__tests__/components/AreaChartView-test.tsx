@@ -13,14 +13,14 @@ jest.mock('react-native-gifted-charts', () => ({
 
 describe('AreaChartView', () => {
     const mockData = [
-        { value: 10, label: 'Jan' },
-        { value: 20, label: 'Feb' },
-        { value: 30, label: 'Mar' },
+        { total_duration: 10, date: 'Jan' },
+        { total_duration: 20, date: 'Feb' },
+        { total_duration: 30, date: 'Mar' },
     ]
 
     it('renders without crashing', () => {
         const { getByTestId } = render(
-            <AreaChartView data={mockData} maxValue={50} />
+            <AreaChartView data={mockData}  />
         )
 
         expect(getByTestId('MockedLineChart')).toBeTruthy()
@@ -28,7 +28,7 @@ describe('AreaChartView', () => {
 
     it('renders with the correct maxValue', () => {
         const { getByTestId } = render(
-            <AreaChartView data={mockData} maxValue={100} />
+            <AreaChartView data={mockData}  />
         )
 
         expect(getByTestId('MockedLineChart')).toBeTruthy()
@@ -36,7 +36,7 @@ describe('AreaChartView', () => {
 
     it('adjusts maxValue when it is below threshold', () => {
         const { getByTestId } = render(
-            <AreaChartView data={mockData} maxValue={2} />
+            <AreaChartView data={mockData}  />
         )
 
         expect(getByTestId('MockedLineChart')).toBeTruthy()
