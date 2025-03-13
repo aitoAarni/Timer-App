@@ -1,7 +1,7 @@
 import AuthStorage from '@/services/authStorageServices'
 import { useDispatch } from 'react-redux'
 import { setLoggedInUser } from '@/redux/userSlice'
-import login from '@/services/loginServices'
+import remoteLogin from '@/services/loginServices'
 import { RemoteUser } from '@/types'
 import {
     createLocalUser,
@@ -16,7 +16,7 @@ const useLogIn = () => {
         let remoteUser: RemoteUser | null = null
         let requestNotPossible: boolean
         try {
-            remoteUser = await login(username, password)
+            remoteUser = await remoteLogin(username, password)
             requestNotPossible = false
         } catch (error) {
             console.error(error)
@@ -28,7 +28,7 @@ const useLogIn = () => {
             if (localUser && localUser?.password === password) {
                 if (!requestNotPossible && !remoteUser) {
                     await createRemoteUser(username, password)
-                    remoteUser = await login(username, password)
+                    remoteUser = await remoteLogin(username, password)
                 }
                 const storageUser = {
                     ...localUser,

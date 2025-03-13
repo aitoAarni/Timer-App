@@ -26,7 +26,7 @@ const Text = function ({ style, color, fontSize, ...props }: Props) {
 
 const styles = StyleSheet.create({
     text: {
-        fontFamily: 'SpaceMono-Regular',
+        fontFamily: 'IBM-Plex-Mono',
         color: theme.colors.text,
         fontSize: theme.fontSizes.timer,
         textAlign: 'center',
