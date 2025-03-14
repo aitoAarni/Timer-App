@@ -13,7 +13,6 @@
 | 10.1.2025  | 4h     | setting up testing and doing unit tests                                                       |
 | 11.1.2025  | 4.5h   | Trying to test a component using react native gesture handler w/o success                     |
 | 12.1.2025  | 3h     | Solved how to test gesture handler and added other tests also                                 |
-| in total   | 34h    |                                                                                               |
 | 13.1.2025  | 1h     | researched storage options and decided for local storage expo.sqlite                          |
 | 14.1.2025  | 6h     | sqlite database set up and queries added fo it, also research on design related to it         |
 | 15.1.2025  | 7h     | timer logs times to db now, test different chat libraries and chose one and created a chart   |
@@ -26,7 +25,6 @@
 | 22.1.2025  | 3.5h   | finalize persistent settings and switch timer state to to context, debug silent errors        |
 | 23.1.2025  | 3.5h   | add redux, updated how timer works when settings are change, debugging hidden errors,fix test |
 | 24.1.2025  | 2h     | add unit tests, fix bugs in app, make a error component to notify user                        |
-| in total   | 79.5h  |                                                                                               |
 | 26.1.2025  | 5h     | create singIngPage, update db, refactoring, fix bug, plan app structure                       |
 | 27.1.2025  | 4h     | add secure kvs, reasearch backend hosting, add login view and logic, fix bug w user creation  |
 | 28.1.2025  | 3h     | update loginView, added redux store, debugging expo eas problems                              |
@@ -41,7 +39,6 @@
 | 16.2.2025  | 4h     | add e2e test, add safe launch to e2e tests, start back-end                                    |
 | 17.2.2025  | 2.5h   | create andpoints for user creation and logging in                                             |
 | 18.2.2025  | 3.5h   | integrate MongoDB to back-end                                                                 |
-| in total   | 131.5h |                                                                                               |
 | 19.2.2025  | 4h     | add middleware for errors and unknown endpoint, add config file, add unit tests               |
 | 20.2.2025  | 1h     | get front end to communicate with back-end login endpoint                                     |
 | 21.2.2025  | 3h     | integrate back-end logging in with front-end logging in and user creation                     |
@@ -60,8 +57,8 @@
 | 8.3.2025   | 2.5h   | adding unit tests and fixing bugs                                                             |
 | 9.3.2025   | 4h     | refactor code, add unite tests and create a new component to show past 7 days and total hours |
 | 10.3.2025  | 3h     | refactor code, create unit tests, fix a bug                                                   |
-| in total   | 191.5h |                                                                                               |
 | 11.3.2025  | 5.5h   | create a production envrionment and configure a CD pipeline                                   |
 | 12.3.2025  | 3h     | create user deletion endpoint for e2e, create and fix e2e tests                               |
 | 13.3.2025  | 2.5h   | finalizing app                                                                                |
 | 14.3.2025  | 2h     | finalizing app                                                                                |
+| in total   | 204.5h |                                                                                               |
