@@ -2,9 +2,9 @@ import { AreaChartData, DisplayTimeLogs } from '@/types'
 import { DataPointLabel } from './Stylers'
 import theme from '@/theme'
 
-const msToHours = (ms: number) => {
-    const hours = Math.floor(ms / 360_000) / 10
-    return hours
+const msToMinutes = (ms: number) => {
+    const minutes = Math.floor(ms / 60_000) 
+    return minutes
 }
 
 export const transformDatesAndDurationDataForChart = (
@@ -41,7 +41,7 @@ export const transformDatesAndDurationDataForChart = (
             label: `${months[dateOfData.getMonth()]} ${dateOfData.getDate()}`,
 
             dataPointLabelComponent: () => {
-                return <DataPointLabel val={DataPoint.value * 3600000} />
+                return <DataPointLabel val={DataPoint.value * 60_000} />
             },
             labelTextStyle: { color: theme.colors.grayLight },
         }
@@ -49,7 +49,7 @@ export const transformDatesAndDurationDataForChart = (
             dataIndex < data.length &&
             data[dataIndex].date == dateOfDataString
         ) {
-            DataPoint.value = msToHours(data[dataIndex].total_duration)
+            DataPoint.value = msToMinutes(data[dataIndex].total_duration)
             dataIndex++
             maxValue = maxValue > DataPoint.value ? maxValue : DataPoint.value
         }

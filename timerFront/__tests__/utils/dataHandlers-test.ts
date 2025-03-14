@@ -29,12 +29,12 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 2.7,
+        value: 166,
         label: 'Jan 29',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 20,
+        value: 1200,
         label: 'Jan 30',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
@@ -44,7 +44,7 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 3.3,
+        value: 203,
         label: 'Feb 1',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
@@ -54,7 +54,7 @@ const correctlyTransformedData = [
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
     {
-        value: 0.5,
+        value: 33,
         label: 'Feb 3',
         labelTextStyle: { color: 'rgba(153,153, 153,1)' },
     },
@@ -76,7 +76,7 @@ describe('transformDatesAndDurationDataForChart', () => {
                 labelTextStyle: element.labelTextStyle,
             }).toMatchObject(correctlyTransformedData[index])
         })
-        expect(maxValue).toBe(20)
+        expect(maxValue).toBe(1200)
         jest.resetAllMocks()
     })
 })

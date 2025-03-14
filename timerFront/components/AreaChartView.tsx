@@ -1,7 +1,7 @@
 import theme from '@/theme'
 import { Dimensions, View } from 'react-native'
 import { LineChart } from 'react-native-gifted-charts'
-import {  DisplayTimeLogs } from '@/types'
+import { DisplayTimeLogs } from '@/types'
 import { transformDatesAndDurationDataForChart } from '@/utils/dataHandlers'
 
 interface AreaChartViewProps {
@@ -11,8 +11,11 @@ interface AreaChartViewProps {
 const { width } = Dimensions.get('window')
 
 const AreaChartView = ({ data }: AreaChartViewProps) => {
-    const { transformedData, maxValue } =
-        transformDatesAndDurationDataForChart(data, 30)
+    const { transformedData, maxValue } = transformDatesAndDurationDataForChart(
+        data,
+        30
+    )
+
     return (
         <View>
             <LineChart
@@ -21,7 +24,7 @@ const AreaChartView = ({ data }: AreaChartViewProps) => {
                 width={width - 25}
                 height={300}
                 scrollToIndex={30}
-                maxValue={maxValue > 4 ? maxValue * 1.3 : 6}
+                maxValue={maxValue > 240 ? maxValue * 1.3 : 360}
                 curved
                 curvature={0.1}
                 thickness={1}
