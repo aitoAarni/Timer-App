@@ -26,9 +26,9 @@
 
 ## 🔗Links
 
-[Download the mobile app preview build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/c9cfadde-0830-4e03-aa90-e69704bf9f9a)
+[Download the mobile app preview build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/ae3bf7a2-9b79-4bd9-9602-c8c38d25e06a) (can be used without expo app, or development server)
 
-[Download the mobile app development build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/V738eaf96-4906-4a7b-b736-d41b5f218975)
+[Download the mobile app development build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/2486d5b7-d816-455c-abb2-0e7f27bdc92d)
 
 [Work hours](hours.md)
 
