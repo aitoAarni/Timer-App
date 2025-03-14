@@ -63,3 +63,5 @@
 | in total   | 191.5h |                                                                                               |
 | 11.3.2025  | 5.5h   | create a production envrionment and configure a CD pipeline                                   |
 | 12.3.2025  | 3h     | create user deletion endpoint for e2e, create and fix e2e tests                               |
+| 13.3.2025  | 2.5h   | finalizing app                                                                                |
+| 14.3.2025  | 2h     | finalizing app                                                                                |
