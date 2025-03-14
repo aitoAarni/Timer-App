@@ -27,5 +27,30 @@
 ## 🔗Links
 
 [Download the mobile app preview build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/c9cfadde-0830-4e03-aa90-e69704bf9f9a)
-[Download the mobile app development build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/738eaf96-4906-4a7b-b736-d41b5f218975)
+
+[Download the mobile app development build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/V738eaf96-4906-4a7b-b736-d41b5f218975)
+
 [Work hours](hours.md)
+
+## Additional information
+
+[E2E tests](timerFront/maestro/) uses maestro, which will need to be installed and can be used in timerFront. Before e2e tests can be run both front-end and back-end must have dependencies and be running on your local environment
+
+```bash
+cd backEnd
+npm run test:e2e
+```
+
+open another console and run the commands
+
+```bash
+cd timerFront
+npm run start:e2e
+```
+
+and finally open yet another console and run
+
+```bash
+cd timerFront
+maestro test maestro
+```
