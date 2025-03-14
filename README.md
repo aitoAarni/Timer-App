@@ -4,22 +4,21 @@
 
 ## ✨ Features
 
-- **Pomodoro Timer** – Alternates between work and rest periods in a loop.
-- **Gesture Controls** – 
-  - 🏁 Tap the timer to start/stop.  
-  - ⬅️ Swipe left to add one minute.  
-  - ⬆️ Swipe up to reset the timer.  
-  - ➡️ Swipe right to skip to the next period (work or rest).  
-- **Customizable Durations** – Adjust work and rest times in **Settings**.
-- **Statistics View** – Track progress and view usage stats.
-- **User Accounts** – Sign up, log in, and view your profile.
-- **Offline Support** – Saves time logs locally.
+-   **Pomodoro Timer** – Alternates between work and rest periods in a loop.
+-   **Gesture Controls** –
+    -   🏁 Tap the timer to start/stop.
+    -   ⬅️ Swipe left to add one minute.
+    -   ⬆️ Swipe up to reset the timer.
+    -   ➡️ Swipe right to skip to the next period (work or rest).
+-   **Customizable Durations** – Adjust work and rest times in **Settings**.
+-   **Statistics View** – Track progress and view usage stats.
+-   **User Accounts** – Sign up, log in, and view your profile.
+-   **Offline Support** – Saves time logs locally.
 
 ## 📱 Navigation
 
-- Swipe gestures work for **Timer** and **Settings** screens.
-- Use the **top navigation** or **modal navigator** at the bottom left to access different views.
-
+-   Swipe gestures work for **Timer** and **Settings** screens.
+-   Use the **top navigation** or **modal navigator** at the bottom left to access different views.
 
 ## ▶️ Demo of the app
 
@@ -27,5 +26,31 @@
 
 ## 🔗Links
 
-[Download the mobile app](google.com)  
+[Download the mobile app preview build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/c9cfadde-0830-4e03-aa90-e69704bf9f9a)
+
+[Download the mobile app development build](https://expo.dev/accounts/isovertti/projects/timerFront/builds/V738eaf96-4906-4a7b-b736-d41b5f218975)
+
 [Work hours](hours.md)
+
+## Additional information
+
+[E2E tests](timerFront/maestro/) uses maestro, which will need to be installed and can be used in timerFront. Before e2e tests can be run both front-end and back-end must have dependencies and be running on your local environment
+
+```bash
+cd backEnd
+npm run test:e2e
+```
+
+open another console and run the commands
+
+```bash
+cd timerFront
+npm run start:e2e
+```
+
+and finally open yet another console and run
+
+```bash
+cd timerFront
+maestro test maestro
+```

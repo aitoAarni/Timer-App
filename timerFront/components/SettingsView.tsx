@@ -1,11 +1,4 @@
-import {
-    ScrollView,
-    StyleProp,
-    StyleSheet,
-    TextInput,
-    View,
-    ViewStyle,
-} from 'react-native'
+import { StyleProp, StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 import Text from './Text'
 import theme from '@/theme'
 import { useState } from 'react'

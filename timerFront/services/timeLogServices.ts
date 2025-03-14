@@ -5,7 +5,7 @@ import {
     getTotalTimeLogsDurationQuery,
     insertTimeLogToDbQuery,
 } from '@/storage/local/timerQueries'
-import { StorageUser, TimeLogged } from '@/types'
+import { StorageUser } from '@/types'
 import { BACK_END_URL } from '@/utils/environment'
 import { toDisplayTimeLog, toLocalTimeLogSchema } from '@/utils/validators'
 

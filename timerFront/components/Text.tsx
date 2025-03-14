@@ -1,5 +1,4 @@
 import theme from '@/theme'
-import { getLoadedFonts } from 'expo-font'
 import {
     Text as NativeText,
     StyleProp,

@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react'
+import { ReactNode } from 'react'
 import { StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -9,7 +9,6 @@ import Animated, {
     withDelay,
     withTiming,
 } from 'react-native-reanimated'
-import Text from './Text'
 
 interface DirectionPadProps {
     children?: ReactNode

@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { TimerContext } from "@/contexts/TimerContext"
+import { useContext } from 'react'
+import { TimerContext } from '@/contexts/TimerContext'
 
 export const useTimer = () => {
     const context = useContext(TimerContext)

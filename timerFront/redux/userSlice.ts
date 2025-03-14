@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { StorageUser, User } from '@/types'
+import { StorageUser } from '@/types'
 import AuthStorage from '@/services/authStorageServices'
 
 interface UserState {

@@ -10,7 +10,7 @@ import Text from './Text'
 import { formatTotalTime } from '@/utils/format'
 import theme from '@/theme'
 import { getRankings } from '@/services/rankingServices'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { formStringDate } from '@/utils/dataHandlers'
 import { NearbyUser, Rankings } from '@/types'
@@ -21,8 +21,6 @@ interface LeaderBoardProps {
     userId: string | null
     setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>
 }
-
-// TODO: round a top 0% to top 1% maybe
 
 export default function LeaderBoard({
     userId,
@@ -195,7 +193,7 @@ const Item = ({
 }
 
 const styles = StyleSheet.create({
-    container: { marginTop: 30,  height: 400 },
+    container: { marginTop: 30, height: 400 },
 
     headerText: { fontSize: 20, marginBottom: 1 },
     inputRow: {
@@ -228,7 +226,6 @@ const styles = StyleSheet.create({
         height: 40,
     },
     itemContainer: {
-        // flex: 1,
         flexDirection: 'row',
     },
     rankingText: { fontSize: 18, flex: 1, color: theme.colors.text },

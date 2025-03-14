@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Text from './Text'
 import theme from '@/theme'
-
 
 interface ErrorBoxProps {
     errorMessage: string | null
