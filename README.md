@@ -21,6 +21,7 @@
 -   Use the **top navigation** or **modal navigator** at the bottom left to access different views.
 
 ## ▶️ Demo of the app
+(doesn't have all new features, like the leaderboard)
 
 <img src="https://github.com/aitoAarni/Timer-App/blob/main/appDemo.gif" width="300" height="650">
 
